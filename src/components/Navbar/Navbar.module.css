@@ -15,6 +15,10 @@
   list-style-type: none;
 }
 
+.item:last-child {
+  padding-top: 20px;
+}
+
 .link {
   display: block;
   padding: 10px 20px;
@@ -35,7 +39,7 @@
 
 .link:hover,
 .link:focus,
-.item.active .link {
+.link.active {
   color: #333;
 
   background-color: #ccc;

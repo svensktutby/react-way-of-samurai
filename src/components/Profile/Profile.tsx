@@ -1,19 +1,13 @@
-import React from 'react';
-import classes from './Profile.module.css';
+import React, { FC } from 'react';
+import s from './Profile.module.css';
 import { MyPosts } from './MyPosts';
+import { ProfileInfo } from './ProfileInfo';
 
-export const Profile: React.FC = () => {
-  const { content, signboard } = classes;
-
+export const Profile: FC = () => {
   return (
-    <main className={content}>
-      <img
-        className={signboard}
-        src="https://image.shutterstock.com/image-photo/amsterdam-canal-street-view-long-260nw-739294837.jpg"
-        alt="Top background"
-      />
-      <div>ava + description</div>
+    <div>
+      <ProfileInfo />
       <MyPosts />
-    </main>
+    </div>
   );
 };

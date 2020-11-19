@@ -1,13 +1,11 @@
-import React from 'react';
-import classes from './Header.module.css';
+import React, { FC } from 'react';
+import s from './Header.module.css';
 
-export const Header: React.FC = () => {
-  const { header, logo } = classes;
-
+export const Header: FC = () => {
   return (
-    <header className={header}>
+    <header className={s.header}>
       <img
-        className={logo}
+        className={s.logo}
         src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Appveyor_logo.svg"
         alt="Logo"
       />

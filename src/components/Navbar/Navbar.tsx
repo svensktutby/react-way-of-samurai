@@ -1,36 +1,36 @@
-import React from 'react';
-import classes from './Navbar.module.css';
+import React, { FC } from 'react';
+import { NavLink } from 'react-router-dom';
 
-export const Navbar: React.FC = () => {
-  const { nav, list, item, link, active } = classes;
+import s from './Navbar.module.css';
 
+export const Navbar: FC = () => {
   return (
-    <nav className={nav}>
-      <ul className={list}>
-        <li className={`${item} ${active}`}>
-          <a className={link} href="/">
+    <nav className={s.nav}>
+      <ul className={s.list}>
+        <li className={s.item}>
+          <NavLink className={s.link} to="/profile" activeClassName={s.active}>
             Profile
-          </a>
+          </NavLink>
         </li>
-        <li className={item}>
-          <a className={link} href="/">
+        <li className={s.item}>
+          <NavLink className={s.link} to="/dialogs" activeClassName={s.active}>
             Messages
-          </a>
+          </NavLink>
         </li>
-        <li className={item}>
-          <a className={link} href="/">
+        <li className={s.item}>
+          <NavLink className={s.link} to="/news" activeClassName={s.active}>
             News
-          </a>
+          </NavLink>
         </li>
-        <li className={item}>
-          <a className={link} href="/">
+        <li className={s.item}>
+          <NavLink className={s.link} to="/music" activeClassName={s.active}>
             Music
-          </a>
+          </NavLink>
         </li>
-        <li className={item}>
-          <a className={link} href="/">
+        <li className={s.item}>
+          <NavLink className={s.link} to="/settings" activeClassName={s.active}>
             Settings
-          </a>
+          </NavLink>
         </li>
       </ul>
     </nav>
