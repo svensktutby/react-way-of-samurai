@@ -1,51 +1,35 @@
 import React, { FC } from 'react';
-import { NavLink } from 'react-router-dom';
 import s from './Dialogs.module.css';
+import { DialogItem } from './DialogItem';
+import { Message } from './Message';
+import { DialogItemPropsType, MessagePropsType } from '../../index';
 
-type PropsType = {};
-
-type DialogItemPropsType = {
-  name: string;
-  id: number;
+type PropsType = {
+  dialogs: Array<DialogItemPropsType>;
+  messages: Array<MessagePropsType>;
 };
 
-type MessagePropsType = {
-  message: string;
-};
+export const Dialogs: FC<PropsType> = ({ dialogs, messages }) => {
+  const dialogsElements = dialogs.map((d) => (
+    <DialogItem
+      key={(Math.random() * 1e8).toString(16)}
+      name={d.name}
+      id={d.id}
+    />
+  ));
 
-export const Dialogs: FC<PropsType> = (props: PropsType) => {
+  const messagesElements = messages.map((m) => (
+    <Message
+      key={(Math.random() * 1e8).toString(16)}
+      message={m.message}
+      id={m.id}
+    />
+  ));
+
   return (
     <div className={s.dialogs}>
-      <ul className={s.dialogsList}>
-        <DialogItem name="Andrei" id={1} />
-        <DialogItem name="John Doe" id={2} />
-        <DialogItem name="Patrick" id={3} />
-        <DialogItem name="Someone" id={4} />
-      </ul>
-      <ul className={s.messages}>
-        <Message message="Hi" />
-        <Message message="Hi, dude!" />
-        <Message message="You" />
-      </ul>
+      <ul className={s.dialogsList}>{dialogsElements}</ul>
+      <ul className={s.messages}>{messagesElements}</ul>
     </div>
   );
-};
-
-const DialogItem: FC<DialogItemPropsType> = (props: DialogItemPropsType) => {
-  const { name, id } = props;
-  const path = `/dialogs/${id}`;
-
-  return (
-    <li className={s.dialog}>
-      <NavLink to={path} activeClassName={s.active}>
-        {name}
-      </NavLink>
-    </li>
-  );
-};
-
-const Message: FC<MessagePropsType> = (props: MessagePropsType) => {
-  const { message } = props;
-
-  return <li className={s.message}>{message}</li>;
 };

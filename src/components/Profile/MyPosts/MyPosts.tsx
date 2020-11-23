@@ -1,8 +1,17 @@
 import React, { FC } from 'react';
 import s from './MyPosts.module.css';
 import { Post } from './Post';
+import { PostPropsType } from '../../../index';
 
-export const MyPosts: FC = () => {
+type MyPostsPropsType = {
+  posts: Array<PostPropsType>;
+};
+
+export const MyPosts: FC<MyPostsPropsType> = ({ posts }) => {
+  const postsElements = posts.map((p) => (
+    <Post key={p.id} message={p.message} likesCount={p.likesCount} />
+  ));
+
   return (
     <div className={s.postsBlock}>
       <h3>My posts</h3>
@@ -10,10 +19,7 @@ export const MyPosts: FC = () => {
         <textarea />
         <button>Add post</button>
       </div>
-      <div className={s.posts}>
-        <Post message="Hi, dude!" likesCount={18} />
-        <Post message="It's not my first post" likesCount={3} />
-      </div>
+      <div className={s.posts}>{postsElements}</div>
     </div>
   );
 };

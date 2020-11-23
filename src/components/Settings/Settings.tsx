@@ -3,6 +3,6 @@ import s from './Settings.module.css';
 
 type PropsType = {};
 
-export const Settings: FC<PropsType> = (props: PropsType) => {
+export const Settings: FC<PropsType> = () => {
   return <div>Settings</div>;
 };

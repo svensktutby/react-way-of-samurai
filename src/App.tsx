@@ -9,8 +9,13 @@ import { Dialogs } from './components/Dialogs';
 import { News } from './components/News';
 import { Music } from './components/Music';
 import { Settings } from './components/Settings';
+import { DataPropsType } from './index';
 
-const App: FC = () => {
+type AppPropsType = {
+  data: DataPropsType;
+};
+
+const App: FC<AppPropsType> = ({ data: { posts, messages, dialogs } }) => {
   return (
     <Router>
       <div className="app-wrapper">
@@ -18,11 +23,14 @@ const App: FC = () => {
         <Navbar />
 
         <main className="app-wrapper__content">
-          <Route path="/profile" component={Profile} />
-          <Route path="/dialogs" component={Dialogs} />
-          <Route path="/news" component={News} />
-          <Route path="/music" component={Music} />
-          <Route path="/settings" component={Settings} />
+          <Route path="/profile" render={() => <Profile posts={posts} />} />
+          <Route
+            path="/dialogs"
+            render={() => <Dialogs messages={messages} dialogs={dialogs} />}
+          />
+          <Route path="/news" render={() => <News />} />
+          <Route path="/music" render={() => <Music />} />
+          <Route path="/settings" render={() => <Settings />} />
         </main>
       </div>
     </Router>

@@ -9,32 +9,3 @@
   padding: 10px;
   list-style-type: none;
 }
-
-.dialogsList {
-
-}
-
-.dialog a {
-  color: #333;
-  text-decoration: none;
-}
-
-.dialog a:hover {
-  text-decoration: underline;
-}
-
-.dialog .active {
-  color: #7d97a5;
-}
-
-.dialog {
-
-}
-
-.messages {
-
-}
-
-.message {
-
-}

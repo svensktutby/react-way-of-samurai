@@ -3,6 +3,6 @@ import s from './News.module.css';
 
 type PropsType = {};
 
-export const News: FC<PropsType> = (props: PropsType) => {
+export const News: FC<PropsType> = () => {
   return <div>News</div>;
 };
