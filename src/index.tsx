@@ -1,79 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import state from './redux/state';
 
-export type DialogItemPropsType = {
-  id: number;
-  name: string;
-};
-
-export type MessagePropsType = {
-  id: number;
-  message: string;
-};
-
-export type PostPropsType = {
-  id: number;
-  message: string;
-  likesCount: number;
-};
-
-export type DataPropsType = {
-  dialogs: Array<DialogItemPropsType>;
-  messages: Array<MessagePropsType>;
-  posts: Array<PostPropsType>;
-};
-
-const data: DataPropsType = {
-  dialogs: [
-    {
-      id: 1,
-      name: 'Andrei',
-    },
-    {
-      id: 2,
-      name: 'John Doe',
-    },
-    {
-      id: 3,
-      name: 'Patrick',
-    },
-    {
-      id: 4,
-      name: 'Someone',
-    },
-  ],
-  messages: [
-    {
-      id: 1,
-      message: 'Hi',
-    },
-    {
-      id: 2,
-      message: 'Hi, dude!',
-    },
-    {
-      id: 3,
-      message: 'Yo',
-    },
-  ],
-  posts: [
-    {
-      id: 1,
-      message: 'Hi, dude!',
-      likesCount: 18,
-    },
-    {
-      id: 2,
-      message: "It's not my first post",
-      likesCount: 3,
-    },
-  ],
-};
-
-const app = <App data={data} />;
+const app = (
+  <Router>
+    <App state={state} />
+  </Router>
+);
 
 ReactDOM.render(app, document.getElementById('root'));
 

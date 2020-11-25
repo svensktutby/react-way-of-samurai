@@ -2,13 +2,15 @@ import React, { FC } from 'react';
 import s from './Profile.module.css';
 import { MyPosts } from './MyPosts';
 import { ProfileInfo } from './ProfileInfo';
-import { PostPropsType } from '../../index';
+import { PostType } from '../../redux/state';
 
-type ProfilePropsType = {
-  posts: Array<PostPropsType>;
+type PropsType = {
+  state: {
+    posts: Array<PostType>;
+  };
 };
 
-export const Profile: FC<ProfilePropsType> = ({ posts }) => {
+export const Profile: FC<PropsType> = ({ state: { posts } }) => {
   return (
     <div>
       <ProfileInfo />

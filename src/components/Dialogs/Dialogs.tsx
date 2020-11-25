@@ -2,14 +2,16 @@ import React, { FC } from 'react';
 import s from './Dialogs.module.css';
 import { DialogItem } from './DialogItem';
 import { Message } from './Message';
-import { DialogItemPropsType, MessagePropsType } from '../../index';
+import { DialogItemType, MessageType } from '../../redux/state';
 
 type PropsType = {
-  dialogs: Array<DialogItemPropsType>;
-  messages: Array<MessagePropsType>;
+  state: {
+    dialogs: Array<DialogItemType>;
+    messages: Array<MessageType>;
+  };
 };
 
-export const Dialogs: FC<PropsType> = ({ dialogs, messages }) => {
+export const Dialogs: FC<PropsType> = ({ state: { dialogs, messages } }) => {
   const dialogsElements = dialogs.map((d) => (
     <DialogItem
       key={(Math.random() * 1e8).toString(16)}

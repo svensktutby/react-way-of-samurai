@@ -1,15 +1,15 @@
 import React, { FC } from 'react';
 import s from './MyPosts.module.css';
 import { Post } from './Post';
-import { PostPropsType } from '../../../index';
+import { PostType } from '../../../redux/state';
 
-type MyPostsPropsType = {
-  posts: Array<PostPropsType>;
+type PropsType = {
+  posts: Array<PostType>;
 };
 
-export const MyPosts: FC<MyPostsPropsType> = ({ posts }) => {
+export const MyPosts: FC<PropsType> = ({ posts }) => {
   const postsElements = posts.map((p) => (
-    <Post key={p.id} message={p.message} likesCount={p.likesCount} />
+    <Post key={p.id} id={p.id} message={p.message} likesCount={p.likesCount} />
   ));
 
   return (
