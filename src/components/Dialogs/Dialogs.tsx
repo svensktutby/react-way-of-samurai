@@ -4,14 +4,16 @@ import { DialogItem } from './DialogItem';
 import { Message } from './Message';
 import { DialogItemType, MessageType } from '../../redux/state';
 
-type PropsType = {
+type DialogsPropsType = {
   state: {
     dialogs: Array<DialogItemType>;
     messages: Array<MessageType>;
   };
 };
 
-export const Dialogs: FC<PropsType> = ({ state: { dialogs, messages } }) => {
+export const Dialogs: FC<DialogsPropsType> = ({
+  state: { dialogs, messages },
+}) => {
   const dialogsElements = dialogs.map((d) => (
     <DialogItem
       key={(Math.random() * 1e8).toString(16)}

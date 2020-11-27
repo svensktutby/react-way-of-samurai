@@ -11,18 +11,27 @@ import { Music } from './components/Music';
 import { Settings } from './components/Settings';
 import { RootStateType } from './redux/state';
 
-type PropsType = {
+type AppPropsType = {
   state: RootStateType;
+  addPostCallback: (postMessage: string) => void;
 };
 
-const App: FC<PropsType> = ({ state: { profilePage, dialogsPage } }) => {
+const App: FC<AppPropsType> = ({
+  state: { profilePage, dialogsPage },
+  addPostCallback,
+}) => {
   return (
     <div className="app-wrapper">
       <Header />
       <Navbar />
 
       <main className="app-wrapper__content">
-        <Route path="/profile" render={() => <Profile state={profilePage} />} />
+        <Route
+          path="/profile"
+          render={() => (
+            <Profile state={profilePage} addPostCallback={addPostCallback} />
+          )}
+        />
         <Route path="/dialogs" render={() => <Dialogs state={dialogsPage} />} />
         <Route path="/news" render={() => <News />} />
         <Route path="/music" render={() => <Music />} />

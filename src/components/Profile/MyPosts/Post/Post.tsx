@@ -7,6 +7,8 @@ export const Post: FC<PostType> = ({ message, likesCount }) => {
     <div className={s.item}>
       <img
         src="https://www.bsut.by/images/profiler/avatar1347_bc253802613d256d2dea1442ac5661ee.png"
+        width="50"
+        height="50"
         alt="Avatar"
       />
       {message}

@@ -1,3 +1,5 @@
+import { renderEntireTree } from '../render';
+
 export type DialogItemType = {
   id: number;
   name: string;
@@ -81,6 +83,17 @@ const state: RootStateType = {
     ],
   },
   sidebar: {},
+};
+
+export const addPostCallback = (postMessage: string) => {
+  const newPost: PostType = {
+    id: 5,
+    message: postMessage,
+    likesCount: 0,
+  };
+
+  state.profilePage.posts.push(newPost);
+  renderEntireTree(state);
 };
 
 export default state;

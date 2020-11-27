@@ -4,17 +4,21 @@ import { MyPosts } from './MyPosts';
 import { ProfileInfo } from './ProfileInfo';
 import { PostType } from '../../redux/state';
 
-type PropsType = {
+type ProfilePropsType = {
   state: {
     posts: Array<PostType>;
   };
+  addPostCallback: (postMessage: string) => void;
 };
 
-export const Profile: FC<PropsType> = ({ state: { posts } }) => {
+export const Profile: FC<ProfilePropsType> = ({
+  state: { posts },
+  addPostCallback,
+}) => {
   return (
     <div>
       <ProfileInfo />
-      <MyPosts posts={posts} />
+      <MyPosts posts={posts} addPostCallback={addPostCallback} />
     </div>
   );
 };
