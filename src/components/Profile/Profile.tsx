@@ -5,20 +5,28 @@ import { ProfileInfo } from './ProfileInfo';
 import { PostType } from '../../redux/state';
 
 type ProfilePropsType = {
-  state: {
+  profilePage: {
     posts: Array<PostType>;
+    newPostText: string;
   };
-  addPostCallback: (postMessage: string) => void;
+  addPostCallback: () => void;
+  updateNewPostTextCallback: (newText: string) => void;
 };
 
 export const Profile: FC<ProfilePropsType> = ({
-  state: { posts },
+  profilePage: { posts, newPostText },
   addPostCallback,
+  updateNewPostTextCallback,
 }) => {
   return (
     <div>
       <ProfileInfo />
-      <MyPosts posts={posts} addPostCallback={addPostCallback} />
+      <MyPosts
+        posts={posts}
+        newPostText={newPostText}
+        addPostCallback={addPostCallback}
+        updateNewPostTextCallback={updateNewPostTextCallback}
+      />
     </div>
   );
 };

@@ -13,12 +13,14 @@ import { RootStateType } from './redux/state';
 
 type AppPropsType = {
   state: RootStateType;
-  addPostCallback: (postMessage: string) => void;
+  addPostCallback: () => void;
+  updateNewPostTextCallback: (newText: string) => void;
 };
 
 const App: FC<AppPropsType> = ({
   state: { profilePage, dialogsPage },
   addPostCallback,
+  updateNewPostTextCallback,
 }) => {
   return (
     <div className="app-wrapper">
@@ -29,7 +31,11 @@ const App: FC<AppPropsType> = ({
         <Route
           path="/profile"
           render={() => (
-            <Profile state={profilePage} addPostCallback={addPostCallback} />
+            <Profile
+              profilePage={profilePage}
+              addPostCallback={addPostCallback}
+              updateNewPostTextCallback={updateNewPostTextCallback}
+            />
           )}
         />
         <Route path="/dialogs" render={() => <Dialogs state={dialogsPage} />} />

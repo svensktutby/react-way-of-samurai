@@ -11,13 +11,14 @@ export type MessageType = {
 };
 
 export type PostType = {
-  id: number;
+  id: string;
   message: string;
   likesCount: number;
 };
 
 type ProfilePageType = {
   posts: Array<PostType>;
+  newPostText: string;
 };
 
 type DialogsPageType = {
@@ -33,20 +34,23 @@ export type RootStateType = {
   sidebar: SidebarType;
 };
 
+const randomId = () => (Math.random() * 1e8).toString(16);
+
 const state: RootStateType = {
   profilePage: {
     posts: [
       {
-        id: 1,
+        id: randomId(),
         message: 'Hi, dude!',
         likesCount: 18,
       },
       {
-        id: 2,
+        id: randomId(),
         message: "It's not my first post",
         likesCount: 3,
       },
     ],
+    newPostText: 'it-kamasutra.com',
   },
   dialogsPage: {
     dialogs: [
@@ -85,14 +89,20 @@ const state: RootStateType = {
   sidebar: {},
 };
 
-export const addPostCallback = (postMessage: string) => {
+export const addPost = () => {
   const newPost: PostType = {
-    id: 5,
-    message: postMessage,
+    id: randomId(),
+    message: state.profilePage.newPostText,
     likesCount: 0,
   };
 
   state.profilePage.posts.push(newPost);
+  state.profilePage.newPostText = '';
+  renderEntireTree(state);
+};
+
+export const updateNewPostText = (newText: string) => {
+  state.profilePage.newPostText = newText;
   renderEntireTree(state);
 };
 

@@ -5,12 +5,16 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 // import state from './redux/state';
-import { addPostCallback, RootStateType } from './redux/state';
+import { addPost, updateNewPostText, RootStateType } from './redux/state';
 
 export const renderEntireTree = (state: RootStateType) => {
   const app = (
     <Router>
-      <App state={state} addPostCallback={addPostCallback} />
+      <App
+        state={state}
+        addPostCallback={addPost}
+        updateNewPostTextCallback={updateNewPostText}
+      />
     </Router>
   );
 
