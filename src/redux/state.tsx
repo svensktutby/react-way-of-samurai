@@ -1,5 +1,3 @@
-import { renderEntireTree } from '../render';
-
 export type DialogItemType = {
   id: number;
   name: string;
@@ -34,76 +32,102 @@ export type RootStateType = {
   sidebar: SidebarType;
 };
 
+export type StoreType = {
+  _state: RootStateType;
+  _onChange: () => void;
+  getState: () => RootStateType;
+  addPost: () => void;
+  updateNewPostText: (newText: string) => void;
+  subscribe: (cb: () => void) => void;
+};
+
 const randomId = () => (Math.random() * 1e8).toString(16);
 
-const state: RootStateType = {
-  profilePage: {
-    posts: [
-      {
-        id: randomId(),
-        message: 'Hi, dude!',
-        likesCount: 18,
-      },
-      {
-        id: randomId(),
-        message: "It's not my first post",
-        likesCount: 3,
-      },
-    ],
-    newPostText: 'it-kamasutra.com',
+const store: StoreType = {
+  _state: {
+    profilePage: {
+      posts: [
+        {
+          id: randomId(),
+          message: 'Hi, dude!',
+          likesCount: 18,
+        },
+        {
+          id: randomId(),
+          message: "It's not my first post",
+          likesCount: 3,
+        },
+      ],
+      newPostText: 'it-kamasutra.com',
+    },
+    dialogsPage: {
+      dialogs: [
+        {
+          id: 1,
+          name: 'Andrei',
+        },
+        {
+          id: 2,
+          name: 'John Doe',
+        },
+        {
+          id: 3,
+          name: 'Patrick',
+        },
+        {
+          id: 4,
+          name: 'Someone',
+        },
+      ],
+      messages: [
+        {
+          id: 1,
+          message: 'Hi',
+        },
+        {
+          id: 2,
+          message: 'Hi, dude!',
+        },
+        {
+          id: 3,
+          message: 'Yo',
+        },
+      ],
+    },
+    sidebar: {},
   },
-  dialogsPage: {
-    dialogs: [
-      {
-        id: 1,
-        name: 'Andrei',
-      },
-      {
-        id: 2,
-        name: 'John Doe',
-      },
-      {
-        id: 3,
-        name: 'Patrick',
-      },
-      {
-        id: 4,
-        name: 'Someone',
-      },
-    ],
-    messages: [
-      {
-        id: 1,
-        message: 'Hi',
-      },
-      {
-        id: 2,
-        message: 'Hi, dude!',
-      },
-      {
-        id: 3,
-        message: 'Yo',
-      },
-    ],
+  getState() {
+    return this._state;
   },
-  sidebar: {},
+  _onChange() {
+    console.log('State changed');
+  },
+  addPost() {
+    const newPost: PostType = {
+      id: randomId(),
+      message: this._state.profilePage.newPostText,
+      likesCount: 0,
+    };
+
+    this._state.profilePage.posts.push(newPost);
+    this._state.profilePage.newPostText = '';
+    this._onChange();
+  },
+  updateNewPostText(newText) {
+    this._state.profilePage.newPostText = newText;
+    this._onChange();
+  },
+  subscribe(cb) {
+    this._onChange = cb;
+  },
 };
 
-export const addPost = () => {
-  const newPost: PostType = {
-    id: randomId(),
-    message: state.profilePage.newPostText,
-    likesCount: 0,
-  };
+export default store;
 
-  state.profilePage.posts.push(newPost);
-  state.profilePage.newPostText = '';
-  renderEntireTree(state);
-};
-
-export const updateNewPostText = (newText: string) => {
-  state.profilePage.newPostText = newText;
-  renderEntireTree(state);
-};
-
-export default state;
+///////////
+declare global {
+  interface Window {
+    store: StoreType;
+  }
+}
+window.store = store;

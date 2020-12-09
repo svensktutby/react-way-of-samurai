@@ -9,19 +9,16 @@ import { Dialogs } from './components/Dialogs';
 import { News } from './components/News';
 import { Music } from './components/Music';
 import { Settings } from './components/Settings';
-import { RootStateType } from './redux/state';
+import { StoreType } from './redux/state';
 
 type AppPropsType = {
-  state: RootStateType;
-  addPostCallback: () => void;
-  updateNewPostTextCallback: (newText: string) => void;
+  store: StoreType;
 };
 
-const App: FC<AppPropsType> = ({
-  state: { profilePage, dialogsPage },
-  addPostCallback,
-  updateNewPostTextCallback,
-}) => {
+const App: FC<AppPropsType> = ({ store }) => {
+  const { profilePage, dialogsPage } = store.getState();
+  const { addPost, updateNewPostText } = store;
+
   return (
     <div className="app-wrapper">
       <Header />
@@ -33,8 +30,8 @@ const App: FC<AppPropsType> = ({
           render={() => (
             <Profile
               profilePage={profilePage}
-              addPostCallback={addPostCallback}
-              updateNewPostTextCallback={updateNewPostTextCallback}
+              addPostCallback={addPost.bind(store)}
+              updateNewPostTextCallback={updateNewPostText.bind(store)}
             />
           )}
         />
