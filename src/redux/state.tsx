@@ -1,3 +1,5 @@
+const randomId = () => (Math.random() * 1e8).toString(16);
+
 export type DialogItemType = {
   id: number;
   name: string;
@@ -26,7 +28,7 @@ type DialogsPageType = {
 
 type SidebarType = {};
 
-export type RootStateType = {
+type RootStateType = {
   profilePage: ProfilePageType;
   dialogsPage: DialogsPageType;
   sidebar: SidebarType;
@@ -34,14 +36,23 @@ export type RootStateType = {
 
 export type StoreType = {
   _state: RootStateType;
-  _onChange: () => void;
+  _callSubscriber: () => void;
   getState: () => RootStateType;
-  addPost: () => void;
-  updateNewPostText: (newText: string) => void;
   subscribe: (cb: () => void) => void;
+  dispatch: (action: ActionsType) => void;
 };
 
-const randomId = () => (Math.random() * 1e8).toString(16);
+export type ActionsType =
+  | ReturnType<typeof addPostAC>
+  | ReturnType<typeof changePostAC>;
+
+const ADD_POST = 'ADD_POST';
+const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT';
+
+export const addPostAC = () => ({ type: ADD_POST } as const);
+
+export const changePostAC = (text: string) =>
+  ({ type: UPDATE_NEW_POST_TEXT, payload: text } as const);
 
 const store: StoreType = {
   _state: {
@@ -96,35 +107,44 @@ const store: StoreType = {
     },
     sidebar: {},
   },
+
+  _callSubscriber() {
+    console.log('State changed');
+  },
   getState() {
     return this._state;
   },
-  _onChange() {
-    console.log('State changed');
-  },
-  addPost() {
-    const newPost: PostType = {
-      id: randomId(),
-      message: this._state.profilePage.newPostText,
-      likesCount: 0,
-    };
-
-    this._state.profilePage.posts.push(newPost);
-    this._state.profilePage.newPostText = '';
-    this._onChange();
-  },
-  updateNewPostText(newText) {
-    this._state.profilePage.newPostText = newText;
-    this._onChange();
-  },
   subscribe(cb) {
-    this._onChange = cb;
+    this._callSubscriber = cb;
+  },
+  dispatch(action) {
+    switch (action.type) {
+      case 'ADD_POST':
+        const newPost: PostType = {
+          id: randomId(),
+          message: this._state.profilePage.newPostText,
+          likesCount: 0,
+        };
+
+        this._state.profilePage.posts.push(newPost);
+        this._state.profilePage.newPostText = '';
+        this._callSubscriber();
+        return;
+
+      case 'UPDATE_NEW_POST_TEXT':
+        this._state.profilePage.newPostText = action.payload;
+        this._callSubscriber();
+        return;
+
+      default:
+        return;
+    }
   },
 };
 
 export default store;
 
-///////////
+/* declare_global_store */
 declare global {
   interface Window {
     store: StoreType;

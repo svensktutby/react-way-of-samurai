@@ -17,7 +17,7 @@ type AppPropsType = {
 
 const App: FC<AppPropsType> = ({ store }) => {
   const { profilePage, dialogsPage } = store.getState();
-  const { addPost, updateNewPostText } = store;
+  const { dispatch } = store;
 
   return (
     <div className="app-wrapper">
@@ -30,8 +30,7 @@ const App: FC<AppPropsType> = ({ store }) => {
           render={() => (
             <Profile
               profilePage={profilePage}
-              addPostCallback={addPost.bind(store)}
-              updateNewPostTextCallback={updateNewPostText.bind(store)}
+              dispatch={dispatch.bind(store)}
             />
           )}
         />
