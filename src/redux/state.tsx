@@ -1,4 +1,12 @@
-const randomId = () => Math.floor(Math.random() * 1e9).toString(16);
+import { addPostAC, changePostAC, profileReducer } from './profileReducer';
+import {
+  changeMessageAC,
+  dialogsReducer,
+  sendMessageAC,
+} from './dialogsReducer';
+import { sidebarReducer } from './sidebarReducer';
+
+export const randomId = () => Math.floor(Math.random() * 1e9).toString(16);
 
 export type DialogItemType = {
   id: string;
@@ -16,18 +24,18 @@ export type PostType = {
   likesCount: number;
 };
 
-type ProfilePageType = {
+export type ProfilePageType = {
   posts: Array<PostType>;
   newPostText: string;
 };
 
-type DialogsPageType = {
+export type DialogsPageType = {
   dialogs: Array<DialogItemType>;
   messages: Array<MessageType>;
   newMessageText: string;
 };
 
-type SidebarType = {};
+export type SidebarType = {};
 
 type RootStateType = {
   profilePage: ProfilePageType;
@@ -48,22 +56,6 @@ export type ActionsType =
   | ReturnType<typeof addPostAC>
   | ReturnType<typeof changeMessageAC>
   | ReturnType<typeof sendMessageAC>;
-
-const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT';
-const ADD_POST = 'ADD_POST';
-
-const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE_NEW_MESSAGE_TEXT';
-const SEND_MESSAGE = 'SEND_MESSAGE';
-
-export const changePostAC = (text: string) =>
-  ({ type: UPDATE_NEW_POST_TEXT, payload: text } as const);
-
-export const addPostAC = () => ({ type: ADD_POST } as const);
-
-export const changeMessageAC = (text: string) =>
-  ({ type: UPDATE_NEW_MESSAGE_TEXT, payload: text } as const);
-
-export const sendMessageAC = () => ({ type: SEND_MESSAGE } as const);
 
 const store: StoreType = {
   _state: {
@@ -130,43 +122,11 @@ const store: StoreType = {
     this._callSubscriber = cb;
   },
   dispatch(action) {
-    switch (action.type) {
-      case 'UPDATE_NEW_POST_TEXT':
-        this._state.profilePage.newPostText = action.payload;
-        this._callSubscriber();
-        return;
+    this._state.profilePage = profileReducer(this._state.profilePage, action);
+    this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
+    this._state.sidebar = sidebarReducer(this._state.sidebar, action);
 
-      case 'ADD_POST':
-        const post: PostType = {
-          id: randomId(),
-          message: this._state.profilePage.newPostText,
-          likesCount: 0,
-        };
-
-        this._state.profilePage.posts.push(post);
-        this._state.profilePage.newPostText = '';
-        this._callSubscriber();
-        return;
-
-      case 'UPDATE_NEW_MESSAGE_TEXT':
-        this._state.dialogsPage.newMessageText = action.payload;
-        this._callSubscriber();
-        return;
-
-      case 'SEND_MESSAGE':
-        const message: MessageType = {
-          id: randomId(),
-          message: this._state.dialogsPage.newMessageText,
-        };
-
-        this._state.dialogsPage.messages.push(message);
-        this._state.dialogsPage.newMessageText = '';
-        this._callSubscriber();
-        return;
-
-      default:
-        return;
-    }
+    this._callSubscriber();
   },
 };
 
