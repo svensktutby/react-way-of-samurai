@@ -17,24 +17,27 @@ type AppPropsType = {
 
 const App: FC<AppPropsType> = ({ store }) => {
   const { profilePage, dialogsPage } = store.getState();
-  const { dispatch } = store;
+  const { dispatch: d } = store;
+  const dispatch = d.bind(store);
 
   return (
-    <div className="app-wrapper">
+    <div className="appWrapper">
       <Header />
       <Navbar />
 
-      <main className="app-wrapper__content">
+      <main className="appWrapperContent">
         <Route
           path="/profile"
           render={() => (
-            <Profile
-              profilePage={profilePage}
-              dispatch={dispatch.bind(store)}
-            />
+            <Profile profilePage={profilePage} dispatch={dispatch} />
           )}
         />
-        <Route path="/dialogs" render={() => <Dialogs state={dialogsPage} />} />
+        <Route
+          path="/dialogs"
+          render={() => (
+            <Dialogs dialogsPage={dialogsPage} dispatch={dispatch} />
+          )}
+        />
         <Route path="/news" render={() => <News />} />
         <Route path="/music" render={() => <Music />} />
         <Route path="/settings" render={() => <Settings />} />

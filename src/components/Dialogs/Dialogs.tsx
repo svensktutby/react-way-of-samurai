@@ -1,39 +1,62 @@
-import React, { FC } from 'react';
+import React, { ChangeEvent, FC } from 'react';
 import s from './Dialogs.module.css';
 import { DialogItem } from './DialogItem';
 import { Message } from './Message';
-import { DialogItemType, MessageType } from '../../redux/state';
+import {
+  ActionsType,
+  changeMessageAC,
+  DialogItemType,
+  MessageType,
+  sendMessageAC,
+} from '../../redux/state';
 
 type DialogsPropsType = {
-  state: {
+  dialogsPage: {
     dialogs: Array<DialogItemType>;
     messages: Array<MessageType>;
+    newMessageText: string;
   };
+  dispatch: (action: ActionsType) => void;
 };
 
 export const Dialogs: FC<DialogsPropsType> = ({
-  state: { dialogs, messages },
+  dialogsPage: { dialogs, messages, newMessageText },
+  dispatch,
 }) => {
+  const sendMessageHandler = () => {
+    dispatch(sendMessageAC());
+  };
+
+  const changeMessageHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    dispatch(changeMessageAC(e.currentTarget.value));
+  };
+
   const dialogsElements = dialogs.map((d) => (
-    <DialogItem
-      key={(Math.random() * 1e8).toString(16)}
-      name={d.name}
-      id={d.id}
-    />
+    <DialogItem key={d.id} name={d.name} id={d.id} />
   ));
 
   const messagesElements = messages.map((m) => (
-    <Message
-      key={(Math.random() * 1e8).toString(16)}
-      message={m.message}
-      id={m.id}
-    />
+    <Message key={m.id} message={m.message} id={m.id} />
   ));
 
   return (
     <div className={s.dialogs}>
-      <ul className={s.dialogsList}>{dialogsElements}</ul>
-      <ul className={s.messages}>{messagesElements}</ul>
+      <div className={s.dialogsList}>{dialogsElements}</div>
+      <div className={s.messagesList}>
+        <div>{messagesElements}</div>
+        <div>
+          <div>
+            <textarea
+              onChange={changeMessageHandler}
+              value={newMessageText}
+              placeholder="Write here..."
+            />
+            <div>
+              <button onClick={sendMessageHandler}>Send</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

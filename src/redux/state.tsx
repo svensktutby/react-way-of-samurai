@@ -1,12 +1,12 @@
-const randomId = () => (Math.random() * 1e8).toString(16);
+const randomId = () => Math.floor(Math.random() * 1e9).toString(16);
 
 export type DialogItemType = {
-  id: number;
+  id: string;
   name: string;
 };
 
 export type MessageType = {
-  id: number;
+  id: string;
   message: string;
 };
 
@@ -24,6 +24,7 @@ type ProfilePageType = {
 type DialogsPageType = {
   dialogs: Array<DialogItemType>;
   messages: Array<MessageType>;
+  newMessageText: string;
 };
 
 type SidebarType = {};
@@ -43,16 +44,26 @@ export type StoreType = {
 };
 
 export type ActionsType =
+  | ReturnType<typeof changePostAC>
   | ReturnType<typeof addPostAC>
-  | ReturnType<typeof changePostAC>;
+  | ReturnType<typeof changeMessageAC>
+  | ReturnType<typeof sendMessageAC>;
 
-const ADD_POST = 'ADD_POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT';
+const ADD_POST = 'ADD_POST';
 
-export const addPostAC = () => ({ type: ADD_POST } as const);
+const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE_NEW_MESSAGE_TEXT';
+const SEND_MESSAGE = 'SEND_MESSAGE';
 
 export const changePostAC = (text: string) =>
   ({ type: UPDATE_NEW_POST_TEXT, payload: text } as const);
+
+export const addPostAC = () => ({ type: ADD_POST } as const);
+
+export const changeMessageAC = (text: string) =>
+  ({ type: UPDATE_NEW_MESSAGE_TEXT, payload: text } as const);
+
+export const sendMessageAC = () => ({ type: SEND_MESSAGE } as const);
 
 const store: StoreType = {
   _state: {
@@ -74,36 +85,37 @@ const store: StoreType = {
     dialogsPage: {
       dialogs: [
         {
-          id: 1,
+          id: randomId(),
           name: 'Andrei',
         },
         {
-          id: 2,
+          id: randomId(),
           name: 'John Doe',
         },
         {
-          id: 3,
+          id: randomId(),
           name: 'Patrick',
         },
         {
-          id: 4,
+          id: randomId(),
           name: 'Someone',
         },
       ],
       messages: [
         {
-          id: 1,
+          id: randomId(),
           message: 'Hi',
         },
         {
-          id: 2,
+          id: randomId(),
           message: 'Hi, dude!',
         },
         {
-          id: 3,
+          id: randomId(),
           message: 'Yo',
         },
       ],
+      newMessageText: '',
     },
     sidebar: {},
   },
@@ -119,20 +131,36 @@ const store: StoreType = {
   },
   dispatch(action) {
     switch (action.type) {
+      case 'UPDATE_NEW_POST_TEXT':
+        this._state.profilePage.newPostText = action.payload;
+        this._callSubscriber();
+        return;
+
       case 'ADD_POST':
-        const newPost: PostType = {
+        const post: PostType = {
           id: randomId(),
           message: this._state.profilePage.newPostText,
           likesCount: 0,
         };
 
-        this._state.profilePage.posts.push(newPost);
+        this._state.profilePage.posts.push(post);
         this._state.profilePage.newPostText = '';
         this._callSubscriber();
         return;
 
-      case 'UPDATE_NEW_POST_TEXT':
-        this._state.profilePage.newPostText = action.payload;
+      case 'UPDATE_NEW_MESSAGE_TEXT':
+        this._state.dialogsPage.newMessageText = action.payload;
+        this._callSubscriber();
+        return;
+
+      case 'SEND_MESSAGE':
+        const message: MessageType = {
+          id: randomId(),
+          message: this._state.dialogsPage.newMessageText,
+        };
+
+        this._state.dialogsPage.messages.push(message);
+        this._state.dialogsPage.newMessageText = '';
         this._callSubscriber();
         return;
 

@@ -7,10 +7,10 @@ export const DialogItem: FC<DialogItemType> = ({ name, id }) => {
   const path = `/dialogs/${id}`;
 
   return (
-    <li className={s.dialog}>
+    <div className={s.dialog}>
       <NavLink to={path} activeClassName={s.active}>
         {name}
       </NavLink>
-    </li>
+    </div>
   );
 };

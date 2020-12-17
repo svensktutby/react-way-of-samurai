@@ -1,4 +1,4 @@
-.app-wrapper {
+.appWrapper {
   display: grid;
   grid-column-gap: 15px;
   grid-row-gap: 25px;
@@ -9,7 +9,7 @@
   padding-bottom: 25px;
 }
 
-.app-wrapper__content {
+.appWrapperContent {
   grid-area: content;
   margin-right: 15px;
   overflow: hidden;
