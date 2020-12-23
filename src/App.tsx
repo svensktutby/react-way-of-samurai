@@ -16,7 +16,7 @@ type AppPropsType = {
 };
 
 const App: FC<AppPropsType> = ({ store }) => {
-  const { profilePage, dialogsPage }: AppStateType = store.getState();
+  const { dialogsPage }: AppStateType = store.getState();
   const { dispatch } = store;
 
   return (
@@ -25,12 +25,7 @@ const App: FC<AppPropsType> = ({ store }) => {
       <Navbar />
 
       <main className="appWrapperContent">
-        <Route
-          path="/profile"
-          render={() => (
-            <Profile profilePage={profilePage} dispatch={dispatch} />
-          )}
-        />
+        <Route path="/profile" render={() => <Profile store={store} />} />
         <Route
           path="/dialogs"
           render={() => (
