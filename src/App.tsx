@@ -5,20 +5,17 @@ import './App.css';
 import { Header } from './components/Header/Header';
 import { Navbar } from './components/Navbar/Navbar';
 import { Profile } from './components/Profile/Profile';
-import { Dialogs } from './components/Dialogs/Dialogs';
 import { News } from './components/News/News';
 import { Music } from './components/Music/Music';
 import { Settings } from './components/Settings/Settings';
-import { AppStateType, StoreType, store } from './redux/redux-store';
+import { store, StoreType } from './redux/redux-store';
+import { DialogsContainer } from './components/Dialogs/DialogsContainer';
 
 type AppPropsType = {
   store: StoreType;
 };
 
 const App: FC<AppPropsType> = ({ store }) => {
-  const { dialogsPage }: AppStateType = store.getState();
-  const { dispatch } = store;
-
   return (
     <div className="appWrapper">
       <Header />
@@ -28,9 +25,7 @@ const App: FC<AppPropsType> = ({ store }) => {
         <Route path="/profile" render={() => <Profile store={store} />} />
         <Route
           path="/dialogs"
-          render={() => (
-            <Dialogs dialogsPage={dialogsPage} dispatch={dispatch} />
-          )}
+          render={() => <DialogsContainer store={store} />}
         />
         <Route path="/news" render={() => <News />} />
         <Route path="/music" render={() => <Music />} />

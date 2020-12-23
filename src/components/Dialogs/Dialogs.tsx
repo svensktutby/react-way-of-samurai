@@ -2,32 +2,25 @@ import React, { ChangeEvent, FC } from 'react';
 import s from './Dialogs.module.css';
 import { DialogItem } from './DialogItem/DialogItem';
 import { Message } from './Message/Message';
-import {
-  changeMessageAC,
-  DialogsPageActionTypes,
-  sendMessageAC,
-} from '../../redux/dialogsReducer';
-import { DialogItemType, MessageType } from '../../redux/types';
+import { DialogsPageType } from '../../redux/dialogsReducer';
 
 type DialogsPropsType = {
-  dialogsPage: {
-    dialogs: Array<DialogItemType>;
-    messages: Array<MessageType>;
-    newMessageText: string;
-  };
-  dispatch: (action: DialogsPageActionTypes) => void;
+  dialogsPage: DialogsPageType;
+  changeMessage: (payload: string) => void;
+  sendMessage: () => void;
 };
 
 export const Dialogs: FC<DialogsPropsType> = ({
   dialogsPage: { dialogs, messages, newMessageText },
-  dispatch,
+  changeMessage,
+  sendMessage,
 }) => {
   const sendMessageHandler = () => {
-    dispatch(sendMessageAC());
+    sendMessage();
   };
 
   const changeMessageHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    dispatch(changeMessageAC(e.currentTarget.value));
+    changeMessage(e.currentTarget.value);
   };
 
   const dialogsElements = dialogs.map((d) => (

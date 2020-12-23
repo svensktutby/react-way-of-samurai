@@ -7,18 +7,18 @@ type MyPostsContainerPropsType = {
   store: StoreType;
 };
 
-export const MyPostsContainer: FC<MyPostsContainerPropsType> = ({ store }) => {
+export const MyPostsContainer: FC<MyPostsContainerPropsType> = ({
+  store: { getState, dispatch },
+}) => {
   const {
     profilePage: { newPostText, posts },
-  } = store.getState();
+  } = getState();
 
-  const { dispatch } = store;
-
-  const addPost = () => {
+  const addPostCallback = () => {
     dispatch(addPostAC());
   };
 
-  const changePost = (payload: string) => {
+  const changePostCallback = (payload: string) => {
     dispatch(changePostAC(payload));
   };
 
@@ -26,8 +26,8 @@ export const MyPostsContainer: FC<MyPostsContainerPropsType> = ({ store }) => {
     <MyPosts
       posts={posts}
       newPostText={newPostText}
-      addPost={addPost}
-      changePost={changePost}
+      addPost={addPostCallback}
+      changePost={changePostCallback}
     />
   );
 };
