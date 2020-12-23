@@ -2,8 +2,12 @@ import React, { ChangeEvent, FC } from 'react';
 import s from './Dialogs.module.css';
 import { DialogItem } from './DialogItem';
 import { Message } from './Message';
-import { ActionsType, DialogItemType, MessageType } from '../../redux/state';
-import { changeMessageAC, sendMessageAC } from '../../redux/dialogsReducer';
+import {
+  changeMessageAC,
+  DialogsPageActionTypes,
+  sendMessageAC,
+} from '../../redux/dialogsReducer';
+import { DialogItemType, MessageType } from '../../redux/types';
 
 type DialogsPropsType = {
   dialogsPage: {
@@ -11,7 +15,7 @@ type DialogsPropsType = {
     messages: Array<MessageType>;
     newMessageText: string;
   };
-  dispatch: (action: ActionsType) => void;
+  dispatch: (action: DialogsPageActionTypes) => void;
 };
 
 export const Dialogs: FC<DialogsPropsType> = ({

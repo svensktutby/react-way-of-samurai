@@ -1,3 +1,6 @@
+import { randomId } from '../utils/randomId';
+
+/*
 import { addPostAC, changePostAC, profileReducer } from './profileReducer';
 import {
   changeMessageAC,
@@ -6,7 +9,6 @@ import {
 } from './dialogsReducer';
 import { sidebarReducer } from './sidebarReducer';
 
-export const randomId = () => Math.floor(Math.random() * 1e9).toString(16);
 
 export type DialogItemType = {
   id: string;
@@ -131,11 +133,4 @@ const store: StoreType = {
 };
 
 export default store;
-
-/* declare_global_store */
-declare global {
-  interface Window {
-    store: StoreType;
-  }
-}
-window.store = store;
+*/
