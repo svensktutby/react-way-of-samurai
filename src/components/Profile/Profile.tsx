@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
-import { MyPosts } from './MyPosts';
-import { ProfileInfo } from './ProfileInfo';
+import { MyPosts } from './MyPosts/MyPosts';
+import { ProfileInfo } from './ProfileInfo/ProfileInfo';
 import { ProfilePageActionTypes } from '../../redux/profileReducer';
 import { PostType } from '../../redux/types';
 

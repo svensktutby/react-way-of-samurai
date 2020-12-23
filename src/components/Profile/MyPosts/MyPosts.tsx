@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FC } from 'react';
 import s from './MyPosts.module.css';
-import { Post } from './Post';
+import { Post } from './Post/Post';
 import {
   addPostAC,
   changePostAC,

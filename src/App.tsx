@@ -2,13 +2,13 @@ import React, { FC } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
 
-import { Header } from './components/Header';
-import { Navbar } from './components/Navbar';
-import { Profile } from './components/Profile';
-import { Dialogs } from './components/Dialogs';
-import { News } from './components/News';
-import { Music } from './components/Music';
-import { Settings } from './components/Settings';
+import { Header } from './components/Header/Header';
+import { Navbar } from './components/Navbar/Navbar';
+import { Profile } from './components/Profile/Profile';
+import { Dialogs } from './components/Dialogs/Dialogs';
+import { News } from './components/News/News';
+import { Music } from './components/Music/Music';
+import { Settings } from './components/Settings/Settings';
 import { AppStateType, StoreType, store } from './redux/redux-store';
 
 type AppPropsType = {
