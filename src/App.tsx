@@ -8,25 +8,19 @@ import { Profile } from './components/Profile/Profile';
 import { News } from './components/News/News';
 import { Music } from './components/Music/Music';
 import { Settings } from './components/Settings/Settings';
-import { store, StoreType } from './redux/redux-store';
+import { store } from './redux/reduxStore';
 import { DialogsContainer } from './components/Dialogs/DialogsContainer';
+import { Provider } from './StoreContext';
 
-type AppPropsType = {
-  store: StoreType;
-};
-
-const App: FC<AppPropsType> = ({ store }) => {
+const App: FC = () => {
   return (
     <div className="appWrapper">
       <Header />
       <Navbar />
 
       <main className="appWrapperContent">
-        <Route path="/profile" render={() => <Profile store={store} />} />
-        <Route
-          path="/dialogs"
-          render={() => <DialogsContainer store={store} />}
-        />
+        <Route path="/profile" render={() => <Profile />} />
+        <Route path="/dialogs" render={() => <DialogsContainer />} />
         <Route path="/news" render={() => <News />} />
         <Route path="/music" render={() => <Music />} />
         <Route path="/settings" render={() => <Settings />} />
@@ -37,9 +31,11 @@ const App: FC<AppPropsType> = ({ store }) => {
 
 const SamuraiJSApp: FC = () => {
   return (
-    <Router>
-      <App store={store} />
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <App />
+      </Router>
+    </Provider>
   );
 };
 
