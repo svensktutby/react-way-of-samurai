@@ -1,5 +1,8 @@
-import { dialogsReducer, sendMessageAC } from './dialogsReducer';
-import { DialogsPageType } from './types';
+import {
+  DialogsPageType,
+  dialogsReducer,
+  sendMessageAC,
+} from './dialogsReducer';
 
 describe('Dialogs page', () => {
   const state: DialogsPageType = {

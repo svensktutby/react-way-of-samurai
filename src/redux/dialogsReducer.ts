@@ -1,12 +1,7 @@
 import { randomId } from '../utils/randomId';
-import {
-  DialogsPageType,
-  MessageType,
-  SEND_MESSAGE,
-  UPDATE_NEW_MESSAGE_TEXT,
-} from './types';
+import { DialogItemType, MessageType } from '../types/types';
 
-const initialState: DialogsPageType = {
+const initialState = {
   dialogs: [
     {
       id: randomId(),
@@ -24,7 +19,7 @@ const initialState: DialogsPageType = {
       id: randomId(),
       name: 'Someone',
     },
-  ],
+  ] as Array<DialogItemType>,
   messages: [
     {
       id: randomId(),
@@ -38,9 +33,11 @@ const initialState: DialogsPageType = {
       id: randomId(),
       message: 'Yo',
     },
-  ],
+  ] as Array<MessageType>,
   newMessageText: '',
 };
+
+export type DialogsPageType = typeof initialState;
 
 export const dialogsReducer = (
   state = initialState,
@@ -66,9 +63,11 @@ export const dialogsReducer = (
   }
 };
 
+const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE_NEW_MESSAGE_TEXT';
 export const changeMessageAC = (payload: string) =>
   ({ type: UPDATE_NEW_MESSAGE_TEXT, payload } as const);
 
+const SEND_MESSAGE = 'SEND_MESSAGE';
 export const sendMessageAC = () => ({ type: SEND_MESSAGE } as const);
 
 type DialogsPageActionTypes =

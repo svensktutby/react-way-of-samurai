@@ -1,6 +1,6 @@
-import { SidebarType } from './types';
+const initialState = {};
 
-const initialState: SidebarType = {};
+export type SidebarType = typeof initialState;
 
 export const sidebarReducer = (
   state = initialState,

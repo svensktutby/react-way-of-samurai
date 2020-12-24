@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import s from './Post.module.css';
-import { PostType } from '../../../../redux/types';
+import { PostType } from '../../../../types/types';
 
 export const Post: FC<PostType> = ({ message, likesCount }) => {
   return (

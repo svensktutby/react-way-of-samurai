@@ -1,5 +1,8 @@
-import { profileReducer, addPostAC } from './profileReducer';
-import { ProfilePageStateType } from './types';
+import {
+  profileReducer,
+  addPostAC,
+  ProfilePageStateType,
+} from './profileReducer';
 
 describe('Profile page', () => {
   const state: ProfilePageStateType = {
