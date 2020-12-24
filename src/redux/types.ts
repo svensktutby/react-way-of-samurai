@@ -19,3 +19,16 @@ export type MessageType = {
   id: string;
   message: string;
 };
+
+export type ProfilePageStateType = {
+  posts: Array<PostType>;
+  newPostText: string;
+};
+
+export type DialogsPageType = {
+  dialogs: Array<DialogItemType>;
+  messages: Array<MessageType>;
+  newMessageText: string;
+};
+
+export type SidebarType = {};

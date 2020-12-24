@@ -1,6 +1,4 @@
-export type SidebarType = {};
-
-export type SidebarActionTypes = { type: 'TYPE' };
+import { SidebarType } from './types';
 
 const initialState: SidebarType = {};
 
@@ -13,3 +11,5 @@ export const sidebarReducer = (
       return state;
   }
 };
+
+type SidebarActionTypes = { type: 'TYPE' };

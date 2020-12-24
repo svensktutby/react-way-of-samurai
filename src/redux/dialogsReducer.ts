@@ -1,20 +1,10 @@
 import { randomId } from '../utils/randomId';
 import {
-  DialogItemType,
+  DialogsPageType,
   MessageType,
   SEND_MESSAGE,
   UPDATE_NEW_MESSAGE_TEXT,
 } from './types';
-
-export type DialogsPageType = {
-  dialogs: Array<DialogItemType>;
-  messages: Array<MessageType>;
-  newMessageText: string;
-};
-
-export type DialogsPageActionTypes =
-  | ReturnType<typeof changeMessageAC>
-  | ReturnType<typeof sendMessageAC>;
 
 const initialState: DialogsPageType = {
   dialogs: [
@@ -80,3 +70,7 @@ export const changeMessageAC = (payload: string) =>
   ({ type: UPDATE_NEW_MESSAGE_TEXT, payload } as const);
 
 export const sendMessageAC = () => ({ type: SEND_MESSAGE } as const);
+
+type DialogsPageActionTypes =
+  | ReturnType<typeof changeMessageAC>
+  | ReturnType<typeof sendMessageAC>;

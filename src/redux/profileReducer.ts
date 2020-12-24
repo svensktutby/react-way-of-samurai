@@ -1,14 +1,10 @@
 import { randomId } from '../utils/randomId';
-import { ADD_POST, PostType, UPDATE_NEW_POST_TEXT } from './types';
-
-export type ProfilePageStateType = {
-  posts: Array<PostType>;
-  newPostText: string;
-};
-
-export type ProfilePageActionTypes =
-  | ReturnType<typeof changePostAC>
-  | ReturnType<typeof addPostAC>;
+import {
+  ADD_POST,
+  PostType,
+  ProfilePageStateType,
+  UPDATE_NEW_POST_TEXT,
+} from './types';
 
 const initialState: ProfilePageStateType = {
   posts: [
@@ -55,3 +51,7 @@ export const changePostAC = (payload: string) =>
   ({ type: UPDATE_NEW_POST_TEXT, payload } as const);
 
 export const addPostAC = () => ({ type: ADD_POST } as const);
+
+type ProfilePageActionTypes =
+  | ReturnType<typeof changePostAC>
+  | ReturnType<typeof addPostAC>;
