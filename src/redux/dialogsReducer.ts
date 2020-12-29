@@ -45,8 +45,7 @@ export const dialogsReducer = (
 ): DialogsPageType => {
   switch (action.type) {
     case UPDATE_NEW_MESSAGE_TEXT:
-      state.newMessageText = action.payload;
-      return state;
+      return { ...state, newMessageText: action.payload };
 
     case SEND_MESSAGE:
       const message: MessageType = {
@@ -54,9 +53,11 @@ export const dialogsReducer = (
         message: state.newMessageText,
       };
 
-      state.messages.push(message);
-      state.newMessageText = '';
-      return state;
+      return {
+        ...state,
+        messages: [...state.messages, message],
+        newMessageText: '',
+      };
 
     default:
       return state;
