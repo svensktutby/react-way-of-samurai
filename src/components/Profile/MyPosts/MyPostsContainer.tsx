@@ -1,33 +1,29 @@
 import React, { FC } from 'react';
 import { addPostAC, changePostAC } from '../../../redux/profileReducer';
 import { MyPosts } from './MyPosts';
-import { StoreContext } from '../../../StoreContext';
+import { connect } from 'react-redux';
+import { AppStateType } from '../../../redux/reduxStore';
 
-export const MyPostsContainer: FC = () => {
-  return (
-    <StoreContext.Consumer>
-      {({ getState, dispatch }) => {
-        const {
-          profilePage: { newPostText, posts },
-        } = getState();
-
-        const addPostCallback = () => {
-          dispatch(addPostAC());
-        };
-
-        const changePostCallback = (payload: string) => {
-          dispatch(changePostAC(payload));
-        };
-
-        return (
-          <MyPosts
-            posts={posts}
-            newPostText={newPostText}
-            addPost={addPostCallback}
-            changePost={changePostCallback}
-          />
-        );
-      }}
-    </StoreContext.Consumer>
-  );
+const mapStateToProps = ({
+  profilePage: { newPostText, posts },
+}: AppStateType) => {
+  return {
+    newPostText,
+    posts,
+  };
 };
+
+// FIXME give dispatch Type
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    addPost: () => dispatch(addPostAC()),
+    changePost: (payload: string) => {
+      dispatch(changePostAC(payload));
+    },
+  };
+};
+
+export const MyPostsContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(MyPosts);

@@ -1,30 +1,28 @@
 import React, { FC } from 'react';
+import { connect } from 'react-redux';
 import { changeMessageAC, sendMessageAC } from '../../redux/dialogsReducer';
 import { Dialogs } from './Dialogs';
-import { StoreContext } from '../../StoreContext';
+import { AppStateType } from '../../redux/reduxStore';
 
-export const DialogsContainer: FC = () => {
-  return (
-    <StoreContext.Consumer>
-      {({ getState, dispatch }) => {
-        const { dialogsPage } = getState();
-
-        const sendMessageCallback = () => {
-          dispatch(sendMessageAC());
-        };
-
-        const changeMessageCallback = (payload: string) => {
-          dispatch(changeMessageAC(payload));
-        };
-
-        return (
-          <Dialogs
-            dialogsPage={dialogsPage}
-            sendMessage={sendMessageCallback}
-            changeMessage={changeMessageCallback}
-          />
-        );
-      }}
-    </StoreContext.Consumer>
-  );
+const mapStateToProps = ({ dialogsPage }: AppStateType) => {
+  return {
+    dialogsPage,
+  };
 };
+
+// FIXME give dispatch Type
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    sendMessage: () => {
+      dispatch(sendMessageAC());
+    },
+    changeMessage: (payload: string) => {
+      dispatch(changeMessageAC(payload));
+    },
+  };
+};
+
+export const DialogsContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Dialogs);
