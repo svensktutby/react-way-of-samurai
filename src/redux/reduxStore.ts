@@ -6,8 +6,6 @@ import { profileReducer as profilePage } from './profileReducer';
 type RootReducerType = typeof rootReducer;
 export type AppStateType = ReturnType<RootReducerType>;
 
-export type StoreType = typeof store;
-
 const rootReducer = combineReducers({
   profilePage,
   dialogsPage,
@@ -15,3 +13,7 @@ const rootReducer = combineReducers({
 });
 
 export const store = createStore(rootReducer);
+
+// FIXME remove global __store__
+// @ts-ignore
+window.__store__ = store;

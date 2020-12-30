@@ -15,10 +15,6 @@
   list-style-type: none;
 }
 
-.item:last-child {
-  padding-top: 20px;
-}
-
 .link {
   display: block;
   padding: 10px 20px;

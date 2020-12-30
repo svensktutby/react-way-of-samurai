@@ -17,21 +17,6 @@ export const Navbar: FC = () => {
             Messages
           </NavLink>
         </li>
-        <li className={s.item}>
-          <NavLink className={s.link} to="/news" activeClassName={s.active}>
-            News
-          </NavLink>
-        </li>
-        <li className={s.item}>
-          <NavLink className={s.link} to="/music" activeClassName={s.active}>
-            Music
-          </NavLink>
-        </li>
-        <li className={s.item}>
-          <NavLink className={s.link} to="/settings" activeClassName={s.active}>
-            Settings
-          </NavLink>
-        </li>
       </ul>
     </nav>
   );

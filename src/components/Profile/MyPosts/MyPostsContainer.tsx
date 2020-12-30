@@ -5,25 +5,12 @@ import {
   changePostAC,
   ProfilePageActionTypes,
 } from '../../../redux/profileReducer';
-import { MyPosts } from './MyPosts';
+import { DispatchPropsType, MyPosts, StatePropsType } from './MyPosts';
 import { AppStateType } from '../../../redux/reduxStore';
-import { PostType } from '../../../types/types';
-
-type MapStatePropsType = {
-  posts: Array<PostType>;
-  newPostText: string;
-};
-
-type MapDispatchPropsType = {
-  addPost: () => void;
-  changePost: (payload: string) => void;
-};
-
-export type MyPostsPropsType = MapStatePropsType & MapDispatchPropsType;
 
 const mapStateToProps = ({
   profilePage: { newPostText, posts },
-}: AppStateType): MapStatePropsType => {
+}: AppStateType): StatePropsType => {
   return {
     newPostText,
     posts,
@@ -32,16 +19,23 @@ const mapStateToProps = ({
 
 const mapDispatchToProps = (
   dispatch: Dispatch<ProfilePageActionTypes>,
-): MapDispatchPropsType => {
+): DispatchPropsType => {
   return {
-    addPost: () => dispatch(addPostAC()),
+    addPost: () => {
+      dispatch(addPostAC());
+    },
     changePost: (payload: string) => {
       dispatch(changePostAC(payload));
     },
   };
 };
 
-export const MyPostsContainer = connect(
+export const MyPostsContainer = connect<
+  StatePropsType,
+  DispatchPropsType,
+  {},
+  AppStateType
+>(
   mapStateToProps,
   mapDispatchToProps,
 )(MyPosts);

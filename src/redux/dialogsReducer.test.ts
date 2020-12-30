@@ -49,8 +49,7 @@ describe('Dialogs page', () => {
     const newState = dialogsReducer(state, action);
 
     // 3. expectation
-    expect(newState.messages.length).toBe(4);
-    expect(newState.messages.length).not.toBe(3);
+    expect(newState.messages).toHaveLength(4);
   });
 
   it('new post message should be correct', function () {
@@ -61,6 +60,6 @@ describe('Dialogs page', () => {
     const newState = dialogsReducer(state, action);
 
     // 3. expectation
-    expect(newState.messages[3].message).toBe('I wish you happy holidays');
+    expect(newState.messages[3].message).toEqual('I wish you happy holidays');
   });
 });

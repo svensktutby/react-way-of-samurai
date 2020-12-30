@@ -17,7 +17,7 @@ const initialState = {
   newPostText: 'it-kamasutra.com',
 };
 
-export type ProfilePageStateType = typeof initialState;
+type ProfilePageStateType = typeof initialState;
 
 export const profileReducer = (
   state = initialState,
@@ -34,7 +34,7 @@ export const profileReducer = (
         likesCount: 0,
       };
 
-      return { ...state, posts: [post, ...state.posts], newPostText: '' };
+      return { ...state, posts: [...state.posts, post], newPostText: '' };
 
     default:
       return state;

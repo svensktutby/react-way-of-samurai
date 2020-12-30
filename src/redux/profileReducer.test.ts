@@ -29,8 +29,7 @@ describe('Profile page', () => {
     const newState = profileReducer(state, action);
 
     // 3. expectation
-    expect(newState.posts.length).toBe(3);
-    expect(newState.posts.length).not.toBe(2);
+    expect(newState.posts).toHaveLength(3);
   });
 
   it('new post message should be correct', function () {
@@ -41,6 +40,6 @@ describe('Profile page', () => {
     const newState = profileReducer(state, action);
 
     // 3. expectation
-    expect(newState.posts[2].message).toBe('it-kamasutra.com');
+    expect(newState.posts[2].message).toEqual('it-kamasutra.com');
   });
 });

@@ -3,30 +3,20 @@ import { Dispatch } from 'redux';
 import {
   changeMessageAC,
   DialogsPageActionTypes,
-  DialogsPageType,
   sendMessageAC,
 } from '../../redux/dialogsReducer';
-import { Dialogs } from './Dialogs';
+import { Dialogs, DispatchPropsType, StatePropsType } from './Dialogs';
 import { AppStateType } from '../../redux/reduxStore';
 
-type MapStatePropsType = {
-  dialogsPage: DialogsPageType;
-};
-
-type MapDispatchPropsType = {
-  changeMessage: (payload: string) => void;
-  sendMessage: () => void;
-};
-
-export type DialogsPropsType = MapStatePropsType & MapDispatchPropsType;
-
-const mapStateToProps = ({ dialogsPage }: AppStateType) => {
+const mapStateToProps = ({ dialogsPage }: AppStateType): StatePropsType => {
   return {
     dialogsPage,
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<DialogsPageActionTypes>) => {
+const mapDispatchToProps = (
+  dispatch: Dispatch<DialogsPageActionTypes>,
+): DispatchPropsType => {
   return {
     sendMessage: () => {
       dispatch(sendMessageAC());
@@ -37,7 +27,12 @@ const mapDispatchToProps = (dispatch: Dispatch<DialogsPageActionTypes>) => {
   };
 };
 
-export const DialogsContainer = connect(
+export const DialogsContainer = connect<
+  StatePropsType,
+  DispatchPropsType,
+  {},
+  AppStateType
+>(
   mapStateToProps,
   mapDispatchToProps,
 )(Dialogs);

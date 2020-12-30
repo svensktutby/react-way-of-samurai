@@ -1,9 +1,19 @@
 import React, { ChangeEvent, FC } from 'react';
 import s from './MyPosts.module.css';
 import { Post } from './Post/Post';
-import { MyPostsPropsType } from './MyPostsContainer';
+import { PostType } from '../../../types/types';
 
-export const MyPosts: FC<MyPostsPropsType> = ({
+export type StatePropsType = {
+  posts: Array<PostType>;
+  newPostText: string;
+};
+
+export type DispatchPropsType = {
+  addPost: () => void;
+  changePost: (payload: string) => void;
+};
+
+export const MyPosts: FC<StatePropsType & DispatchPropsType> = ({
   posts,
   newPostText,
   addPost,
