@@ -1,14 +1,7 @@
 import React, { ChangeEvent, FC } from 'react';
 import s from './MyPosts.module.css';
 import { Post } from './Post/Post';
-import { PostType } from '../../../types/types';
-
-type MyPostsPropsType = {
-  posts: Array<PostType>;
-  newPostText: string;
-  addPost: () => void;
-  changePost: (payload: string) => void;
-};
+import { MyPostsPropsType } from './MyPostsContainer';
 
 export const MyPosts: FC<MyPostsPropsType> = ({
   posts,

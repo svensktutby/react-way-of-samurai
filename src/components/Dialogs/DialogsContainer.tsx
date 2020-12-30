@@ -1,7 +1,24 @@
 import { connect } from 'react-redux';
-import { changeMessageAC, sendMessageAC } from '../../redux/dialogsReducer';
+import { Dispatch } from 'redux';
+import {
+  changeMessageAC,
+  DialogsPageActionTypes,
+  DialogsPageType,
+  sendMessageAC,
+} from '../../redux/dialogsReducer';
 import { Dialogs } from './Dialogs';
 import { AppStateType } from '../../redux/reduxStore';
+
+type MapStatePropsType = {
+  dialogsPage: DialogsPageType;
+};
+
+type MapDispatchPropsType = {
+  changeMessage: (payload: string) => void;
+  sendMessage: () => void;
+};
+
+export type DialogsPropsType = MapStatePropsType & MapDispatchPropsType;
 
 const mapStateToProps = ({ dialogsPage }: AppStateType) => {
   return {
@@ -9,8 +26,7 @@ const mapStateToProps = ({ dialogsPage }: AppStateType) => {
   };
 };
 
-// FIXME give dispatch Type
-const mapDispatchToProps = (dispatch: any) => {
+const mapDispatchToProps = (dispatch: Dispatch<DialogsPageActionTypes>) => {
   return {
     sendMessage: () => {
       dispatch(sendMessageAC());

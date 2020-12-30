@@ -71,6 +71,6 @@ export const changeMessageAC = (payload: string) =>
 const SEND_MESSAGE = 'SEND_MESSAGE';
 export const sendMessageAC = () => ({ type: SEND_MESSAGE } as const);
 
-type DialogsPageActionTypes =
+export type DialogsPageActionTypes =
   | ReturnType<typeof changeMessageAC>
   | ReturnType<typeof sendMessageAC>;

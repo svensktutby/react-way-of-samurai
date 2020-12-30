@@ -48,6 +48,6 @@ export const changePostAC = (payload: string) =>
 const ADD_POST = 'ADD_POST';
 export const addPostAC = () => ({ type: ADD_POST } as const);
 
-type ProfilePageActionTypes =
+export type ProfilePageActionTypes =
   | ReturnType<typeof changePostAC>
   | ReturnType<typeof addPostAC>;
