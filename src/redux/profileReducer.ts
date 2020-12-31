@@ -17,7 +17,7 @@ const initialState = {
   newPostText: 'it-kamasutra.com',
 };
 
-type ProfilePageStateType = typeof initialState;
+export type ProfilePageStateType = typeof initialState;
 
 export const profileReducer = (
   state = initialState,
