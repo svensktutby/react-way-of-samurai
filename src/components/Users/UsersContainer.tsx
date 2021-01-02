@@ -1,15 +1,8 @@
 import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
 
-import { Users, DispatchPropsType, StatePropsType } from './Users';
+import { DispatchPropsType, StatePropsType, Users } from './Users';
 import { AppStateType } from '../../redux/reduxStore';
-import {
-  followAC,
-  setUsersAC,
-  unfollowAC,
-  UsersPageActionTypes,
-} from '../../redux/usersReducer';
-import { UserType } from '../../types/types';
+import { followAC, setUsersAC, unfollowAC } from '../../redux/usersReducer';
 
 const mapStateToProps = ({
   usersPage: { users },
@@ -19,20 +12,10 @@ const mapStateToProps = ({
   };
 };
 
-const mapDispatchToProps = (
-  dispatch: Dispatch<UsersPageActionTypes>,
-): DispatchPropsType => {
-  return {
-    follow: (payload: number) => {
-      dispatch(followAC(payload));
-    },
-    unfollow: (payload: number) => {
-      dispatch(unfollowAC(payload));
-    },
-    setUsers: (payload: Array<UserType>) => {
-      dispatch(setUsersAC(payload));
-    },
-  };
+const mapDispatchToProps: DispatchPropsType = {
+  follow: followAC,
+  unfollow: unfollowAC,
+  setUsers: setUsersAC,
 };
 
 export const UsersContainer = connect<

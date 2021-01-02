@@ -1,10 +1,5 @@
 import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
-import {
-  addPostAC,
-  changePostAC,
-  ProfilePageActionTypes,
-} from '../../../redux/profileReducer';
+import { addPostAC, changePostAC } from '../../../redux/profileReducer';
 import { DispatchPropsType, MyPosts, StatePropsType } from './MyPosts';
 import { AppStateType } from '../../../redux/reduxStore';
 
@@ -17,17 +12,9 @@ const mapStateToProps = ({
   };
 };
 
-const mapDispatchToProps = (
-  dispatch: Dispatch<ProfilePageActionTypes>,
-): DispatchPropsType => {
-  return {
-    addPost: () => {
-      dispatch(addPostAC());
-    },
-    changePost: (payload: string) => {
-      dispatch(changePostAC(payload));
-    },
-  };
+const mapDispatchToProps: DispatchPropsType = {
+  addPost: addPostAC,
+  changePost: changePostAC,
 };
 
 export const MyPostsContainer = connect<

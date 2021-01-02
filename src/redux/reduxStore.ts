@@ -1,4 +1,4 @@
-import { combineReducers, createStore } from 'redux';
+import { combineReducers, compose, createStore } from 'redux';
 import { sidebarReducer as sidebar } from './sidebarReducer';
 import { dialogsReducer as dialogsPage } from './dialogsReducer';
 import { profileReducer as profilePage } from './profileReducer';
@@ -14,7 +14,10 @@ const rootReducer = combineReducers({
   usersPage,
 });
 
-export const store = createStore(rootReducer);
+// @ts-ignore
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+export const store = createStore(rootReducer, composeEnhancers());
 
 // FIXME remove global __store__
 // @ts-ignore
