@@ -42,11 +42,11 @@ export const usersReducer = (
 };
 
 const FOLLOW = 'FOLLOW';
-export const followAC = (payload: string) =>
+export const followAC = (payload: number) =>
   ({ type: FOLLOW, payload } as const);
 
 const UNFOLLOW = 'UNFOLLOW';
-export const unfollowAC = (payload: string) =>
+export const unfollowAC = (payload: number) =>
   ({ type: UNFOLLOW, payload } as const);
 
 const SET_USERS = 'SET_USERS';

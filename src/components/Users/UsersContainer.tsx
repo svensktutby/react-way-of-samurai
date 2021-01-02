@@ -23,10 +23,10 @@ const mapDispatchToProps = (
   dispatch: Dispatch<UsersPageActionTypes>,
 ): DispatchPropsType => {
   return {
-    follow: (payload: string) => {
+    follow: (payload: number) => {
       dispatch(followAC(payload));
     },
-    unfollow: (payload: string) => {
+    unfollow: (payload: number) => {
       dispatch(unfollowAC(payload));
     },
     setUsers: (payload: Array<UserType>) => {

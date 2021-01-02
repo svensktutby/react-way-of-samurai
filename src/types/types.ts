@@ -14,14 +14,15 @@ export type MessageType = {
   message: string;
 };
 
+export type PhotosType = {
+  small: string | null;
+  large: string | null;
+};
+
 export type UserType = {
-  id: string;
-  followed: boolean;
-  fullName: string;
-  photoUrl: string;
+  id: number;
+  name: string;
+  photos: PhotosType;
   status: string;
-  location: {
-    country: string;
-    city: string;
-  };
+  followed: boolean;
 };
