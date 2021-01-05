@@ -1,10 +1,16 @@
+.usersBlock {
+  padding: 10px;
+}
+
 .list {
   padding-left: 0;
+
   list-style-type: none;
 }
 
 .item {
   display: flex;
+  margin-bottom: 10px;
 }
 
 .avatarWrapper {
