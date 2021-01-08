@@ -3,15 +3,21 @@ import axios, { AxiosResponse } from 'axios';
 import s from './Users.module.css';
 import { UserType } from '../../types/types';
 import userAvatar from '../../assets/images/userAvatar.svg';
+import { randomId } from '../../utils/randomId';
 
 export type StatePropsType = {
   users: Array<UserType>;
+  pageSize: number;
+  totalUsersCount: number;
+  currentPage: number;
 };
 
 export type DispatchPropsType = {
   follow: (payload: number) => void;
   unfollow: (payload: number) => void;
   setUsers: (payload: Array<UserType>) => void;
+  setCurrentPage: (payload: number) => void;
+  setUsersTotalCount: (payload: number) => void;
 };
 
 type GetUsersResponseType = {
@@ -30,14 +36,35 @@ export class Users extends Component<PropsType, StateType> {
 
     axios({
       method: 'GET',
-      url: `${baseUrl}/users?count=4`,
+      url: `${baseUrl}/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,
     }).then((res: AxiosResponse<GetUsersResponseType>) => {
       this.props.setUsers(res.data.items);
+      this.props.setUsersTotalCount(res.data.totalCount);
     });
   }
 
+  changePageHandler = (pageNumber: number) => {
+    this.props.setCurrentPage(pageNumber);
+
+    const baseUrl = 'https://social-network.samuraijs.com/api/1.0';
+
+    axios({
+      method: 'GET',
+      url: `${baseUrl}/users?page=${pageNumber}&count=${this.props.pageSize}`,
+    }).then((res: AxiosResponse<GetUsersResponseType>) => {
+      this.props.setUsers(res.data.items);
+    });
+  };
+
   render() {
-    const { users, follow, unfollow } = this.props;
+    const {
+      users,
+      pageSize,
+      totalUsersCount,
+      currentPage,
+      follow,
+      unfollow,
+    } = this.props;
 
     const userElements = users.map((u) => (
       <li className={s.item} key={u.id}>
@@ -84,8 +111,27 @@ export class Users extends Component<PropsType, StateType> {
       </li>
     ));
 
+    const pagesCount = Math.ceil(totalUsersCount / pageSize);
+
+    const pages = Array(10 /*pagesCount*/).fill(null);
+
     return (
       <div className={s.usersBlock}>
+        <div>
+          {pages.map((p, idx) => (
+            <button
+              type="button"
+              key={randomId()}
+              className={`${s.pageBtn} ${
+                idx + 1 === currentPage && s.selectedPage
+              }`}
+              onClick={(e) => this.changePageHandler(idx + 1)}
+            >
+              {idx + 1}
+            </button>
+          ))}
+        </div>
+
         <ul className={s.list}>{userElements}</ul>
         <button className={s.moreBtn} type="button" onClick={() => {}}>
           Show more

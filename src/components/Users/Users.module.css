@@ -2,6 +2,10 @@
   padding: 10px;
 }
 
+.selectedPage {
+  font-weight: bold;
+}
+
 .list {
   padding-left: 0;
 
@@ -32,4 +36,18 @@
 
 .location {
   text-align: right;
+}
+
+.pageBtn {
+  display: inline-block;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.pageBtn:first-child {
+  margin-left: 0;
+}
+
+.pageBtn:last-child {
+  margin-right: 0;
 }

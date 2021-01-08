@@ -2,6 +2,9 @@ import { UserType } from '../types/types';
 
 const initialState = {
   users: [] as Array<UserType>,
+  pageSize: 5,
+  totalUsersCount: 0,
+  currentPage: 1,
 };
 
 export type UsersPageType = typeof initialState;
@@ -32,7 +35,21 @@ export const usersReducer = (
     case SET_USERS: {
       return {
         ...state,
-        users: [...state.users, ...action.payload],
+        users: action.payload,
+      };
+    }
+
+    case SET_CURRENT_PAGE: {
+      return {
+        ...state,
+        currentPage: action.payload,
+      };
+    }
+
+    case SET_USERS_TOTAL_COUNT: {
+      return {
+        ...state,
+        totalUsersCount: action.payload,
       };
     }
 
@@ -53,7 +70,17 @@ const SET_USERS = 'SET_USERS';
 export const setUsersAC = (payload: Array<UserType>) =>
   ({ type: SET_USERS, payload } as const);
 
+const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
+export const setCurrentPageAC = (payload: number) =>
+  ({ type: SET_CURRENT_PAGE, payload } as const);
+
+const SET_USERS_TOTAL_COUNT = 'SET_USERS_TOTAL_COUNT';
+export const setUsersTotalCountAC = (payload: number) =>
+  ({ type: SET_USERS_TOTAL_COUNT, payload } as const);
+
 export type UsersPageActionTypes =
   | ReturnType<typeof followAC>
   | ReturnType<typeof unfollowAC>
-  | ReturnType<typeof setUsersAC>;
+  | ReturnType<typeof setUsersAC>
+  | ReturnType<typeof setCurrentPageAC>
+  | ReturnType<typeof setUsersTotalCountAC>;
