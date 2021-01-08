@@ -5,23 +5,27 @@ import {
 } from './profileReducer';
 
 describe('Profile page', () => {
-  const state: ProfilePageStateType = {
-    posts: [
-      {
-        id: '1',
-        message: 'Hi, dude!',
-        likesCount: 18,
-      },
-      {
-        id: '2',
-        message: "It's not my first post",
-        likesCount: 3,
-      },
-    ],
-    newPostText: 'it-kamasutra.com',
-  };
+  let state: ProfilePageStateType;
 
-  it("posts' length should be incremented", function () {
+  beforeEach(() => {
+    state = {
+      posts: [
+        {
+          id: '1',
+          message: 'Hi, dude!',
+          likesCount: 18,
+        },
+        {
+          id: '2',
+          message: "It's not my first post",
+          likesCount: 3,
+        },
+      ],
+      newPostText: 'it-kamasutra.com',
+    };
+  });
+
+  test("posts' length should be incremented", function () {
     // 1. data
     const action = addPostAC();
 
@@ -32,7 +36,7 @@ describe('Profile page', () => {
     expect(newState.posts).toHaveLength(3);
   });
 
-  it('new post message should be correct', function () {
+  test('new post message should be correct', function () {
     // 1. data
     const action = addPostAC();
 

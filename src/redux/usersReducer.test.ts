@@ -1,27 +1,36 @@
 import {
   followAC,
+  setCurrentPageAC,
   setUsersAC,
+  setUsersTotalCountAC,
   UsersPageType,
   usersReducer,
 } from './usersReducer';
 
 describe('Users page', () => {
-  const state: UsersPageType = {
-    users: [
-      {
-        id: 1,
-        name: 'John',
-        photos: {
-          small: '',
-          large: '',
-        },
-        status: '',
-        followed: true,
-      },
-    ],
-  };
+  let state: UsersPageType;
 
-  it('followed status of specified user should be changed', function () {
+  beforeEach(() => {
+    state = {
+      users: [
+        {
+          id: 1,
+          name: 'John',
+          photos: {
+            small: '',
+            large: '',
+          },
+          status: '',
+          followed: true,
+        },
+      ],
+      pageSize: 5,
+      totalUsersCount: 0,
+      currentPage: 1,
+    };
+  });
+
+  test('followed status of specified user should be changed', function () {
     // 1. data
     const action = followAC(1);
 
@@ -32,7 +41,7 @@ describe('Users page', () => {
     expect(newState.users[0].followed).toBeFalsy();
   });
 
-  it('users should be added', function () {
+  test('users should be changed', function () {
     // 1. data
     const newUsers = [
       {
@@ -53,7 +62,29 @@ describe('Users page', () => {
     const newState = usersReducer(state, action);
 
     // 3. expectation
-    expect(newState.users).toHaveLength(2);
-    expect(newState.users[1].name).toBe('Andrei');
+    expect(newState.users).toHaveLength(1);
+    expect(newState.users[0].name).toBe('Andrei');
+  });
+
+  test('currentPage should be changed', function () {
+    // 1. data
+    const action = setCurrentPageAC(3);
+
+    // 2. action
+    const newState = usersReducer(state, action);
+
+    // 3. expectation
+    expect(newState.currentPage).toBe(3);
+  });
+
+  test('totalUsersCount should be changed', function () {
+    // 1. data
+    const action = setUsersTotalCountAC(10);
+
+    // 2. action
+    const newState = usersReducer(state, action);
+
+    // 3. expectation
+    expect(newState.totalUsersCount).toBe(10);
   });
 });
