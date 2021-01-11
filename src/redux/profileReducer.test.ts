@@ -1,8 +1,5 @@
-import {
-  profileReducer,
-  addPostAC,
-  ProfilePageStateType,
-} from './profileReducer';
+import { profileReducer, ProfilePageStateType } from './profileReducer';
+import { addPost, changePost } from './actions';
 
 describe('Profile page', () => {
   let state: ProfilePageStateType;
@@ -27,7 +24,7 @@ describe('Profile page', () => {
 
   test("posts' length should be incremented", function () {
     // 1. data
-    const action = addPostAC();
+    const action = addPost();
 
     // 2. action
     const newState = profileReducer(state, action);
@@ -38,12 +35,23 @@ describe('Profile page', () => {
 
   test('new post message should be correct', function () {
     // 1. data
-    const action = addPostAC();
+    const action = addPost();
 
     // 2. action
     const newState = profileReducer(state, action);
 
     // 3. expectation
     expect(newState.posts[2].message).toEqual('it-kamasutra.com');
+  });
+
+  test("changed post' text should be correct", function () {
+    // 1. data
+    const action = changePost('new text');
+
+    // 2. action
+    const newState = profileReducer(state, action);
+
+    // 3. expectation
+    expect(newState.newPostText).toEqual('new text');
   });
 });

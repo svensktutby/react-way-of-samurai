@@ -4,8 +4,7 @@ import { dialogsReducer as dialogsPage } from './dialogsReducer';
 import { profileReducer as profilePage } from './profileReducer';
 import { usersReducer as usersPage } from './usersReducer';
 
-type RootReducerType = typeof rootReducer;
-export type AppStateType = ReturnType<RootReducerType>;
+export type AppStateType = ReturnType<typeof rootReducer>;
 
 const rootReducer = combineReducers({
   profilePage,

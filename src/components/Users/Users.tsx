@@ -113,7 +113,7 @@ export class Users extends Component<PropsType, StateType> {
 
     const pagesCount = Math.ceil(totalUsersCount / pageSize);
 
-    const pages = Array(10 /*pagesCount*/).fill(null);
+    const pages = Array(Math.min(10, pagesCount)).fill(null);
 
     return (
       <div className={s.usersBlock}>
@@ -125,7 +125,7 @@ export class Users extends Component<PropsType, StateType> {
               className={`${s.pageBtn} ${
                 idx + 1 === currentPage && s.selectedPage
               }`}
-              onClick={(e) => this.changePageHandler(idx + 1)}
+              onClick={() => this.changePageHandler(idx + 1)}
             >
               {idx + 1}
             </button>

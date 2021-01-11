@@ -1,5 +1,6 @@
 import { randomId } from '../utils/randomId';
 import { DialogItemType, MessageType } from '../types/types';
+import { ACTIONS_TYPE, DialogsPageActionTypes } from './actions';
 
 const initialState = {
   dialogs: [
@@ -44,10 +45,10 @@ export const dialogsReducer = (
   action: DialogsPageActionTypes,
 ): DialogsPageType => {
   switch (action.type) {
-    case UPDATE_NEW_MESSAGE_TEXT:
+    case ACTIONS_TYPE.UPDATE_NEW_MESSAGE_TEXT:
       return { ...state, newMessageText: action.payload };
 
-    case SEND_MESSAGE:
+    case ACTIONS_TYPE.SEND_MESSAGE:
       const message: MessageType = {
         id: randomId(),
         message: state.newMessageText,
@@ -63,14 +64,3 @@ export const dialogsReducer = (
       return state;
   }
 };
-
-const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE_NEW_MESSAGE_TEXT';
-export const changeMessageAC = (payload: string) =>
-  ({ type: UPDATE_NEW_MESSAGE_TEXT, payload } as const);
-
-const SEND_MESSAGE = 'SEND_MESSAGE';
-export const sendMessageAC = () => ({ type: SEND_MESSAGE } as const);
-
-export type DialogsPageActionTypes =
-  | ReturnType<typeof changeMessageAC>
-  | ReturnType<typeof sendMessageAC>;

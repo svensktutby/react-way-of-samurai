@@ -1,11 +1,11 @@
+import { UsersPageType, usersReducer } from './usersReducer';
 import {
-  followAC,
-  setCurrentPageAC,
-  setUsersAC,
-  setUsersTotalCountAC,
-  UsersPageType,
-  usersReducer,
-} from './usersReducer';
+  follow,
+  setCurrentPage,
+  setUsers,
+  setUsersTotalCount,
+  unfollow,
+} from './actions';
 
 describe('Users page', () => {
   let state: UsersPageType;
@@ -23,6 +23,16 @@ describe('Users page', () => {
           status: '',
           followed: true,
         },
+        {
+          id: 2,
+          name: 'Andrei',
+          photos: {
+            small: '',
+            large: '',
+          },
+          status: '',
+          followed: false,
+        },
       ],
       pageSize: 5,
       totalUsersCount: 0,
@@ -30,9 +40,9 @@ describe('Users page', () => {
     };
   });
 
-  test('followed status of specified user should be changed', function () {
+  test("status 'follow' of specified user should be changed", function () {
     // 1. data
-    const action = followAC(1);
+    const action = follow(1);
 
     // 2. action
     const newState = usersReducer(state, action);
@@ -41,12 +51,23 @@ describe('Users page', () => {
     expect(newState.users[0].followed).toBeFalsy();
   });
 
+  test("status 'unfollow' of specified user should be changed", function () {
+    // 1. data
+    const action = unfollow(2);
+
+    // 2. action
+    const newState = usersReducer(state, action);
+
+    // 3. expectation
+    expect(newState.users[1].followed).toBeTruthy();
+  });
+
   test('users should be changed', function () {
     // 1. data
     const newUsers = [
       {
-        id: 2,
-        name: 'Andrei',
+        id: 3,
+        name: 'Kastus',
         photos: {
           small: '',
           large: '',
@@ -56,19 +77,19 @@ describe('Users page', () => {
       },
     ];
 
-    const action = setUsersAC(newUsers);
+    const action = setUsers(newUsers);
 
     // 2. action
     const newState = usersReducer(state, action);
 
     // 3. expectation
     expect(newState.users).toHaveLength(1);
-    expect(newState.users[0].name).toBe('Andrei');
+    expect(newState.users[0].name).toBe('Kastus');
   });
 
   test('currentPage should be changed', function () {
     // 1. data
-    const action = setCurrentPageAC(3);
+    const action = setCurrentPage(3);
 
     // 2. action
     const newState = usersReducer(state, action);
@@ -79,7 +100,7 @@ describe('Users page', () => {
 
   test('totalUsersCount should be changed', function () {
     // 1. data
-    const action = setUsersTotalCountAC(10);
+    const action = setUsersTotalCount(10);
 
     // 2. action
     const newState = usersReducer(state, action);

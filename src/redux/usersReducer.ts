@@ -1,4 +1,5 @@
 import { UserType } from '../types/types';
+import { ACTIONS_TYPE, UsersPageActionTypes } from './actions';
 
 const initialState = {
   users: [] as Array<UserType>,
@@ -14,7 +15,7 @@ export const usersReducer = (
   action: UsersPageActionTypes,
 ): UsersPageType => {
   switch (action.type) {
-    case FOLLOW: {
+    case ACTIONS_TYPE.FOLLOW: {
       return {
         ...state,
         users: state.users.map((u) =>
@@ -23,7 +24,7 @@ export const usersReducer = (
       };
     }
 
-    case UNFOLLOW: {
+    case ACTIONS_TYPE.UNFOLLOW: {
       return {
         ...state,
         users: state.users.map((u) =>
@@ -32,21 +33,21 @@ export const usersReducer = (
       };
     }
 
-    case SET_USERS: {
+    case ACTIONS_TYPE.SET_USERS: {
       return {
         ...state,
         users: action.payload,
       };
     }
 
-    case SET_CURRENT_PAGE: {
+    case ACTIONS_TYPE.SET_CURRENT_PAGE: {
       return {
         ...state,
         currentPage: action.payload,
       };
     }
 
-    case SET_USERS_TOTAL_COUNT: {
+    case ACTIONS_TYPE.SET_USERS_TOTAL_COUNT: {
       return {
         ...state,
         totalUsersCount: action.payload,
@@ -57,30 +58,3 @@ export const usersReducer = (
       return state;
   }
 };
-
-const FOLLOW = 'FOLLOW';
-export const followAC = (payload: number) =>
-  ({ type: FOLLOW, payload } as const);
-
-const UNFOLLOW = 'UNFOLLOW';
-export const unfollowAC = (payload: number) =>
-  ({ type: UNFOLLOW, payload } as const);
-
-const SET_USERS = 'SET_USERS';
-export const setUsersAC = (payload: Array<UserType>) =>
-  ({ type: SET_USERS, payload } as const);
-
-const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
-export const setCurrentPageAC = (payload: number) =>
-  ({ type: SET_CURRENT_PAGE, payload } as const);
-
-const SET_USERS_TOTAL_COUNT = 'SET_USERS_TOTAL_COUNT';
-export const setUsersTotalCountAC = (payload: number) =>
-  ({ type: SET_USERS_TOTAL_COUNT, payload } as const);
-
-export type UsersPageActionTypes =
-  | ReturnType<typeof followAC>
-  | ReturnType<typeof unfollowAC>
-  | ReturnType<typeof setUsersAC>
-  | ReturnType<typeof setCurrentPageAC>
-  | ReturnType<typeof setUsersTotalCountAC>;
