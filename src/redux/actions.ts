@@ -12,6 +12,7 @@ export enum ACTIONS_TYPE {
   SET_USERS = 'USERS/SET_USERS',
   SET_CURRENT_PAGE = 'USERS/SET_CURRENT_PAGE',
   SET_USERS_TOTAL_COUNT = 'USERS/SET_USERS_TOTAL_COUNT',
+  TOGGLE_IS_FETCHING = 'USERS/TOGGLE_IS_FETCHING',
 }
 
 export const changePost = (payload: string) =>
@@ -47,9 +48,13 @@ export const setCurrentPage = (payload: number) =>
 export const setUsersTotalCount = (payload: number) =>
   ({ type: ACTIONS_TYPE.SET_USERS_TOTAL_COUNT, payload } as const);
 
+export const toggleIsFetching = (payload: boolean) =>
+  ({ type: ACTIONS_TYPE.TOGGLE_IS_FETCHING, payload } as const);
+
 export type UsersPageActionTypes =
   | ReturnType<typeof follow>
   | ReturnType<typeof unfollow>
   | ReturnType<typeof setUsers>
   | ReturnType<typeof setCurrentPage>
-  | ReturnType<typeof setUsersTotalCount>;
+  | ReturnType<typeof setUsersTotalCount>
+  | ReturnType<typeof toggleIsFetching>;

@@ -4,6 +4,7 @@ import {
   setCurrentPage,
   setUsers,
   setUsersTotalCount,
+  toggleIsFetching,
   unfollow,
 } from './actions';
 
@@ -37,6 +38,7 @@ describe('Users page', () => {
       pageSize: 5,
       totalUsersCount: 0,
       currentPage: 1,
+      isFetching: false,
     };
   });
 
@@ -107,5 +109,16 @@ describe('Users page', () => {
 
     // 3. expectation
     expect(newState.totalUsersCount).toBe(10);
+  });
+
+  test('fetching status should be changed', function () {
+    // 1. data
+    const action = toggleIsFetching(true);
+
+    // 2. action
+    const newState = usersReducer(state, action);
+
+    // 3. expectation
+    expect(newState.isFetching).toBeTruthy();
   });
 });

@@ -6,6 +6,7 @@ const initialState = {
   pageSize: 5,
   totalUsersCount: 0,
   currentPage: 1,
+  isFetching: false,
 };
 
 export type UsersPageType = typeof initialState;
@@ -51,6 +52,13 @@ export const usersReducer = (
       return {
         ...state,
         totalUsersCount: action.payload,
+      };
+    }
+
+    case ACTIONS_TYPE.TOGGLE_IS_FETCHING: {
+      return {
+        ...state,
+        isFetching: action.payload,
       };
     }
 
