@@ -1,5 +1,5 @@
 import { profileReducer, ProfilePageStateType } from './profileReducer';
-import { addPost, changePost } from './actions';
+import { addPost, changePost, setUserProfile } from './actions';
 
 describe('Profile page', () => {
   let state: ProfilePageStateType;
@@ -19,6 +19,7 @@ describe('Profile page', () => {
         },
       ],
       newPostText: 'it-kamasutra.com',
+      profile: null,
     };
   });
 
@@ -34,24 +35,48 @@ describe('Profile page', () => {
   });
 
   test('new post message should be correct', function () {
-    // 1. data
     const action = addPost();
 
-    // 2. action
     const newState = profileReducer(state, action);
 
-    // 3. expectation
     expect(newState.posts[2].message).toEqual('it-kamasutra.com');
   });
 
   test("changed post' text should be correct", function () {
-    // 1. data
     const action = changePost('new text');
 
-    // 2. action
     const newState = profileReducer(state, action);
 
-    // 3. expectation
     expect(newState.newPostText).toEqual('new text');
+  });
+
+  test('new user profile should be added', function () {
+    const newUserProfile = {
+      aboutMe: 'tough-ass dude',
+      contacts: {
+        facebook: '',
+        website: '',
+        vk: '',
+        twitter: '',
+        instagram: '',
+        youtube: '',
+        github: '',
+        mainLink: '',
+      },
+      lookingForAJob: false,
+      lookingForAJobDescription: '',
+      fullName: 'svensktutby',
+      userId: 13640,
+      photos: {
+        small: null,
+        large: null,
+      },
+    };
+
+    const action = setUserProfile(newUserProfile);
+
+    const newState = profileReducer(state, action);
+
+    expect(newState.profile).toEqual(newUserProfile);
   });
 });

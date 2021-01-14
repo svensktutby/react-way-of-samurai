@@ -5,3 +5,8 @@
 .descriptionBlock {
   padding: 10px;
 }
+
+.avatar {
+  max-width: 300px;
+  max-height: 300px;
+}
