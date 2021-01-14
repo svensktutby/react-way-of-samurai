@@ -1,5 +1,5 @@
 import { randomId } from '../utils/randomId';
-import { PostType } from '../types/types';
+import { PostType, ProfileType } from '../types/types';
 import { ACTIONS_TYPE, ProfilePageActionTypes } from './actions';
 
 const initialState = {
@@ -16,6 +16,7 @@ const initialState = {
     },
   ] as Array<PostType>,
   newPostText: 'it-kamasutra.com',
+  profile: null as ProfileType | null,
 };
 
 export type ProfilePageStateType = typeof initialState;
@@ -36,6 +37,9 @@ export const profileReducer = (
       };
 
       return { ...state, posts: [...state.posts, post], newPostText: '' };
+
+    case ACTIONS_TYPE.SET_USER_PROFILE:
+      return { ...state, profile: action.payload };
 
     default:
       return state;

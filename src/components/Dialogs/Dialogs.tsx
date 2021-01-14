@@ -9,7 +9,7 @@ export type StatePropsType = {
 };
 
 export type DispatchPropsType = {
-  changeMessage: (payload: string) => void;
+  changeMessage: (message: string) => void;
   sendMessage: () => void;
 };
 

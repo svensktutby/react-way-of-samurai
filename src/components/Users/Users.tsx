@@ -3,15 +3,16 @@ import s from './Users.module.css';
 import userAvatar from '../../assets/images/userAvatar.svg';
 import { randomId } from '../../utils/randomId';
 import { UserType } from '../../types/types';
+import { NavLink } from 'react-router-dom';
 
 type UsersPropsType = {
   users: Array<UserType>;
   pageSize: number;
   totalUsersCount: number;
   currentPage: number;
-  follow: (payload: number) => void;
-  unfollow: (payload: number) => void;
-  changePageHandler: (payload: number) => void;
+  follow: (userId: number) => void;
+  unfollow: (userId: number) => void;
+  changePageHandler: (pageNumber: number) => void;
 };
 
 export const Users: FC<UsersPropsType> = (props) => {
@@ -29,13 +30,15 @@ export const Users: FC<UsersPropsType> = (props) => {
     <li className={s.item} key={u.id}>
       <div>
         <div className={s.avatarWrapper}>
-          <img
-            className={s.avatar}
-            src={u.photos.small ? u.photos.small : userAvatar}
-            width="50"
-            height="50"
-            alt="User avatar"
-          />
+          <NavLink to={`/profile/${u.id}`}>
+            <img
+              className={s.avatar}
+              src={u.photos.small ? u.photos.small : userAvatar}
+              width="50"
+              height="50"
+              alt="User avatar"
+            />
+          </NavLink>
         </div>
         <div>
           {u.followed ? (

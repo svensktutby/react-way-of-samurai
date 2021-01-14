@@ -7,9 +7,9 @@ type PreloaderPropsType = {
 
 export const Preloader: FC<PreloaderPropsType> = ({ text }) => {
   return (
-    <div className={s.bar}>
-      <div className={s.circle}></div>
-      <p className={s.text}>{text}</p>
+    <div className={s.wrapper}>
+      <div className={s.loaderCircle} />
+      <div className={s.loaderBottom}>{text}</div>
     </div>
   );
 };

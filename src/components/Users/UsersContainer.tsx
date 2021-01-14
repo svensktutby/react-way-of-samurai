@@ -24,12 +24,12 @@ type StatePropsType = {
 };
 
 type DispatchPropsType = {
-  follow: (payload: number) => void;
-  unfollow: (payload: number) => void;
-  setUsers: (payload: Array<UserType>) => void;
-  setCurrentPage: (payload: number) => void;
-  setUsersTotalCount: (payload: number) => void;
-  toggleIsFetching: (payload: boolean) => void;
+  follow: (userId: number) => void;
+  unfollow: (userId: number) => void;
+  setUsers: (users: Array<UserType>) => void;
+  setCurrentPage: (pageNumber: number) => void;
+  setUsersTotalCount: (totalCount: number) => void;
+  toggleIsFetching: (isFetching: boolean) => void;
 };
 
 type GetUsersResponseType = {

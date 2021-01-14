@@ -1,7 +1,18 @@
 import React, { FC } from 'react';
 import s from './ProfileInfo.module.css';
+import { ProfileType } from '../../../types/types';
+import userAvatar from '../../../assets/images/userAvatar.svg';
+import { Preloader } from '../../common/Preloader/Preloader';
 
-export const ProfileInfo: FC = () => {
+type ProfileInfoPropsType = {
+  profile: ProfileType | null;
+};
+
+export const ProfileInfo: FC<ProfileInfoPropsType> = ({ profile }) => {
+  if (!profile) {
+    return <Preloader text="Loading..." />;
+  }
+
   return (
     <div>
       <div>
@@ -11,7 +22,10 @@ export const ProfileInfo: FC = () => {
           alt="Top background"
         />
       </div>
-      <div className={s.descriptionBlock}>ava + description</div>
+      <div className={s.descriptionBlock}>
+        <img src={profile.photos.large || userAvatar} alt="User" />
+        ava + description
+      </div>
     </div>
   );
 };

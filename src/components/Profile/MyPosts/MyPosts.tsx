@@ -10,7 +10,7 @@ export type StatePropsType = {
 
 export type DispatchPropsType = {
   addPost: () => void;
-  changePost: (payload: string) => void;
+  changePost: (text: string) => void;
 };
 
 export const MyPosts: FC<StatePropsType & DispatchPropsType> = ({
