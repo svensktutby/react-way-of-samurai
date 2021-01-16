@@ -54,18 +54,14 @@ describe('Users page', () => {
   });
 
   test("status 'unfollow' of specified user should be changed", function () {
-    // 1. data
     const action = unfollow(2);
 
-    // 2. action
     const newState = usersReducer(state, action);
 
-    // 3. expectation
     expect(newState.users[1].followed).toBeTruthy();
   });
 
   test('users should be changed', function () {
-    // 1. data
     const newUsers = [
       {
         id: 3,
@@ -81,44 +77,33 @@ describe('Users page', () => {
 
     const action = setUsers(newUsers);
 
-    // 2. action
     const newState = usersReducer(state, action);
 
-    // 3. expectation
     expect(newState.users).toHaveLength(1);
     expect(newState.users[0].name).toBe('Kastus');
   });
 
   test('currentPage should be changed', function () {
-    // 1. data
     const action = setCurrentPage(3);
 
-    // 2. action
     const newState = usersReducer(state, action);
 
-    // 3. expectation
     expect(newState.currentPage).toBe(3);
   });
 
   test('totalUsersCount should be changed', function () {
-    // 1. data
     const action = setUsersTotalCount(10);
 
-    // 2. action
     const newState = usersReducer(state, action);
 
-    // 3. expectation
     expect(newState.totalUsersCount).toBe(10);
   });
 
   test('fetching status should be changed', function () {
-    // 1. data
     const action = toggleIsFetching(true);
 
-    // 2. action
     const newState = usersReducer(state, action);
 
-    // 3. expectation
     expect(newState.isFetching).toBeTruthy();
   });
 });

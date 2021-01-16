@@ -22,9 +22,32 @@ code {
   monospace;
 }
 
+svg {
+  fill: currentColor;
+}
+
 img {
   max-width: 100%;
   height: auto;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  margin: 0;
+
+  font-size: 100%;
+  line-height: 1.15;
+  font-family: inherit;
+}
+
+input[type=text],
+input[type=email],
+input[type=password],
+textarea {
+  -webkit-appearance: none; /* fix safari inputs shadow */
 }
 
 [type=button]:not(:disabled),

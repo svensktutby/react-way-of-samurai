@@ -1,0 +1,49 @@
+@keyframes back-pulse {
+  50% {
+    background-color: rgba(125, 151, 165, 0.75);
+  }
+}
+
+.btn {
+  position: relative;
+
+  display: inline-block;
+  padding: 5px 10px;
+  overflow: hidden;
+
+  vertical-align: middle;
+  color: #fff;
+  text-decoration: none;
+
+  background-color: #7d97a5;
+  border: 0;
+  border-radius: 3px;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  transform: perspective(1px) translateZ(0);
+  cursor: pointer;
+
+  transition-duration: 0.5s;
+  transition-property: color, background-color;
+
+  user-select: none;
+}
+
+.btn:focus {
+  outline: 0;
+}
+
+@media (hover: hover) {
+  .btn:hover,
+  .btn:focus,
+  .btn:active {
+    color: #fff;
+
+    background-color: #7d97a5;
+
+    animation-name: back-pulse;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-delay: 0.5s;
+    animation-iteration-count: infinite;
+  }
+}

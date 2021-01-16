@@ -5,16 +5,16 @@ import { store } from './redux/reduxStore';
 
 import './App.css';
 
-import { Header } from './components/Header/Header';
 import { Navbar } from './components/Navbar/Navbar';
 import { DialogsContainer } from './components/Dialogs/DialogsContainer';
 import { UsersContainer } from './components/Users/UsersContainer';
 import { ProfileContainer } from './components/Profile/ProfileContainer';
+import { HeaderContainer } from './components/Header/HeaderContainer';
 
 const App: FC = () => {
   return (
     <div className="appWrapper">
-      <Header />
+      <HeaderContainer />
       <Navbar />
 
       <main className="appWrapperContent">

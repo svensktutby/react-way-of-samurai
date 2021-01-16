@@ -4,6 +4,7 @@ import userAvatar from '../../assets/images/userAvatar.svg';
 import { randomId } from '../../utils/randomId';
 import { UserType } from '../../types/types';
 import { NavLink } from 'react-router-dom';
+import styleBtn from '../common/styles/Button.module.css';
 
 type UsersPropsType = {
   users: Array<UserType>;
@@ -43,7 +44,7 @@ export const Users: FC<UsersPropsType> = (props) => {
         <div>
           {u.followed ? (
             <button
-              className={s.followBtn}
+              className={styleBtn.btn}
               type="button"
               onClick={() => follow(u.id)}
             >
@@ -51,7 +52,7 @@ export const Users: FC<UsersPropsType> = (props) => {
             </button>
           ) : (
             <button
-              className={s.followBtn}
+              className={styleBtn.btn}
               type="button"
               onClick={() => unfollow(u.id)}
             >
@@ -84,7 +85,7 @@ export const Users: FC<UsersPropsType> = (props) => {
           <button
             type="button"
             key={randomId()}
-            className={`${s.pageBtn} ${
+            className={`${s.pageBtn} ${styleBtn.btn} ${
               idx + 1 === currentPage && s.selectedPage
             }`}
             onClick={() => changePageHandler(idx + 1)}
@@ -95,7 +96,7 @@ export const Users: FC<UsersPropsType> = (props) => {
       </div>
 
       <ul className={s.list}>{userElements}</ul>
-      <button className={s.moreBtn} type="button" onClick={() => {}}>
+      <button className={styleBtn.btn} type="button" onClick={() => {}}>
         Show more
       </button>
     </div>

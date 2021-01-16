@@ -1,4 +1,5 @@
 import { ProfileType, UserType } from '../types/types';
+import { AuthType } from './authReducer';
 
 export enum ACTIONS_TYPE {
   UPDATE_NEW_POST_TEXT = 'SN/PROFILE/UPDATE_NEW_POST_TEXT',
@@ -14,6 +15,8 @@ export enum ACTIONS_TYPE {
   SET_CURRENT_PAGE = 'SN/USERS/SET_CURRENT_PAGE',
   SET_USERS_TOTAL_COUNT = 'SN/USERS/SET_USERS_TOTAL_COUNT',
   TOGGLE_IS_FETCHING = 'SN/USERS/TOGGLE_IS_FETCHING',
+
+  SET_AUTH_USER_DATA = 'SN/AUTH/SET_AUTH_USER_DATA',
 }
 
 export const changePost = (text: string) =>
@@ -63,3 +66,8 @@ export type UsersPageActionTypes =
   | ReturnType<typeof setCurrentPage>
   | ReturnType<typeof setUsersTotalCount>
   | ReturnType<typeof toggleIsFetching>;
+
+export const setAuthUserData = (data: AuthType) =>
+  ({ type: ACTIONS_TYPE.SET_AUTH_USER_DATA, payload: data } as const);
+
+export type AuthActionTypes = ReturnType<typeof setAuthUserData>;

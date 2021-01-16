@@ -54,24 +54,18 @@ describe('Dialogs page', () => {
   });
 
   test('new post message should be correct', function () {
-    // 1. data
     const action = sendMessage();
 
-    // 2. action
     const newState = dialogsReducer(state, action);
 
-    // 3. expectation
     expect(newState.messages[3].message).toEqual('I wish you happy holidays');
   });
 
   test("changed post' message should be correct", function () {
-    // 1. data
     const action = changeMessage('new text');
 
-    // 2. action
     const newState = dialogsReducer(state, action);
 
-    // 3. expectation
     expect(newState.newMessageText).toEqual('new text');
   });
 });

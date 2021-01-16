@@ -4,6 +4,7 @@ import { sidebarReducer as sidebar } from './sidebarReducer';
 import { dialogsReducer as dialogsPage } from './dialogsReducer';
 import { profileReducer as profilePage } from './profileReducer';
 import { usersReducer as usersPage } from './usersReducer';
+import { authReducer as auth } from './authReducer';
 
 export type AppStateType = ReturnType<typeof rootReducer>;
 
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   dialogsPage,
   sidebar,
   usersPage,
+  auth,
 });
 
 export const store = createStore(rootReducer, enhancedStore);

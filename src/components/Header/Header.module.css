@@ -1,7 +1,9 @@
 .header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   grid-area: header;
+  padding-right: 35px;
   padding-left: 35px;
 
   background-color: #4d636f;
@@ -9,4 +11,8 @@
 
 .logo {
   width: 40px;
+}
+
+.login {
+  color: #fff;
 }
