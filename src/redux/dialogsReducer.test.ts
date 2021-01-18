@@ -42,7 +42,7 @@ describe('Dialogs page', () => {
     };
   });
 
-  test("messages' length should be incremented", function () {
+  test("messages' length should be incremented", () => {
     // 1. data
     const action = sendMessage();
 
@@ -53,7 +53,7 @@ describe('Dialogs page', () => {
     expect(newState.messages).toHaveLength(4);
   });
 
-  test('new post message should be correct', function () {
+  test('new post message should be correct', () => {
     const action = sendMessage();
 
     const newState = dialogsReducer(state, action);
@@ -61,7 +61,7 @@ describe('Dialogs page', () => {
     expect(newState.messages[3].message).toEqual('I wish you happy holidays');
   });
 
-  test("changed post' message should be correct", function () {
+  test("changed post' message should be correct", () => {
     const action = changeMessage('new text');
 
     const newState = dialogsReducer(state, action);

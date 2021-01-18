@@ -23,7 +23,7 @@ describe('Profile page', () => {
     };
   });
 
-  test("posts' length should be incremented", function () {
+  test("posts' length should be incremented", () => {
     // 1. data
     const action = addPost();
 
@@ -34,7 +34,7 @@ describe('Profile page', () => {
     expect(newState.posts).toHaveLength(3);
   });
 
-  test('new post message should be correct', function () {
+  test('new post message should be correct', () => {
     const action = addPost();
 
     const newState = profileReducer(state, action);
@@ -42,7 +42,7 @@ describe('Profile page', () => {
     expect(newState.posts[2].message).toEqual('it-kamasutra.com');
   });
 
-  test("changed post' text should be correct", function () {
+  test("changed post' text should be correct", () => {
     const action = changePost('new text');
 
     const newState = profileReducer(state, action);
@@ -50,7 +50,7 @@ describe('Profile page', () => {
     expect(newState.newPostText).toEqual('new text');
   });
 
-  test('new user profile should be added', function () {
+  test('new user profile should be added', () => {
     const newUserProfile = {
       aboutMe: 'tough-ass dude',
       contacts: {

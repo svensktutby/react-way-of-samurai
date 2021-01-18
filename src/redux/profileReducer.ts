@@ -1,6 +1,6 @@
 import { randomId } from '../utils/randomId';
 import { PostType, ProfileType } from '../types/types';
-import { ACTIONS_TYPE, ProfilePageActionTypes } from './actions';
+import { ActionsType, ProfilePageActionTypes } from './actions';
 
 const initialState = {
   posts: [
@@ -26,10 +26,10 @@ export const profileReducer = (
   action: ProfilePageActionTypes,
 ): ProfilePageStateType => {
   switch (action.type) {
-    case ACTIONS_TYPE.UPDATE_NEW_POST_TEXT:
+    case ActionsType.UPDATE_NEW_POST_TEXT:
       return { ...state, newPostText: action.payload };
 
-    case ACTIONS_TYPE.ADD_POST:
+    case ActionsType.ADD_POST: {
       const post: PostType = {
         id: randomId(),
         message: state.newPostText,
@@ -37,8 +37,9 @@ export const profileReducer = (
       };
 
       return { ...state, posts: [...state.posts, post], newPostText: '' };
+    }
 
-    case ACTIONS_TYPE.SET_USER_PROFILE:
+    case ActionsType.SET_USER_PROFILE:
       return { ...state, profile: action.payload };
 
     default:

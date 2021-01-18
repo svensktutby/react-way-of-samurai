@@ -1,4 +1,5 @@
 import React, { ChangeEvent, FC } from 'react';
+
 import s from './Dialogs.module.css';
 import { DialogItem } from './DialogItem/DialogItem';
 import { Message } from './Message/Message';
@@ -52,7 +53,11 @@ export const Dialogs: FC<StatePropsType & DispatchPropsType> = ({
               />
             </label>
             <div>
-              <button className={styleBtn.btn} onClick={sendMessageHandler}>
+              <button
+                type="button"
+                className={styleBtn.btn}
+                onClick={sendMessageHandler}
+              >
                 Send
               </button>
             </div>

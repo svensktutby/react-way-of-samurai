@@ -1,5 +1,6 @@
-import { AuthType, authReducer } from './authReducer';
+import { authReducer } from './authReducer';
 import { setAuthUserData } from './actions';
+import { AuthType } from '../types/types';
 
 describe('Auth', () => {
   let state: AuthType;
@@ -13,7 +14,7 @@ describe('Auth', () => {
     };
   });
 
-  test('auth user data should be changed', function () {
+  test('auth user data should be changed', () => {
     // 1. data
     const userAuthData = {
       id: 4,

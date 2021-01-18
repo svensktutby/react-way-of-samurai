@@ -1,9 +1,10 @@
 import React, { FC } from 'react';
+import { Link } from 'react-router-dom';
+
 import s from './Users.module.css';
 import userAvatar from '../../assets/images/userAvatar.svg';
 import { randomId } from '../../utils/randomId';
 import { UserType } from '../../types/types';
-import { NavLink } from 'react-router-dom';
 import styleBtn from '../common/styles/Button.module.css';
 
 type UsersPropsType = {
@@ -31,7 +32,7 @@ export const Users: FC<UsersPropsType> = (props) => {
     <li className={s.item} key={u.id}>
       <div>
         <div className={s.avatarWrapper}>
-          <NavLink to={`/profile/${u.id}`}>
+          <Link to={`/profile/${u.id}`}>
             <img
               className={s.avatar}
               src={u.photos.small ? u.photos.small : userAvatar}
@@ -39,7 +40,7 @@ export const Users: FC<UsersPropsType> = (props) => {
               height="50"
               alt="User avatar"
             />
-          </NavLink>
+          </Link>
         </div>
         <div>
           {u.followed ? (
@@ -67,8 +68,8 @@ export const Users: FC<UsersPropsType> = (props) => {
           <div className={s.status}>{u.status}</div>
         </div>
         <div className={s.location}>
-          <div>{'u.location.country'},</div>
-          <div>{'u.location.city'}</div>
+          <div>u.location.country</div>
+          <div>u.location.city</div>
         </div>
       </div>
     </li>

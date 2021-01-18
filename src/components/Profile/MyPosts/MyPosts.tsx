@@ -1,4 +1,5 @@
 import React, { ChangeEvent, FC } from 'react';
+
 import s from './MyPosts.module.css';
 import { Post } from './Post/Post';
 import { PostType } from '../../../types/types';
@@ -44,7 +45,7 @@ export const MyPosts: FC<StatePropsType & DispatchPropsType> = ({
             value={newPostText}
           />
         </label>
-        <button className={styleBtn.btn} onClick={addPostHandler}>
+        <button type="button" className={styleBtn.btn} onClick={addPostHandler}>
           Add post
         </button>
       </div>

@@ -1,5 +1,5 @@
 import { UserType } from '../types/types';
-import { ACTIONS_TYPE, UsersPageActionTypes } from './actions';
+import { ActionsType, UsersPageActionTypes } from './actions';
 
 const initialState = {
   users: [] as Array<UserType>,
@@ -16,7 +16,7 @@ export const usersReducer = (
   action: UsersPageActionTypes,
 ): UsersPageType => {
   switch (action.type) {
-    case ACTIONS_TYPE.FOLLOW: {
+    case ActionsType.FOLLOW: {
       return {
         ...state,
         users: state.users.map((u) =>
@@ -25,7 +25,7 @@ export const usersReducer = (
       };
     }
 
-    case ACTIONS_TYPE.UNFOLLOW: {
+    case ActionsType.UNFOLLOW: {
       return {
         ...state,
         users: state.users.map((u) =>
@@ -34,28 +34,28 @@ export const usersReducer = (
       };
     }
 
-    case ACTIONS_TYPE.SET_USERS: {
+    case ActionsType.SET_USERS: {
       return {
         ...state,
         users: action.payload,
       };
     }
 
-    case ACTIONS_TYPE.SET_CURRENT_PAGE: {
+    case ActionsType.SET_CURRENT_PAGE: {
       return {
         ...state,
         currentPage: action.payload,
       };
     }
 
-    case ACTIONS_TYPE.SET_USERS_TOTAL_COUNT: {
+    case ActionsType.SET_USERS_TOTAL_COUNT: {
       return {
         ...state,
         totalUsersCount: action.payload,
       };
     }
 
-    case ACTIONS_TYPE.TOGGLE_IS_FETCHING: {
+    case ActionsType.TOGGLE_IS_FETCHING: {
       return {
         ...state,
         isFetching: action.payload,

@@ -1,7 +1,7 @@
 import { applyMiddleware, compose, Middleware } from 'redux';
 import { createLogger } from 'redux-logger';
 
-const __DEV__ = process.env.NODE_ENV !== 'production';
+const DEV = process.env.NODE_ENV !== 'production';
 
 const logger = createLogger({
   duration: true,
@@ -15,12 +15,13 @@ const logger = createLogger({
   },
 });
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore next line
 const devtools = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
-const composeEnhancers = __DEV__ && devtools ? devtools : compose;
+const composeEnhancers = DEV && devtools ? devtools : compose;
 
 const middleware: Array<Middleware> = [];
 
-__DEV__ && middleware.push(logger);
+if (DEV) middleware.push(logger);
 
 export const enhancedStore = composeEnhancers(applyMiddleware(...middleware));

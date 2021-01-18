@@ -47,3 +47,10 @@ export type ProfileType = {
   photos: PhotosType;
   aboutMe: string;
 };
+
+export type AuthType = {
+  id: number | null;
+  email: string | null;
+  login: string | null;
+  isAuth: boolean;
+};

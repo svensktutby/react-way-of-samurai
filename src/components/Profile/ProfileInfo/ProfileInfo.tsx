@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+
 import s from './ProfileInfo.module.css';
 import { ProfileType } from '../../../types/types';
 import userAvatar from '../../../assets/images/userAvatar.svg';

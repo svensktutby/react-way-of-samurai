@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+
 import s from './Message.module.css';
 import { MessageType } from '../../../types/types';
 

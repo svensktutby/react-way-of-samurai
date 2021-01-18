@@ -77,8 +77,8 @@ class UsersAPIContainer extends Component<PropsType> {
       pageSize,
       totalUsersCount,
       currentPage,
-      follow,
-      unfollow,
+      follow: followCallback,
+      unfollow: unfollowCallback,
       isFetching,
     } = this.props;
 
@@ -92,8 +92,8 @@ class UsersAPIContainer extends Component<PropsType> {
             pageSize={pageSize}
             totalUsersCount={totalUsersCount}
             currentPage={currentPage}
-            follow={follow}
-            unfollow={unfollow}
+            follow={followCallback}
+            unfollow={unfollowCallback}
             changePageHandler={this.changePageHandler}
           />
         )}
@@ -117,7 +117,7 @@ const mapStateToProps = ({
 export const UsersContainer = connect<
   StatePropsType,
   DispatchPropsType,
-  {},
+  Record<string, never>,
   AppStateType
 >(mapStateToProps, {
   follow,

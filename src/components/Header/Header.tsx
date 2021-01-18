@@ -1,8 +1,20 @@
 import React, { FC } from 'react';
+import { Link } from 'react-router-dom';
+
 import s from './Header.module.css';
-import { NavLink } from 'react-router-dom';
 import styleBtn from '../common/styles/Button.module.css';
-import { PropsType } from './HeaderContainer';
+import { AuthType } from '../../types/types';
+
+export type StatePropsType = {
+  login: string | null;
+  isAuth: boolean;
+};
+
+export type DispatchPropsType = {
+  setAuthUserData: (data: AuthType) => void;
+};
+
+export type PropsType = StatePropsType & DispatchPropsType;
 
 export const Header: FC<PropsType> = ({ login, isAuth }) => {
   return (
@@ -16,9 +28,9 @@ export const Header: FC<PropsType> = ({ login, isAuth }) => {
         {isAuth ? (
           <span className={s.login}>{login}</span>
         ) : (
-          <NavLink className={styleBtn.btn} to="/login">
+          <Link className={styleBtn.btn} to="/login">
             Log in
-          </NavLink>
+          </Link>
         )}
       </div>
     </header>

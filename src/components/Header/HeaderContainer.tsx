@@ -1,27 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios, { AxiosResponse } from 'axios';
-import { Header } from './Header';
-import { AuthType } from '../../redux/authReducer';
+
+import { DispatchPropsType, Header, PropsType, StatePropsType } from './Header';
 import { AppStateType } from '../../redux/reduxStore';
 import { setAuthUserData } from '../../redux/actions';
-
-type StatePropsType = {
-  login: string | null;
-  isAuth: boolean;
-};
-
-type DispatchPropsType = {
-  setAuthUserData: (data: AuthType) => void;
-};
+import { AuthType } from '../../types/types';
 
 type AxiosResponseType = {
   resultCode: 0 | 1;
   messages: Array<string>;
   data: AuthType | null;
 };
-
-export type PropsType = StatePropsType & DispatchPropsType;
 
 class HeaderAPIContainer extends Component<PropsType> {
   componentDidMount() {
@@ -32,9 +22,9 @@ class HeaderAPIContainer extends Component<PropsType> {
       url: `${baseUrl}/auth/me`,
       withCredentials: true,
     }).then((res: AxiosResponse<AxiosResponseType>) => {
-      res.data.resultCode === 0 &&
-        res.data.data &&
+      if (res.data.resultCode === 0 && res.data.data) {
         this.props.setAuthUserData(res.data.data);
+      }
     });
   }
 
@@ -52,6 +42,6 @@ const mapStateToProps = ({
 export const HeaderContainer = connect<
   StatePropsType,
   DispatchPropsType,
-  {},
+  Record<string, never>,
   AppStateType
 >(mapStateToProps, { setAuthUserData })(HeaderAPIContainer);

@@ -1,15 +1,14 @@
 import React, { FC } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
+
 import { store } from './redux/reduxStore';
-
-import './App.css';
-
-import { Navbar } from './components/Navbar/Navbar';
 import { DialogsContainer } from './components/Dialogs/DialogsContainer';
 import { UsersContainer } from './components/Users/UsersContainer';
 import { ProfileContainer } from './components/Profile/ProfileContainer';
 import { HeaderContainer } from './components/Header/HeaderContainer';
+import './App.css';
+import { Navbar } from './components/Navbar/Navbar';
 
 const App: FC = () => {
   return (
@@ -26,7 +25,7 @@ const App: FC = () => {
   );
 };
 
-const SamuraiJSApp: FC = () => {
+export const SamuraiJSApp: FC = () => {
   return (
     <Provider store={store}>
       <Router>
@@ -35,5 +34,3 @@ const SamuraiJSApp: FC = () => {
     </Provider>
   );
 };
-
-export default SamuraiJSApp;

@@ -19,5 +19,6 @@ const rootReducer = combineReducers({
 export const store = createStore(rootReducer, enhancedStore);
 
 // FIXME remove global __store__
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore next line
-window.__store__ = store;
+window.store = store;

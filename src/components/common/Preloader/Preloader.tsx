@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+
 import s from './Preloader.module.css';
 
 type PreloaderPropsType = {

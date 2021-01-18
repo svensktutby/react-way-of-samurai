@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Profile } from './Profile';
 import axios, { AxiosResponse } from 'axios';
-import { ProfileType } from '../../types/types';
 import { connect } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { Profile } from './Profile';
+import { ProfileType } from '../../types/types';
 import { AppStateType } from '../../redux/reduxStore';
 import { setUserProfile } from '../../redux/actions';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 type PathPropsType = {
   userId: string;
@@ -54,6 +54,6 @@ const WithURLDataProfileAPIContainer = withRouter(ProfileAPIContainer);
 export const ProfileContainer = connect<
   StatePropsType,
   DispatchPropsType,
-  {},
+  Record<string, never>,
   AppStateType
 >(mapStateToProps, { setUserProfile })(WithURLDataProfileAPIContainer);

@@ -42,7 +42,7 @@ describe('Users page', () => {
     };
   });
 
-  test("status 'follow' of specified user should be changed", function () {
+  test("status 'follow' of specified user should be changed", () => {
     // 1. data
     const action = follow(1);
 
@@ -53,7 +53,7 @@ describe('Users page', () => {
     expect(newState.users[0].followed).toBeFalsy();
   });
 
-  test("status 'unfollow' of specified user should be changed", function () {
+  test("status 'unfollow' of specified user should be changed", () => {
     const action = unfollow(2);
 
     const newState = usersReducer(state, action);
@@ -61,7 +61,7 @@ describe('Users page', () => {
     expect(newState.users[1].followed).toBeTruthy();
   });
 
-  test('users should be changed', function () {
+  test('users should be changed', () => {
     const newUsers = [
       {
         id: 3,
@@ -83,7 +83,7 @@ describe('Users page', () => {
     expect(newState.users[0].name).toBe('Kastus');
   });
 
-  test('currentPage should be changed', function () {
+  test('currentPage should be changed', () => {
     const action = setCurrentPage(3);
 
     const newState = usersReducer(state, action);
@@ -91,7 +91,7 @@ describe('Users page', () => {
     expect(newState.currentPage).toBe(3);
   });
 
-  test('totalUsersCount should be changed', function () {
+  test('totalUsersCount should be changed', () => {
     const action = setUsersTotalCount(10);
 
     const newState = usersReducer(state, action);
@@ -99,7 +99,7 @@ describe('Users page', () => {
     expect(newState.totalUsersCount).toBe(10);
   });
 
-  test('fetching status should be changed', function () {
+  test('fetching status should be changed', () => {
     const action = toggleIsFetching(true);
 
     const newState = usersReducer(state, action);

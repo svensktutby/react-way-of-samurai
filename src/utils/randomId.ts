@@ -1,1 +1,2 @@
-export const randomId = () => Math.floor(Math.random() * 1e9).toString(16);
+export const randomId = (): string =>
+  Math.floor(Math.random() * 1e9).toString(16);

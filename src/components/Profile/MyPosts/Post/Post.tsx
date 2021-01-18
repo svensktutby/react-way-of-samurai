@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+
 import s from './Post.module.css';
 import { PostType } from '../../../../types/types';
 
