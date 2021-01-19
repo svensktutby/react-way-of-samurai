@@ -40,15 +40,16 @@ type GetUsersResponseType = {
 
 type PropsType = StatePropsType & DispatchPropsType;
 
+const BASE_URL = 'https://social-network.samuraijs.com/api/1.0';
+
 class UsersAPIContainer extends Component<PropsType> {
   componentDidMount() {
-    const baseUrl = 'https://social-network.samuraijs.com/api/1.0';
-
     this.props.toggleIsFetching(true);
 
     axios({
       method: 'GET',
-      url: `${baseUrl}/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,
+      url: `${BASE_URL}/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,
+      withCredentials: true,
     }).then((res: AxiosResponse<GetUsersResponseType>) => {
       this.props.toggleIsFetching(false);
       this.props.setUsers(res.data.items);
@@ -60,11 +61,10 @@ class UsersAPIContainer extends Component<PropsType> {
     this.props.setCurrentPage(pageNumber);
     this.props.toggleIsFetching(true);
 
-    const baseUrl = 'https://social-network.samuraijs.com/api/1.0';
-
     axios({
       method: 'GET',
-      url: `${baseUrl}/users?page=${pageNumber}&count=${this.props.pageSize}`,
+      url: `${BASE_URL}/users?page=${pageNumber}&count=${this.props.pageSize}`,
+      withCredentials: true,
     }).then((res: AxiosResponse<GetUsersResponseType>) => {
       this.props.toggleIsFetching(false);
       this.props.setUsers(res.data.items);

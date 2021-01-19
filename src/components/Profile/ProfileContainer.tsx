@@ -23,14 +23,15 @@ type DispatchPropsType = {
 
 type PropsType = StatePropsType & DispatchPropsType & RouterPropsType;
 
+const BASE_URL = 'https://social-network.samuraijs.com/api/1.0';
+
 class ProfileAPIContainer extends Component<PropsType> {
   componentDidMount() {
-    const baseUrl = 'https://social-network.samuraijs.com/api/1.0';
     const userId = this.props.match.params.userId || 13640;
 
     axios({
       method: 'GET',
-      url: `${baseUrl}/profile/${userId}`,
+      url: `${BASE_URL}/profile/${userId}`,
     }).then((res: AxiosResponse<ProfileType>) => {
       this.props.setUserProfile(res.data);
     });

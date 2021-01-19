@@ -7,21 +7,21 @@ import { AppStateType } from '../../redux/reduxStore';
 import { setAuthUserData } from '../../redux/actions';
 import { AuthType } from '../../types/types';
 
-type AxiosResponseType = {
+export type AuthResponseType = {
   resultCode: 0 | 1;
   messages: Array<string>;
   data: AuthType | null;
 };
 
+const BASE_URL = 'https://social-network.samuraijs.com/api/1.0';
+
 class HeaderAPIContainer extends Component<PropsType> {
   componentDidMount() {
-    const baseUrl = 'https://social-network.samuraijs.com/api/1.0';
-
     axios({
       method: 'GET',
-      url: `${baseUrl}/auth/me`,
+      url: `${BASE_URL}/auth/me`,
       withCredentials: true,
-    }).then((res: AxiosResponse<AxiosResponseType>) => {
+    }).then((res: AxiosResponse<AuthResponseType>) => {
       if (res.data.resultCode === 0 && res.data.data) {
         this.props.setAuthUserData(res.data.data);
       }

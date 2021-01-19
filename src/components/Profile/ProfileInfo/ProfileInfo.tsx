@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
 
 import s from './ProfileInfo.module.css';
-import { ProfileType } from '../../../types/types';
 import userAvatar from '../../../assets/images/userAvatar.svg';
+import { ProfileType } from '../../../types/types';
 import { Preloader } from '../../common/Preloader/Preloader';
 
 type ProfileInfoPropsType = {
@@ -27,7 +27,7 @@ export const ProfileInfo: FC<ProfileInfoPropsType> = ({ profile }) => {
         <img
           className={s.avatar}
           src={profile.photos.large || userAvatar}
-          alt="User"
+          alt={`${profile.fullName} avatar`}
         />
         ava + description
       </div>

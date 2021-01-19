@@ -1,11 +1,13 @@
 import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
+import axios, { AxiosResponse } from 'axios';
 
 import s from './Users.module.css';
 import userAvatar from '../../assets/images/userAvatar.svg';
 import { randomId } from '../../utils/randomId';
 import { UserType } from '../../types/types';
 import styleBtn from '../common/styles/Button.module.css';
+import { AuthResponseType } from '../Header/HeaderContainer';
 
 type UsersPropsType = {
   users: Array<UserType>;
@@ -16,6 +18,9 @@ type UsersPropsType = {
   unfollow: (userId: number) => void;
   changePageHandler: (pageNumber: number) => void;
 };
+
+const BASE_URL = 'https://social-network.samuraijs.com/api/1.0';
+const API_KEY = process.env.REACT_APP_API_KEY;
 
 export const Users: FC<UsersPropsType> = (props) => {
   const {
@@ -47,7 +52,20 @@ export const Users: FC<UsersPropsType> = (props) => {
             <button
               className={styleBtn.btn}
               type="button"
-              onClick={() => follow(u.id)}
+              onClick={() => {
+                axios({
+                  method: 'DELETE',
+                  url: `${BASE_URL}/follow/${u.id}`,
+                  withCredentials: true,
+                  headers: {
+                    'API-KEY': `${API_KEY}`,
+                  },
+                }).then((res: AxiosResponse<AuthResponseType>) => {
+                  if (res.data.resultCode === 0) {
+                    follow(u.id);
+                  }
+                });
+              }}
             >
               Unfollow
             </button>
@@ -55,7 +73,20 @@ export const Users: FC<UsersPropsType> = (props) => {
             <button
               className={styleBtn.btn}
               type="button"
-              onClick={() => unfollow(u.id)}
+              onClick={() => {
+                axios({
+                  method: 'POST',
+                  url: `${BASE_URL}/follow/${u.id}`,
+                  withCredentials: true,
+                  headers: {
+                    'API-KEY': `${API_KEY}`,
+                  },
+                }).then((res: AxiosResponse<AuthResponseType>) => {
+                  if (res.data.resultCode === 0) {
+                    unfollow(u.id);
+                  }
+                });
+              }}
             >
               Follow
             </button>

@@ -40,6 +40,9 @@ module.exports = {
     'linebreak-style': 'off',
     'import/prefer-default-export': 'off',
     'import/no-default-export': 'error',
+    'no-console': 'warn',
+    'no-debugger': 'warn',
+    // FIXME change 'react/destructuring-assignment' to warn
     'react/destructuring-assignment': 'off',
     'react/jsx-props-no-spreading': 'off',
     'jsx-a11y/label-has-associated-control': [
