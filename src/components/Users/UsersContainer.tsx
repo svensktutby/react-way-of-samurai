@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import axios, { AxiosResponse } from 'axios';
 
 import { AppStateType } from '../../redux/reduxStore';
 import {
@@ -14,6 +13,8 @@ import {
 import { UserType } from '../../types/types';
 import { Users } from './Users';
 import { Preloader } from '../common/Preloader/Preloader';
+import { UsersResponseType } from '../../api/api';
+import { usersApi } from '../../api/usersApi';
 
 type StatePropsType = {
   users: Array<UserType>;
@@ -32,43 +33,31 @@ type DispatchPropsType = {
   toggleIsFetching: (isFetching: boolean) => void;
 };
 
-type GetUsersResponseType = {
-  items: Array<UserType>;
-  totalCount: number;
-  error: string | null;
-};
-
 type PropsType = StatePropsType & DispatchPropsType;
-
-const BASE_URL = 'https://social-network.samuraijs.com/api/1.0';
 
 class UsersAPIContainer extends Component<PropsType> {
   componentDidMount() {
     this.props.toggleIsFetching(true);
 
-    axios({
-      method: 'GET',
-      url: `${BASE_URL}/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,
-      withCredentials: true,
-    }).then((res: AxiosResponse<GetUsersResponseType>) => {
-      this.props.toggleIsFetching(false);
-      this.props.setUsers(res.data.items);
-      this.props.setUsersTotalCount(res.data.totalCount);
-    });
+    usersApi
+      .getUsers(this.props.currentPage, this.props.pageSize)
+      .then((data: UsersResponseType) => {
+        this.props.toggleIsFetching(false);
+        this.props.setUsers(data.items);
+        this.props.setUsersTotalCount(data.totalCount);
+      });
   }
 
   changePageHandler = (pageNumber: number) => {
     this.props.setCurrentPage(pageNumber);
     this.props.toggleIsFetching(true);
 
-    axios({
-      method: 'GET',
-      url: `${BASE_URL}/users?page=${pageNumber}&count=${this.props.pageSize}`,
-      withCredentials: true,
-    }).then((res: AxiosResponse<GetUsersResponseType>) => {
-      this.props.toggleIsFetching(false);
-      this.props.setUsers(res.data.items);
-    });
+    usersApi
+      .getUsers(pageNumber, this.props.pageSize)
+      .then((data: UsersResponseType) => {
+        this.props.toggleIsFetching(false);
+        this.props.setUsers(data.items);
+      });
   };
 
   render() {

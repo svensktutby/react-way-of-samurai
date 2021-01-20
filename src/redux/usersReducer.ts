@@ -20,7 +20,7 @@ export const usersReducer = (
       return {
         ...state,
         users: state.users.map((u) =>
-          u.id === action.payload ? { ...u, followed: false } : u,
+          u.id === action.payload ? { ...u, followed: true } : u,
         ),
       };
     }
@@ -29,7 +29,7 @@ export const usersReducer = (
       return {
         ...state,
         users: state.users.map((u) =>
-          u.id === action.payload ? { ...u, followed: true } : u,
+          u.id === action.payload ? { ...u, followed: false } : u,
         ),
       };
     }

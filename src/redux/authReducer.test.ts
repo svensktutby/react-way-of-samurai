@@ -1,6 +1,6 @@
 import { authReducer } from './authReducer';
 import { setAuthUserData } from './actions';
-import { AuthType } from '../types/types';
+import { AuthType } from '../api/api';
 
 describe('Auth', () => {
   let state: AuthType;

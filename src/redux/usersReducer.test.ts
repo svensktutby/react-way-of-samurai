@@ -50,7 +50,7 @@ describe('Users page', () => {
     const newState = usersReducer(state, action);
 
     // 3. expectation
-    expect(newState.users[0].followed).toBeFalsy();
+    expect(newState.users[0].followed).toBeTruthy();
   });
 
   test("status 'unfollow' of specified user should be changed", () => {
@@ -58,7 +58,7 @@ describe('Users page', () => {
 
     const newState = usersReducer(state, action);
 
-    expect(newState.users[1].followed).toBeTruthy();
+    expect(newState.users[1].followed).toBeFalsy();
   });
 
   test('users should be changed', () => {

@@ -1,4 +1,5 @@
-import { AuthType, ProfileType, UserType } from '../types/types';
+import { ProfileType, UserType } from '../types/types';
+import { AuthType } from '../api/api';
 
 export enum ActionsType {
   UPDATE_NEW_POST_TEXT = 'SN/PROFILE/UPDATE_NEW_POST_TEXT',

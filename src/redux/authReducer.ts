@@ -1,5 +1,5 @@
 import { ActionsType, AuthActionTypes } from './actions';
-import { AuthType } from '../types/types';
+import { AuthType } from '../api/api';
 
 const initialState: AuthType = {
   id: null,

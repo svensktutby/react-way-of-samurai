@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import s from './Header.module.css';
 import styleBtn from '../common/styles/Button.module.css';
-import { AuthType } from '../../types/types';
+import { AuthType } from '../../api/api';
 
 export type StatePropsType = {
   login: string | null;
