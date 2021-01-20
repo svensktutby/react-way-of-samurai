@@ -7,6 +7,7 @@ import {
   setCurrentPage,
   setUsers,
   setUsersTotalCount,
+  toggleFollowingProgress,
   toggleIsFetching,
   unfollow,
 } from '../../redux/actions';
@@ -22,6 +23,7 @@ type StatePropsType = {
   totalUsersCount: number;
   currentPage: number;
   isFetching: boolean;
+  followingInProgress: Array<number>;
 };
 
 type DispatchPropsType = {
@@ -31,6 +33,7 @@ type DispatchPropsType = {
   setCurrentPage: (pageNumber: number) => void;
   setUsersTotalCount: (totalCount: number) => void;
   toggleIsFetching: (isFetching: boolean) => void;
+  toggleFollowingProgress: (isFetching: boolean, userId: number) => void;
 };
 
 type PropsType = StatePropsType & DispatchPropsType;
@@ -66,9 +69,11 @@ class UsersAPIContainer extends Component<PropsType> {
       pageSize,
       totalUsersCount,
       currentPage,
+      followingInProgress,
       follow: followCallback,
       unfollow: unfollowCallback,
       isFetching,
+      toggleFollowingProgress: toggleFollowingProgressCallback,
     } = this.props;
 
     return (
@@ -81,8 +86,10 @@ class UsersAPIContainer extends Component<PropsType> {
             pageSize={pageSize}
             totalUsersCount={totalUsersCount}
             currentPage={currentPage}
+            followingInProgress={followingInProgress}
             follow={followCallback}
             unfollow={unfollowCallback}
+            toggleFollowingProgress={toggleFollowingProgressCallback}
             changePageHandler={this.changePageHandler}
           />
         )}
@@ -92,7 +99,14 @@ class UsersAPIContainer extends Component<PropsType> {
 }
 
 const mapStateToProps = ({
-  usersPage: { users, pageSize, totalUsersCount, currentPage, isFetching },
+  usersPage: {
+    users,
+    pageSize,
+    totalUsersCount,
+    currentPage,
+    isFetching,
+    followingInProgress,
+  },
 }: AppStateType): StatePropsType => {
   return {
     users,
@@ -100,6 +114,7 @@ const mapStateToProps = ({
     totalUsersCount,
     currentPage,
     isFetching,
+    followingInProgress,
   };
 };
 
@@ -115,4 +130,5 @@ export const UsersContainer = connect<
   setCurrentPage,
   setUsersTotalCount,
   toggleIsFetching,
+  toggleFollowingProgress,
 })(UsersAPIContainer);

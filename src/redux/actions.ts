@@ -15,6 +15,7 @@ export enum ActionsType {
   SET_CURRENT_PAGE = 'SN/USERS/SET_CURRENT_PAGE',
   SET_USERS_TOTAL_COUNT = 'SN/USERS/SET_USERS_TOTAL_COUNT',
   TOGGLE_IS_FETCHING = 'SN/USERS/TOGGLE_IS_FETCHING',
+  TOGGLE_IS_FOLLOWING_PROGRESS = 'SN/USERS/TOGGLE_IS_FOLLOWING_PROGRESS',
 
   SET_AUTH_USER_DATA = 'SN/AUTH/SET_AUTH_USER_DATA',
 }
@@ -59,13 +60,23 @@ export const setUsersTotalCount = (totalCount: number) =>
 export const toggleIsFetching = (isFetching: boolean) =>
   ({ type: ActionsType.TOGGLE_IS_FETCHING, payload: isFetching } as const);
 
+export const toggleFollowingProgress = (isFetching: boolean, userId: number) =>
+  ({
+    type: ActionsType.TOGGLE_IS_FOLLOWING_PROGRESS,
+    payload: {
+      isFetching,
+      userId,
+    },
+  } as const);
+
 export type UsersPageActionTypes =
   | ReturnType<typeof follow>
   | ReturnType<typeof unfollow>
   | ReturnType<typeof setUsers>
   | ReturnType<typeof setCurrentPage>
   | ReturnType<typeof setUsersTotalCount>
-  | ReturnType<typeof toggleIsFetching>;
+  | ReturnType<typeof toggleIsFetching>
+  | ReturnType<typeof toggleFollowingProgress>;
 
 export const setAuthUserData = (data: AuthType) =>
   ({ type: ActionsType.SET_AUTH_USER_DATA, payload: data } as const);

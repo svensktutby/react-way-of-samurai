@@ -14,9 +14,11 @@ type UsersPropsType = {
   pageSize: number;
   totalUsersCount: number;
   currentPage: number;
+  followingInProgress: Array<number>;
   follow: (userId: number) => void;
   unfollow: (userId: number) => void;
   changePageHandler: (pageNumber: number) => void;
+  toggleFollowingProgress: (isFetching: boolean, userId: number) => void;
 };
 
 export const Users: FC<UsersPropsType> = (props) => {
@@ -25,9 +27,11 @@ export const Users: FC<UsersPropsType> = (props) => {
     pageSize,
     totalUsersCount,
     currentPage,
+    followingInProgress,
     follow,
     unfollow,
     changePageHandler,
+    toggleFollowingProgress,
   } = props;
 
   const userElements = users.map((u) => (
@@ -49,11 +53,14 @@ export const Users: FC<UsersPropsType> = (props) => {
             <button
               className={styleBtn.btn}
               type="button"
+              disabled={followingInProgress.some((id) => id === u.id)}
               onClick={() => {
+                toggleFollowingProgress(true, u.id);
                 usersApi.unfollow(u.id).then((data: ApiResponseType) => {
                   if (data.resultCode === 0) {
                     unfollow(u.id);
                   }
+                  toggleFollowingProgress(false, u.id);
                 });
               }}
             >
@@ -63,11 +70,14 @@ export const Users: FC<UsersPropsType> = (props) => {
             <button
               className={styleBtn.btn}
               type="button"
+              disabled={followingInProgress.some((id) => id === u.id)}
               onClick={() => {
+                toggleFollowingProgress(true, u.id);
                 usersApi.follow(u.id).then((data: ApiResponseType) => {
                   if (data.resultCode === 0) {
                     follow(u.id);
                   }
+                  toggleFollowingProgress(false, u.id);
                 });
               }}
             >

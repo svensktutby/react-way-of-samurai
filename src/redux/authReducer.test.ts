@@ -29,6 +29,6 @@ describe('Auth', () => {
     const newState = authReducer(state, action);
 
     // 3. expectation
-    expect(newState.email).toBe('tough.ass.dude@me.com');
+    expect(newState).toEqual(userAuthData);
   });
 });
