@@ -1,13 +1,5 @@
+import * as actions from './actions';
 import { UsersPageType, usersReducer } from './usersReducer';
-import {
-  follow,
-  setCurrentPage,
-  setUsers,
-  setUsersTotalCount,
-  toggleFollowingProgress,
-  toggleIsFetching,
-  unfollow,
-} from './actions';
 
 describe('Users page', () => {
   let state: UsersPageType;
@@ -44,26 +36,27 @@ describe('Users page', () => {
     };
   });
 
-  test("status 'follow' of specified user should be changed", () => {
+  test('should handle follow', () => {
     // 1. data
-    const action = follow(1);
 
     // 2. action
+    const action = actions.follow(1);
+
     const newState = usersReducer(state, action);
 
     // 3. expectation
     expect(newState.users[0].followed).toBeTruthy();
   });
 
-  test("status 'unfollow' of specified user should be changed", () => {
-    const action = unfollow(2);
+  test('should handle unfollow', () => {
+    const action = actions.unfollow(2);
 
     const newState = usersReducer(state, action);
 
     expect(newState.users[1].followed).toBeFalsy();
   });
 
-  test('users should be changed', () => {
+  test('should handle setUsers', () => {
     const newUsers = [
       {
         id: 3,
@@ -77,7 +70,7 @@ describe('Users page', () => {
       },
     ];
 
-    const action = setUsers(newUsers);
+    const action = actions.setUsers(newUsers);
 
     const newState = usersReducer(state, action);
 
@@ -85,34 +78,34 @@ describe('Users page', () => {
     expect(newState.users[0].name).toBe('Kastus');
   });
 
-  test('currentPage should be changed', () => {
-    const action = setCurrentPage(3);
+  test('should handle setCurrentPage', () => {
+    const action = actions.setCurrentPage(3);
 
     const newState = usersReducer(state, action);
 
     expect(newState.currentPage).toBe(3);
   });
 
-  test('totalUsersCount should be changed', () => {
-    const action = setUsersTotalCount(10);
+  test('should handle setUsersTotalCount', () => {
+    const action = actions.setUsersTotalCount(10);
 
     const newState = usersReducer(state, action);
 
     expect(newState.totalUsersCount).toBe(10);
   });
 
-  test('fetching status should be changed', () => {
-    const action = toggleIsFetching(true);
+  test('should handle toggleIsFetching', () => {
+    const action = actions.toggleIsFetching(true);
 
     const newState = usersReducer(state, action);
 
     expect(newState.isFetching).toBeTruthy();
   });
 
-  test('followingInProgress should be changed', () => {
-    const action1 = toggleFollowingProgress(true, 2);
-    const action2 = toggleFollowingProgress(true, 3);
-    const action3 = toggleFollowingProgress(false, 3);
+  test('should handle toggleFollowingProgress', () => {
+    const action1 = actions.toggleFollowingProgress(true, 2);
+    const action2 = actions.toggleFollowingProgress(true, 3);
+    const action3 = actions.toggleFollowingProgress(false, 3);
 
     const newState1 = usersReducer(state, action1);
     const newState2 = usersReducer(newState1, action2);

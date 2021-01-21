@@ -1,5 +1,5 @@
+import * as actions from './actions';
 import { profileReducer, ProfilePageStateType } from './profileReducer';
-import { addPost, changePost, setUserProfile } from './actions';
 
 describe('Profile page', () => {
   let state: ProfilePageStateType;
@@ -23,35 +23,29 @@ describe('Profile page', () => {
     };
   });
 
-  test("posts' length should be incremented", () => {
+  test('should handle addPost', () => {
     // 1. data
-    const action = addPost();
 
     // 2. action
+    const action = actions.addPost();
+
     const newState = profileReducer(state, action);
 
     // 3. expectation
     expect(newState.posts).toHaveLength(3);
-  });
-
-  test('new post message should be correct', () => {
-    const action = addPost();
-
-    const newState = profileReducer(state, action);
-
     expect(newState.posts[2].message).toEqual('it-kamasutra.com');
   });
 
-  test("changed post' text should be correct", () => {
-    const action = changePost('new text');
+  test('should handle changePost', () => {
+    const action = actions.changePost('new text');
 
     const newState = profileReducer(state, action);
 
     expect(newState.newPostText).toEqual('new text');
   });
 
-  test('new user profile should be added', () => {
-    const newUserProfile = {
+  test('should handle setUserProfile', () => {
+    const userProfile = {
       aboutMe: 'tough-ass dude',
       contacts: {
         facebook: '',
@@ -73,10 +67,11 @@ describe('Profile page', () => {
       },
     };
 
-    const action = setUserProfile(newUserProfile);
+    const action = actions.setUserProfile(userProfile);
 
     const newState = profileReducer(state, action);
 
-    expect(newState.profile).toEqual(newUserProfile);
+    expect(newState.profile).not.toBeNull();
+    expect(newState.profile).toEqual(userProfile);
   });
 });

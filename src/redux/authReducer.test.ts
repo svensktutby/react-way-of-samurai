@@ -1,8 +1,8 @@
+import * as actions from './actions';
 import { authReducer } from './authReducer';
-import { setAuthUserData } from './actions';
 import { AuthType } from '../api/api';
 
-describe('Auth', () => {
+describe('auth reducer', () => {
   let state: AuthType;
 
   beforeEach(() => {
@@ -14,7 +14,7 @@ describe('Auth', () => {
     };
   });
 
-  test('auth user data should be changed', () => {
+  test('should handle setAuthUserData', () => {
     // 1. data
     const userAuthData = {
       id: 4,
@@ -23,9 +23,9 @@ describe('Auth', () => {
       isAuth: true,
     };
 
-    const action = setAuthUserData(userAuthData);
-
     // 2. action
+    const action = actions.setAuthUserData(userAuthData);
+
     const newState = authReducer(state, action);
 
     // 3. expectation

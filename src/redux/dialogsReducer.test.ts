@@ -1,6 +1,5 @@
+import * as actions from './actions';
 import { DialogsPageType, dialogsReducer } from './dialogsReducer';
-import { changeMessage, sendMessage } from './actions';
-
 describe('Dialogs page', () => {
   let state: DialogsPageType;
 
@@ -42,30 +41,24 @@ describe('Dialogs page', () => {
     };
   });
 
-  test("messages' length should be incremented", () => {
+  test('should handle sendMessage', () => {
     // 1. data
-    const action = sendMessage();
 
     // 2. action
+    const action = actions.sendMessage();
+
     const newState = dialogsReducer(state, action);
 
     // 3. expectation
     expect(newState.messages).toHaveLength(4);
+    expect(newState.messages[3].message).toBe('I wish you happy holidays');
   });
 
-  test('new post message should be correct', () => {
-    const action = sendMessage();
+  test('should handle changeMessage', () => {
+    const action = actions.changeMessage('new text');
 
     const newState = dialogsReducer(state, action);
 
-    expect(newState.messages[3].message).toEqual('I wish you happy holidays');
-  });
-
-  test("changed post' message should be correct", () => {
-    const action = changeMessage('new text');
-
-    const newState = dialogsReducer(state, action);
-
-    expect(newState.newMessageText).toEqual('new text');
+    expect(newState.newMessageText).toBe('new text');
   });
 });
