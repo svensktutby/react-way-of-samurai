@@ -3,20 +3,13 @@ import { Link } from 'react-router-dom';
 
 import s from './Header.module.css';
 import styleBtn from '../common/styles/Button.module.css';
-import { AuthType } from '../../api/api';
 
-export type StatePropsType = {
+export type HeaderPropsType = {
   login: string | null;
   isAuth: boolean;
 };
 
-export type DispatchPropsType = {
-  setAuthUserData: (data: AuthType) => void;
-};
-
-export type PropsType = StatePropsType & DispatchPropsType;
-
-export const Header: FC<PropsType> = ({ login, isAuth }) => {
+export const Header: FC<HeaderPropsType> = ({ login, isAuth }) => {
   return (
     <header className={s.header}>
       <img

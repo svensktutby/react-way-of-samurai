@@ -1,4 +1,5 @@
 import { applyMiddleware, compose, Middleware } from 'redux';
+import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 
 const DEV = process.env.NODE_ENV !== 'production';
@@ -20,7 +21,7 @@ const logger = createLogger({
 const devtools = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
 const composeEnhancers = DEV && devtools ? devtools : compose;
 
-const middleware: Array<Middleware> = [];
+const middleware: Array<Middleware> = [thunk];
 
 if (DEV) middleware.push(logger);
 

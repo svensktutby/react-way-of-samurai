@@ -1,5 +1,10 @@
+import { Dispatch } from 'redux';
+
+import { usersApi } from '../api/usersApi';
+import { ApiResponseType, AuthType, UsersResponseType } from '../api/api';
 import { ProfileType, UserType } from '../types/types';
-import { AuthType } from '../api/api';
+import { profileApi } from '../api/profileApi';
+import { authApi } from '../api/authApi';
 
 export enum ActionsType {
   UPDATE_NEW_POST_TEXT = 'SN/PROFILE/UPDATE_NEW_POST_TEXT',
@@ -32,6 +37,15 @@ export type ProfilePageActionTypes =
   | ReturnType<typeof changePost>
   | ReturnType<typeof addPost>
   | ReturnType<typeof setUserProfile>;
+
+// FIXME add return type for getProfile
+export const getProfile = (userId: number) => (
+  dispatch: Dispatch<ProfilePageActionTypes>,
+) => {
+  profileApi.getProfile(userId).then((data: ProfileType) => {
+    dispatch(setUserProfile(data));
+  });
+};
 
 export const changeMessage = (message: string) =>
   ({ type: ActionsType.UPDATE_NEW_MESSAGE_TEXT, payload: message } as const);
@@ -78,7 +92,57 @@ export type UsersPageActionTypes =
   | ReturnType<typeof toggleIsFetching>
   | ReturnType<typeof toggleFollowingProgress>;
 
+// FIXME add return type for getUsers
+export const getUsers = (pageNumber: number, pageSize: number) => (
+  dispatch: Dispatch<UsersPageActionTypes>,
+) => {
+  dispatch(toggleIsFetching(true));
+
+  usersApi.getUsers(pageNumber, pageSize).then((data: UsersResponseType) => {
+    dispatch(toggleIsFetching(false));
+    dispatch(setUsers(data.items));
+    dispatch(setUsersTotalCount(data.totalCount));
+  });
+};
+
+// FIXME add return type for followUser
+export const followUser = (userId: number) => (
+  dispatch: Dispatch<UsersPageActionTypes>,
+) => {
+  dispatch(toggleFollowingProgress(true, userId));
+
+  usersApi.follow(userId).then((data: ApiResponseType) => {
+    if (data.resultCode === 0) {
+      dispatch(follow(userId));
+    }
+    dispatch(toggleFollowingProgress(false, userId));
+  });
+};
+
+// FIXME add return type for unfollowUser
+export const unfollowUser = (userId: number) => (
+  dispatch: Dispatch<UsersPageActionTypes>,
+) => {
+  dispatch(toggleFollowingProgress(true, userId));
+
+  usersApi.unfollow(userId).then((data: ApiResponseType) => {
+    if (data.resultCode === 0) {
+      dispatch(unfollow(userId));
+    }
+    dispatch(toggleFollowingProgress(false, userId));
+  });
+};
+
 export const setAuthUserData = (data: AuthType) =>
   ({ type: ActionsType.SET_AUTH_USER_DATA, payload: data } as const);
 
 export type AuthActionTypes = ReturnType<typeof setAuthUserData>;
+
+// FIXME add return type for getProfile
+export const getAuthUserData = () => (dispatch: Dispatch<AuthActionTypes>) => {
+  authApi.me().then((data: ApiResponseType) => {
+    if (data.resultCode === 0 && data.data) {
+      dispatch(setAuthUserData(data.data));
+    }
+  });
+};

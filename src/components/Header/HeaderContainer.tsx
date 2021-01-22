@@ -1,23 +1,30 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { DispatchPropsType, Header, PropsType, StatePropsType } from './Header';
+import { Header } from './Header';
 import { AppStateType } from '../../redux/reduxStore';
-import { setAuthUserData } from '../../redux/actions';
-import { ApiResponseType } from '../../api/api';
-import { authApi } from '../../api/authApi';
+import { getAuthUserData } from '../../redux/actions';
+
+export type StatePropsType = {
+  login: string | null;
+  isAuth: boolean;
+};
+
+export type DispatchPropsType = {
+  getAuthUserData: () => void;
+};
+
+export type PropsType = StatePropsType & DispatchPropsType;
 
 class HeaderAPIContainer extends Component<PropsType> {
   componentDidMount() {
-    authApi.me().then((data: ApiResponseType) => {
-      if (data.resultCode === 0 && data.data) {
-        this.props.setAuthUserData(data.data);
-      }
-    });
+    this.props.getAuthUserData();
   }
 
   render() {
-    return <Header {...this.props} />;
+    const { login, isAuth } = this.props;
+
+    return <Header login={login} isAuth={isAuth} />;
   }
 }
 
@@ -32,4 +39,4 @@ export const HeaderContainer = connect<
   DispatchPropsType,
   Record<string, never>,
   AppStateType
->(mapStateToProps, { setAuthUserData })(HeaderAPIContainer);
+>(mapStateToProps, { getAuthUserData })(HeaderAPIContainer);

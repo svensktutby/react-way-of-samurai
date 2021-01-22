@@ -5,9 +5,7 @@ import s from './Users.module.css';
 import userAvatar from '../../assets/images/userAvatar.svg';
 import styleBtn from '../common/styles/Button.module.css';
 import { randomId } from '../../utils/randomId';
-import { usersApi } from '../../api/usersApi';
 import { UserType } from '../../types/types';
-import { ApiResponseType } from '../../api/api';
 
 type UsersPropsType = {
   users: Array<UserType>;
@@ -18,7 +16,6 @@ type UsersPropsType = {
   follow: (userId: number) => void;
   unfollow: (userId: number) => void;
   changePageHandler: (pageNumber: number) => void;
-  toggleFollowingProgress: (isFetching: boolean, userId: number) => void;
 };
 
 export const Users: FC<UsersPropsType> = (props) => {
@@ -31,7 +28,6 @@ export const Users: FC<UsersPropsType> = (props) => {
     follow,
     unfollow,
     changePageHandler,
-    toggleFollowingProgress,
   } = props;
 
   const userElements = users.map((u) => (
@@ -55,13 +51,7 @@ export const Users: FC<UsersPropsType> = (props) => {
               type="button"
               disabled={followingInProgress.some((id) => id === u.id)}
               onClick={() => {
-                toggleFollowingProgress(true, u.id);
-                usersApi.unfollow(u.id).then((data: ApiResponseType) => {
-                  if (data.resultCode === 0) {
-                    unfollow(u.id);
-                  }
-                  toggleFollowingProgress(false, u.id);
-                });
+                unfollow(u.id);
               }}
             >
               Unfollow
@@ -72,13 +62,7 @@ export const Users: FC<UsersPropsType> = (props) => {
               type="button"
               disabled={followingInProgress.some((id) => id === u.id)}
               onClick={() => {
-                toggleFollowingProgress(true, u.id);
-                usersApi.follow(u.id).then((data: ApiResponseType) => {
-                  if (data.resultCode === 0) {
-                    follow(u.id);
-                  }
-                  toggleFollowingProgress(false, u.id);
-                });
+                follow(u.id);
               }}
             >
               Follow
