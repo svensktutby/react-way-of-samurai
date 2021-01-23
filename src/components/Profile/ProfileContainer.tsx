@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
+
 import { Profile } from './Profile';
 import { ProfileType } from '../../types/types';
 import { AppStateType } from '../../redux/reduxStore';
 import { getProfile } from '../../redux/actions';
+import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 
 type PathPropsType = {
   userId: string;
@@ -42,11 +44,16 @@ const mapStateToProps = ({
   };
 };
 
-const WithURLDataProfileAPIContainer = withRouter(ProfileAPIContainer);
+// FIXME change any
+const WithURLDataProfileAPIContainer: any = withRouter(ProfileAPIContainer);
+
+const AuthRedirectComponent = withAuthRedirect<PropsType>(
+  WithURLDataProfileAPIContainer,
+);
 
 export const ProfileContainer = connect<
   StatePropsType,
   DispatchPropsType,
   Record<string, never>,
   AppStateType
->(mapStateToProps, { getProfile })(WithURLDataProfileAPIContainer);
+>(mapStateToProps, { getProfile })(AuthRedirectComponent);
