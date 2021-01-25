@@ -1,16 +1,19 @@
-import * as actions from './actions';
+import * as profile from './profileReducer';
+import * as dialogs from './dialogsReducer';
+import * as users from './usersReducer';
+import * as auth from './authReducer';
 
 describe('actions', () => {
   test('should create an action to change a post', () => {
     // 1. data
     const text = 'Hi, there!';
     const expectedAction = {
-      type: actions.ActionsType.UPDATE_NEW_POST_TEXT,
+      type: profile.ActionsType.UPDATE_NEW_POST_TEXT,
       payload: text,
     };
 
     // 2. action
-    const action = actions.changePost(text);
+    const action = profile.changePost(text);
 
     // 3. expectation
     expect(action).toEqual(expectedAction);
@@ -18,10 +21,10 @@ describe('actions', () => {
 
   test('should create an action to add a post', () => {
     const expectedAction = {
-      type: actions.ActionsType.ADD_POST,
+      type: profile.ActionsType.ADD_POST,
     };
 
-    const action = actions.addPost();
+    const action = profile.addPost();
 
     expect(action).toEqual(expectedAction);
   });
@@ -50,11 +53,11 @@ describe('actions', () => {
     };
 
     const expectedAction = {
-      type: actions.ActionsType.SET_USER_PROFILE,
+      type: profile.ActionsType.SET_USER_PROFILE,
       payload: userProfile,
     };
 
-    const action = actions.setUserProfile(userProfile);
+    const action = profile.setUserProfile(userProfile);
 
     expect(action).toEqual(expectedAction);
   });
@@ -62,21 +65,21 @@ describe('actions', () => {
   test('should create an action to change a message', () => {
     const message = 'Yo, dude';
     const expectedAction = {
-      type: actions.ActionsType.UPDATE_NEW_MESSAGE_TEXT,
+      type: dialogs.ActionsType.UPDATE_NEW_MESSAGE_TEXT,
       payload: message,
     };
 
-    const action = actions.changeMessage(message);
+    const action = dialogs.changeMessage(message);
 
     expect(action).toEqual(expectedAction);
   });
 
   test('should create an action to send a message', () => {
     const expectedAction = {
-      type: actions.ActionsType.SEND_MESSAGE,
+      type: dialogs.ActionsType.SEND_MESSAGE,
     };
 
-    const action = actions.sendMessage();
+    const action = dialogs.sendMessage();
 
     expect(action).toEqual(expectedAction);
   });
@@ -84,11 +87,11 @@ describe('actions', () => {
   test('should create an action to follow a user', () => {
     const userId = 3;
     const expectedAction = {
-      type: actions.ActionsType.FOLLOW,
+      type: users.ActionsType.FOLLOW,
       payload: userId,
     };
 
-    const action = actions.follow(userId);
+    const action = users.follow(userId);
 
     expect(action).toEqual(expectedAction);
   });
@@ -96,11 +99,11 @@ describe('actions', () => {
   test('should create an action to unfollow a user', () => {
     const userId = 2;
     const expectedAction = {
-      type: actions.ActionsType.UNFOLLOW,
+      type: users.ActionsType.UNFOLLOW,
       payload: userId,
     };
 
-    const action = actions.unfollow(userId);
+    const action = users.unfollow(userId);
 
     expect(action).toEqual(expectedAction);
   });
@@ -120,11 +123,11 @@ describe('actions', () => {
     ];
 
     const expectedAction = {
-      type: actions.ActionsType.SET_USERS,
+      type: users.ActionsType.SET_USERS,
       payload: newUsers,
     };
 
-    const action = actions.setUsers(newUsers);
+    const action = users.setUsers(newUsers);
 
     expect(action).toEqual(expectedAction);
   });
@@ -132,11 +135,11 @@ describe('actions', () => {
   test('should create an action to set the current page', () => {
     const pageNumber = 5;
     const expectedAction = {
-      type: actions.ActionsType.SET_CURRENT_PAGE,
+      type: users.ActionsType.SET_CURRENT_PAGE,
       payload: pageNumber,
     };
 
-    const action = actions.setCurrentPage(pageNumber);
+    const action = users.setCurrentPage(pageNumber);
 
     expect(action).toEqual(expectedAction);
   });
@@ -144,11 +147,11 @@ describe('actions', () => {
   test('should create an action to set a users total count', () => {
     const totalCount = 50;
     const expectedAction = {
-      type: actions.ActionsType.SET_USERS_TOTAL_COUNT,
+      type: users.ActionsType.SET_USERS_TOTAL_COUNT,
       payload: totalCount,
     };
 
-    const action = actions.setUsersTotalCount(totalCount);
+    const action = users.setUsersTotalCount(totalCount);
 
     expect(action).toEqual(expectedAction);
   });
@@ -156,11 +159,11 @@ describe('actions', () => {
   test('should create an action to toggle isFetching', () => {
     const isFetching = true;
     const expectedAction = {
-      type: actions.ActionsType.TOGGLE_IS_FETCHING,
+      type: users.ActionsType.TOGGLE_IS_FETCHING,
       payload: isFetching,
     };
 
-    const action = actions.toggleIsFetching(isFetching);
+    const action = users.toggleIsFetching(isFetching);
 
     expect(action).toEqual(expectedAction);
   });
@@ -169,14 +172,31 @@ describe('actions', () => {
     const isFetching = true;
     const userId = 7;
     const expectedAction = {
-      type: actions.ActionsType.TOGGLE_IS_FOLLOWING_PROGRESS,
+      type: users.ActionsType.TOGGLE_IS_FOLLOWING_PROGRESS,
       payload: {
         isFetching,
         userId,
       },
     };
 
-    const action = actions.toggleFollowingProgress(isFetching, userId);
+    const action = users.toggleFollowingProgress(isFetching, userId);
+
+    expect(action).toEqual(expectedAction);
+  });
+
+  test('should create an action to set auth user data', () => {
+    const data = {
+      id: 4,
+      email: null,
+      login: null,
+      isAuth: true,
+    };
+    const expectedAction = {
+      type: auth.ActionsType.SET_AUTH_USER_DATA,
+      payload: data,
+    };
+
+    const action = auth.setAuthUserData(data);
 
     expect(action).toEqual(expectedAction);
   });

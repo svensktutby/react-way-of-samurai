@@ -6,7 +6,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Profile } from './Profile';
 import { ProfileType } from '../../types/types';
 import { AppStateType } from '../../redux/reduxStore';
-import { getProfile } from '../../redux/actions';
+import { getProfile } from '../../redux/profileReducer';
 import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 
 type PathPropsType = {

@@ -1,5 +1,4 @@
-import * as actions from './actions';
-import { authReducer } from './authReducer';
+import * as auth from './authReducer';
 import { AuthType } from '../api/api';
 
 describe('auth reducer', () => {
@@ -24,9 +23,9 @@ describe('auth reducer', () => {
     };
 
     // 2. action
-    const action = actions.setAuthUserData(userAuthData);
+    const action = auth.setAuthUserData(userAuthData);
 
-    const newState = authReducer(state, action);
+    const newState = auth.authReducer(state, action);
 
     // 3. expectation
     expect(newState).toEqual(userAuthData);

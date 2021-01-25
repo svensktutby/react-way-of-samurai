@@ -8,7 +8,7 @@ import {
   getUsers,
   setCurrentPage,
   unfollowUser,
-} from '../../redux/actions';
+} from '../../redux/usersReducer';
 import { UserType } from '../../types/types';
 import { Users } from './Users';
 import { Preloader } from '../common/Preloader/Preloader';

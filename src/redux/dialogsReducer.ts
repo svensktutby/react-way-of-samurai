@@ -1,6 +1,10 @@
 import { randomId } from '../utils/randomId';
 import { DialogItemType, MessageType } from '../types/types';
-import { ActionsType, DialogsPageActionsType } from './actions';
+
+export enum ActionsType {
+  UPDATE_NEW_MESSAGE_TEXT = 'SN/DIALOGS/UPDATE_NEW_MESSAGE_TEXT',
+  SEND_MESSAGE = 'SN/DIALOGS/SEND_MESSAGE',
+}
 
 const initialState = {
   dialogs: [
@@ -38,12 +42,12 @@ const initialState = {
   newMessageText: '',
 };
 
-export type DialogsPageType = typeof initialState;
+export type DialogsPageStateType = typeof initialState;
 
 export const dialogsReducer = (
   state = initialState,
   action: DialogsPageActionsType,
-): DialogsPageType => {
+): DialogsPageStateType => {
   switch (action.type) {
     case ActionsType.UPDATE_NEW_MESSAGE_TEXT:
       return { ...state, newMessageText: action.payload };
@@ -65,3 +69,12 @@ export const dialogsReducer = (
       return state;
   }
 };
+
+export const changeMessage = (message: string) =>
+  ({ type: ActionsType.UPDATE_NEW_MESSAGE_TEXT, payload: message } as const);
+
+export const sendMessage = () => ({ type: ActionsType.SEND_MESSAGE } as const);
+
+export type DialogsPageActionsType =
+  | ReturnType<typeof changeMessage>
+  | ReturnType<typeof sendMessage>;

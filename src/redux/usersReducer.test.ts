@@ -1,8 +1,7 @@
-import * as actions from './actions';
-import { UsersPageType, usersReducer } from './usersReducer';
+import * as users from './usersReducer';
 
 describe('Users page', () => {
-  let state: UsersPageType;
+  let state: users.UsersPageStateType;
 
   beforeEach(() => {
     state = {
@@ -40,18 +39,18 @@ describe('Users page', () => {
     // 1. data
 
     // 2. action
-    const action = actions.follow(1);
+    const action = users.follow(1);
 
-    const newState = usersReducer(state, action);
+    const newState = users.usersReducer(state, action);
 
     // 3. expectation
     expect(newState.users[0].followed).toBeTruthy();
   });
 
   test('should handle unfollow', () => {
-    const action = actions.unfollow(2);
+    const action = users.unfollow(2);
 
-    const newState = usersReducer(state, action);
+    const newState = users.usersReducer(state, action);
 
     expect(newState.users[1].followed).toBeFalsy();
   });
@@ -70,46 +69,46 @@ describe('Users page', () => {
       },
     ];
 
-    const action = actions.setUsers(newUsers);
+    const action = users.setUsers(newUsers);
 
-    const newState = usersReducer(state, action);
+    const newState = users.usersReducer(state, action);
 
     expect(newState.users).toHaveLength(1);
     expect(newState.users[0].name).toBe('Kastus');
   });
 
   test('should handle setCurrentPage', () => {
-    const action = actions.setCurrentPage(3);
+    const action = users.setCurrentPage(3);
 
-    const newState = usersReducer(state, action);
+    const newState = users.usersReducer(state, action);
 
     expect(newState.currentPage).toBe(3);
   });
 
   test('should handle setUsersTotalCount', () => {
-    const action = actions.setUsersTotalCount(10);
+    const action = users.setUsersTotalCount(10);
 
-    const newState = usersReducer(state, action);
+    const newState = users.usersReducer(state, action);
 
     expect(newState.totalUsersCount).toBe(10);
   });
 
   test('should handle toggleIsFetching', () => {
-    const action = actions.toggleIsFetching(true);
+    const action = users.toggleIsFetching(true);
 
-    const newState = usersReducer(state, action);
+    const newState = users.usersReducer(state, action);
 
     expect(newState.isFetching).toBeTruthy();
   });
 
   test('should handle toggleFollowingProgress', () => {
-    const action1 = actions.toggleFollowingProgress(true, 2);
-    const action2 = actions.toggleFollowingProgress(true, 3);
-    const action3 = actions.toggleFollowingProgress(false, 3);
+    const action1 = users.toggleFollowingProgress(true, 2);
+    const action2 = users.toggleFollowingProgress(true, 3);
+    const action3 = users.toggleFollowingProgress(false, 3);
 
-    const newState1 = usersReducer(state, action1);
-    const newState2 = usersReducer(newState1, action2);
-    const newState3 = usersReducer(newState2, action3);
+    const newState1 = users.usersReducer(state, action1);
+    const newState2 = users.usersReducer(newState1, action2);
+    const newState3 = users.usersReducer(newState2, action3);
 
     expect(newState1.followingInProgress).toEqual([2]);
     expect(newState2.followingInProgress).toEqual([2, 3]);

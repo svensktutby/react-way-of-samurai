@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { Header } from './Header';
 import { AppStateType } from '../../redux/reduxStore';
-import { getAuthUserData } from '../../redux/actions';
+import { getAuthUserData } from '../../redux/authReducer';
 
 export type StatePropsType = {
   login: string | null;

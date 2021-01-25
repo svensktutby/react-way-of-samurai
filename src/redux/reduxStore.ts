@@ -1,5 +1,4 @@
-import { Action, combineReducers, createStore } from 'redux';
-import { ThunkAction } from 'redux-thunk';
+import { combineReducers, createStore } from 'redux';
 
 import { enhancedStore } from './middleware';
 import { dialogsReducer as dialogsPage } from './dialogsReducer';
@@ -9,11 +8,6 @@ import { authReducer as auth } from './authReducer';
 import { sidebarReducer as sidebar } from './sidebarReducer';
 
 export type AppStateType = ReturnType<typeof rootReducer>;
-
-export type AppThunkType<
-  A extends Action = Action,
-  R = Promise<void>
-> = ThunkAction<R, AppStateType, unknown, A>;
 
 const rootReducer = combineReducers({
   profilePage,

@@ -3,12 +3,12 @@ import React, { ChangeEvent, FC } from 'react';
 import s from './Dialogs.module.css';
 import { DialogItem } from './DialogItem/DialogItem';
 import { Message } from './Message/Message';
-import { DialogsPageType } from '../../redux/dialogsReducer';
+import { DialogsPageStateType } from '../../redux/dialogsReducer';
 import styleInput from '../common/styles/Input.module.css';
 import styleBtn from '../common/styles/Button.module.css';
 
 export type StatePropsType = {
-  dialogsPage: DialogsPageType;
+  dialogsPage: DialogsPageStateType;
 };
 
 export type DispatchPropsType = {

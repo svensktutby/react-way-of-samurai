@@ -1,8 +1,7 @@
-import * as actions from './actions';
-import { DialogsPageType, dialogsReducer } from './dialogsReducer';
+import * as dialogs from './dialogsReducer';
 
 describe('Dialogs page', () => {
-  let state: DialogsPageType;
+  let state: dialogs.DialogsPageStateType;
 
   beforeEach(() => {
     state = {
@@ -46,9 +45,9 @@ describe('Dialogs page', () => {
     // 1. data
 
     // 2. action
-    const action = actions.sendMessage();
+    const action = dialogs.sendMessage();
 
-    const newState = dialogsReducer(state, action);
+    const newState = dialogs.dialogsReducer(state, action);
 
     // 3. expectation
     expect(newState.messages).toHaveLength(4);
@@ -56,9 +55,9 @@ describe('Dialogs page', () => {
   });
 
   test('should handle changeMessage', () => {
-    const action = actions.changeMessage('new text');
+    const action = dialogs.changeMessage('new text');
 
-    const newState = dialogsReducer(state, action);
+    const newState = dialogs.dialogsReducer(state, action);
 
     expect(newState.newMessageText).toBe('new text');
   });

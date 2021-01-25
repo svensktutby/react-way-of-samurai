@@ -1,8 +1,7 @@
-import * as actions from './actions';
-import { profileReducer, ProfilePageStateType } from './profileReducer';
+import * as profile from './profileReducer';
 
 describe('Profile page', () => {
-  let state: ProfilePageStateType;
+  let state: profile.ProfilePageStateType;
 
   beforeEach(() => {
     state = {
@@ -27,9 +26,9 @@ describe('Profile page', () => {
     // 1. data
 
     // 2. action
-    const action = actions.addPost();
+    const action = profile.addPost();
 
-    const newState = profileReducer(state, action);
+    const newState = profile.profileReducer(state, action);
 
     // 3. expectation
     expect(newState.posts).toHaveLength(3);
@@ -37,9 +36,9 @@ describe('Profile page', () => {
   });
 
   test('should handle changePost', () => {
-    const action = actions.changePost('new text');
+    const action = profile.changePost('new text');
 
-    const newState = profileReducer(state, action);
+    const newState = profile.profileReducer(state, action);
 
     expect(newState.newPostText).toEqual('new text');
   });
@@ -67,9 +66,9 @@ describe('Profile page', () => {
       },
     };
 
-    const action = actions.setUserProfile(userProfile);
+    const action = profile.setUserProfile(userProfile);
 
-    const newState = profileReducer(state, action);
+    const newState = profile.profileReducer(state, action);
 
     expect(newState.profile).not.toBeNull();
     expect(newState.profile).toEqual(userProfile);
