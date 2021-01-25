@@ -1,5 +1,5 @@
 import { UserType } from '../types/types';
-import { ActionsType, UsersPageActionTypes } from './actions';
+import { ActionsType, UsersPageActionsType } from './actions';
 
 const initialState = {
   users: [] as Array<UserType>,
@@ -14,7 +14,7 @@ export type UsersPageType = typeof initialState;
 
 export const usersReducer = (
   state = initialState,
-  action: UsersPageActionTypes,
+  action: UsersPageActionsType,
 ): UsersPageType => {
   switch (action.type) {
     case ActionsType.FOLLOW: {

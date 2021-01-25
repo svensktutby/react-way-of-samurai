@@ -11,11 +11,11 @@ type UsersPropsType = {
   users: Array<UserType>;
   pageSize: number;
   totalUsersCount: number;
-  currentPage: number;
+  page: number;
   followingInProgress: Array<number>;
   follow: (userId: number) => void;
   unfollow: (userId: number) => void;
-  changePageHandler: (pageNumber: number) => void;
+  changePageHandler: (page: number) => void;
 };
 
 export const Users: FC<UsersPropsType> = (props) => {
@@ -23,7 +23,7 @@ export const Users: FC<UsersPropsType> = (props) => {
     users,
     pageSize,
     totalUsersCount,
-    currentPage,
+    page,
     followingInProgress,
     follow,
     unfollow,
@@ -95,7 +95,7 @@ export const Users: FC<UsersPropsType> = (props) => {
             type="button"
             key={randomId()}
             className={`${s.pageBtn} ${styleBtn.btn} ${
-              idx + 1 === currentPage && s.selectedPage
+              idx + 1 === page && s.selectedPage
             }`}
             onClick={() => changePageHandler(idx + 1)}
           >

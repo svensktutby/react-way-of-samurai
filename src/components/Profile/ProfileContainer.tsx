@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component, ComponentType } from 'react';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
@@ -44,16 +45,8 @@ const mapStateToProps = ({
   };
 };
 
-// FIXME change any
-const WithURLDataProfileAPIContainer: any = withRouter(ProfileAPIContainer);
-
-const AuthRedirectComponent = withAuthRedirect<PropsType>(
-  WithURLDataProfileAPIContainer,
-);
-
-export const ProfileContainer = connect<
-  StatePropsType,
-  DispatchPropsType,
-  Record<string, never>,
-  AppStateType
->(mapStateToProps, { getProfile })(AuthRedirectComponent);
+export const ProfileContainer = compose<ComponentType>(
+  connect(mapStateToProps, { getProfile }),
+  withRouter,
+  withAuthRedirect,
+)(ProfileAPIContainer);

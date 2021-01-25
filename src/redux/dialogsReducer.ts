@@ -1,6 +1,6 @@
 import { randomId } from '../utils/randomId';
 import { DialogItemType, MessageType } from '../types/types';
-import { ActionsType, DialogsPageActionTypes } from './actions';
+import { ActionsType, DialogsPageActionsType } from './actions';
 
 const initialState = {
   dialogs: [
@@ -42,7 +42,7 @@ export type DialogsPageType = typeof initialState;
 
 export const dialogsReducer = (
   state = initialState,
-  action: DialogsPageActionTypes,
+  action: DialogsPageActionsType,
 ): DialogsPageType => {
   switch (action.type) {
     case ActionsType.UPDATE_NEW_MESSAGE_TEXT:

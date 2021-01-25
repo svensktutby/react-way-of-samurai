@@ -1,6 +1,6 @@
 import { randomId } from '../utils/randomId';
 import { PostType, ProfileType } from '../types/types';
-import { ActionsType, ProfilePageActionTypes } from './actions';
+import { ActionsType, ProfilePageActionsType } from './actions';
 
 const initialState = {
   posts: [
@@ -23,7 +23,7 @@ export type ProfilePageStateType = typeof initialState;
 
 export const profileReducer = (
   state = initialState,
-  action: ProfilePageActionTypes,
+  action: ProfilePageActionsType,
 ): ProfilePageStateType => {
   switch (action.type) {
     case ActionsType.UPDATE_NEW_POST_TEXT:

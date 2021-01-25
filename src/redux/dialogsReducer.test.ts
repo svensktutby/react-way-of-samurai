@@ -1,5 +1,6 @@
 import * as actions from './actions';
 import { DialogsPageType, dialogsReducer } from './dialogsReducer';
+
 describe('Dialogs page', () => {
   let state: DialogsPageType;
 

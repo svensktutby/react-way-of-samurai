@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component, ComponentType } from 'react';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 
 import { AppStateType } from '../../redux/reduxStore';
@@ -11,12 +12,13 @@ import {
 import { UserType } from '../../types/types';
 import { Users } from './Users';
 import { Preloader } from '../common/Preloader/Preloader';
+import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 
 type StatePropsType = {
   users: Array<UserType>;
   pageSize: number;
   totalUsersCount: number;
-  currentPage: number;
+  page: number;
   isFetching: boolean;
   followingInProgress: Array<number>;
 };
@@ -24,20 +26,20 @@ type StatePropsType = {
 type DispatchPropsType = {
   followUser: (userId: number) => void;
   unfollowUser: (userId: number) => void;
-  setCurrentPage: (pageNumber: number) => void;
-  getUsers: (currentPage: number, pageSize: number) => void;
+  setCurrentPage: (page: number) => void;
+  getUsers: (page: number, pageSize: number) => void;
 };
 
 type PropsType = StatePropsType & DispatchPropsType;
 
 class UsersAPIContainer extends Component<PropsType> {
   componentDidMount() {
-    this.props.getUsers(this.props.currentPage, this.props.pageSize);
+    this.props.getUsers(this.props.page, this.props.pageSize);
   }
 
-  changePageHandler = (pageNumber: number) => {
-    this.props.setCurrentPage(pageNumber);
-    this.props.getUsers(pageNumber, this.props.pageSize);
+  changePageHandler = (page: number) => {
+    this.props.setCurrentPage(page);
+    this.props.getUsers(page, this.props.pageSize);
   };
 
   render() {
@@ -45,7 +47,7 @@ class UsersAPIContainer extends Component<PropsType> {
       users,
       pageSize,
       totalUsersCount,
-      currentPage,
+      page,
       followingInProgress,
       followUser: follow,
       unfollowUser: unfollow,
@@ -61,7 +63,7 @@ class UsersAPIContainer extends Component<PropsType> {
             users={users}
             pageSize={pageSize}
             totalUsersCount={totalUsersCount}
-            currentPage={currentPage}
+            page={page}
             followingInProgress={followingInProgress}
             follow={follow}
             unfollow={unfollow}
@@ -87,20 +89,18 @@ const mapStateToProps = ({
     users,
     pageSize,
     totalUsersCount,
-    currentPage,
+    page: currentPage,
     isFetching,
     followingInProgress,
   };
 };
 
-export const UsersContainer = connect<
-  StatePropsType,
-  DispatchPropsType,
-  Record<string, never>,
-  AppStateType
->(mapStateToProps, {
-  followUser,
-  unfollowUser,
-  setCurrentPage,
-  getUsers,
-})(UsersAPIContainer);
+export const UsersContainer = compose<ComponentType>(
+  connect(mapStateToProps, {
+    followUser,
+    unfollowUser,
+    setCurrentPage,
+    getUsers,
+  }),
+  withAuthRedirect,
+)(UsersAPIContainer);

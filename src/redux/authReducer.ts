@@ -1,4 +1,4 @@
-import { ActionsType, AuthActionTypes } from './actions';
+import { ActionsType, AuthActionsType } from './actions';
 import { AuthType } from '../api/api';
 
 const initialState: AuthType = {
@@ -10,7 +10,7 @@ const initialState: AuthType = {
 
 export const authReducer = (
   state = initialState,
-  action: AuthActionTypes,
+  action: AuthActionsType,
 ): AuthType => {
   switch (action.type) {
     case ActionsType.SET_AUTH_USER_DATA: {

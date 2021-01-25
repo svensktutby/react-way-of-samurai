@@ -10,12 +10,10 @@ import { sidebarReducer as sidebar } from './sidebarReducer';
 
 export type AppStateType = ReturnType<typeof rootReducer>;
 
-export type AppThunkType<ReturnType = void> = ThunkAction<
-  ReturnType,
-  AppStateType,
-  unknown,
-  Action<string>
->;
+export type AppThunkType<
+  A extends Action = Action,
+  R = Promise<void>
+> = ThunkAction<R, AppStateType, unknown, A>;
 
 const rootReducer = combineReducers({
   profilePage,

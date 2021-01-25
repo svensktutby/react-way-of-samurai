@@ -1,9 +1,9 @@
 import { API, ApiResponseType, UsersResponseType } from './api';
 
 export const usersApi = {
-  getUsers(currentPage = 1, pageSize = 5): Promise<UsersResponseType> {
+  getUsers(page = 1, pageSize = 5): Promise<UsersResponseType> {
     return API.get<UsersResponseType>(
-      `users?page=${currentPage}&count=${pageSize}`,
+      `users?page=${page}&count=${pageSize}`,
     ).then((res) => res.data);
   },
 

@@ -2,7 +2,9 @@
   padding: 10px;
 }
 
-.selectedPage {
+.selectedPage,
+.selectedPage:hover,
+.selectedPage:focus {
   font-weight: bold;
   color: #333;
 }
