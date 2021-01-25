@@ -21,7 +21,7 @@ class HeaderAPIContainer extends Component<PropsType> {
     this.props.getAuthUserData();
   }
 
-  render() {
+  render(): JSX.Element {
     const { login, isAuth } = this.props;
 
     return <Header login={login} isAuth={isAuth} />;

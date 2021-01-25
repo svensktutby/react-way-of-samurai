@@ -45,6 +45,8 @@ module.exports = {
     // FIXME change 'react/destructuring-assignment' to warn
     'react/destructuring-assignment': 'off',
     'react/jsx-props-no-spreading': 'off',
+    'react/state-in-constructor': 'off',
+    'jsx-a11y/no-autofocus': 'off',
     'jsx-a11y/label-has-associated-control': [
       'error',
       {

@@ -4,6 +4,7 @@ import s from './ProfileInfo.module.css';
 import userAvatar from '../../../assets/images/userAvatar.svg';
 import { ProfileType } from '../../../types/types';
 import { Preloader } from '../../common/Preloader/Preloader';
+import { ProfileStatus } from './ProfileStatus/ProfileStatus';
 
 type ProfileInfoPropsType = {
   profile: ProfileType | null;
@@ -15,22 +16,13 @@ export const ProfileInfo: FC<ProfileInfoPropsType> = ({ profile }) => {
   }
 
   return (
-    <div>
-      <div>
-        <img
-          className={s.signboard}
-          src="https://image.shutterstock.com/image-photo/amsterdam-canal-street-view-long-260nw-739294837.jpg"
-          alt="Top background"
-        />
-      </div>
-      <div className={s.descriptionBlock}>
-        <img
-          className={s.avatar}
-          src={profile.photos.large || userAvatar}
-          alt={`${profile.fullName} avatar`}
-        />
-        ava + description
-      </div>
+    <div className={s.profileInfo}>
+      <img
+        className={s.avatar}
+        src={profile.photos.large || userAvatar}
+        alt={`${profile.fullName} avatar`}
+      />
+      <ProfileStatus status="Yo, dudes!" />
     </div>
   );
 };

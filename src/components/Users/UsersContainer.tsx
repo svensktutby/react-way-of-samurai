@@ -42,7 +42,7 @@ class UsersAPIContainer extends Component<PropsType> {
     this.props.getUsers(page, this.props.pageSize);
   };
 
-  render() {
+  render(): JSX.Element {
     const {
       users,
       pageSize,

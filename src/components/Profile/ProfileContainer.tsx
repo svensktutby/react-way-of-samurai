@@ -7,7 +7,6 @@ import { Profile } from './Profile';
 import { ProfileType } from '../../types/types';
 import { AppStateType } from '../../redux/reduxStore';
 import { getProfile } from '../../redux/profileReducer';
-import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 
 type PathPropsType = {
   userId: string;
@@ -32,7 +31,7 @@ class ProfileAPIContainer extends Component<PropsType> {
     this.props.getProfile(userId);
   }
 
-  render() {
+  render(): JSX.Element {
     return <Profile {...this.props} profile={this.props.profile} />;
   }
 }
@@ -48,5 +47,4 @@ const mapStateToProps = ({
 export const ProfileContainer = compose<ComponentType>(
   connect(mapStateToProps, { getProfile }),
   withRouter,
-  withAuthRedirect,
 )(ProfileAPIContainer);
