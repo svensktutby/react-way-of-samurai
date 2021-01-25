@@ -1,8 +1,7 @@
 import * as auth from './authReducer';
-import { AuthType } from '../api/api';
 
 describe('auth reducer', () => {
-  let state: AuthType;
+  let state: auth.AuthStateType;
 
   beforeEach(() => {
     state = {
@@ -19,7 +18,6 @@ describe('auth reducer', () => {
       id: 4,
       email: 'tough.ass.dude@me.com',
       login: 'yoyo',
-      isAuth: true,
     };
 
     // 2. action
@@ -28,6 +26,6 @@ describe('auth reducer', () => {
     const newState = auth.authReducer(state, action);
 
     // 3. expectation
-    expect(newState).toEqual(userAuthData);
+    expect(newState).toEqual({ ...userAuthData, isAuth: true });
   });
 });

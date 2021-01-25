@@ -2,13 +2,17 @@ import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 
 import { authApi } from '../api/authApi';
-import { AuthType } from '../api/api';
+import { AuthType, ResultCode } from '../api/api';
 
-export enum ActionsType {
+export enum ActionType {
   SET_AUTH_USER_DATA = 'SN/AUTH/SET_AUTH_USER_DATA',
 }
 
-const initialState: AuthType = {
+export type AuthStateType = AuthType & {
+  isAuth: boolean;
+};
+
+const initialState: AuthStateType = {
   id: null,
   email: null,
   login: null,
@@ -18,9 +22,9 @@ const initialState: AuthType = {
 export const authReducer = (
   state = initialState,
   action: AuthActionsType,
-): AuthType => {
+): AuthStateType => {
   switch (action.type) {
-    case ActionsType.SET_AUTH_USER_DATA: {
+    case ActionType.SET_AUTH_USER_DATA: {
       return {
         ...state,
         ...action.payload,
@@ -34,7 +38,7 @@ export const authReducer = (
 };
 
 export const setAuthUserData = (data: AuthType) =>
-  ({ type: ActionsType.SET_AUTH_USER_DATA, payload: data } as const);
+  ({ type: ActionType.SET_AUTH_USER_DATA, payload: data } as const);
 
 export type AuthActionsType = ReturnType<typeof setAuthUserData>;
 
@@ -46,7 +50,8 @@ type ThunkType<
 
 export const getAuthUserData = (): ThunkType => async (dispatch) => {
   const data = await authApi.me();
-  if (data.resultCode === 0 && data.data) {
+
+  if (data.resultCode === ResultCode.Success && data.data) {
     dispatch(setAuthUserData(data.data));
   }
 };

@@ -8,7 +8,7 @@ describe('actions', () => {
     // 1. data
     const text = 'Hi, there!';
     const expectedAction = {
-      type: profile.ActionsType.UPDATE_NEW_POST_TEXT,
+      type: profile.ActionType.UPDATE_NEW_POST_TEXT,
       payload: text,
     };
 
@@ -21,7 +21,7 @@ describe('actions', () => {
 
   test('should create an action to add a post', () => {
     const expectedAction = {
-      type: profile.ActionsType.ADD_POST,
+      type: profile.ActionType.ADD_POST,
     };
 
     const action = profile.addPost();
@@ -53,7 +53,7 @@ describe('actions', () => {
     };
 
     const expectedAction = {
-      type: profile.ActionsType.SET_USER_PROFILE,
+      type: profile.ActionType.SET_USER_PROFILE,
       payload: userProfile,
     };
 
@@ -65,7 +65,7 @@ describe('actions', () => {
   test('should create an action to change a message', () => {
     const message = 'Yo, dude';
     const expectedAction = {
-      type: dialogs.ActionsType.UPDATE_NEW_MESSAGE_TEXT,
+      type: dialogs.ActionType.UPDATE_NEW_MESSAGE_TEXT,
       payload: message,
     };
 
@@ -76,7 +76,7 @@ describe('actions', () => {
 
   test('should create an action to send a message', () => {
     const expectedAction = {
-      type: dialogs.ActionsType.SEND_MESSAGE,
+      type: dialogs.ActionType.SEND_MESSAGE,
     };
 
     const action = dialogs.sendMessage();
@@ -87,7 +87,7 @@ describe('actions', () => {
   test('should create an action to follow a user', () => {
     const userId = 3;
     const expectedAction = {
-      type: users.ActionsType.FOLLOW,
+      type: users.ActionType.FOLLOW,
       payload: userId,
     };
 
@@ -99,7 +99,7 @@ describe('actions', () => {
   test('should create an action to unfollow a user', () => {
     const userId = 2;
     const expectedAction = {
-      type: users.ActionsType.UNFOLLOW,
+      type: users.ActionType.UNFOLLOW,
       payload: userId,
     };
 
@@ -123,7 +123,7 @@ describe('actions', () => {
     ];
 
     const expectedAction = {
-      type: users.ActionsType.SET_USERS,
+      type: users.ActionType.SET_USERS,
       payload: newUsers,
     };
 
@@ -135,7 +135,7 @@ describe('actions', () => {
   test('should create an action to set the current page', () => {
     const pageNumber = 5;
     const expectedAction = {
-      type: users.ActionsType.SET_CURRENT_PAGE,
+      type: users.ActionType.SET_CURRENT_PAGE,
       payload: pageNumber,
     };
 
@@ -147,7 +147,7 @@ describe('actions', () => {
   test('should create an action to set a users total count', () => {
     const totalCount = 50;
     const expectedAction = {
-      type: users.ActionsType.SET_USERS_TOTAL_COUNT,
+      type: users.ActionType.SET_USERS_TOTAL_COUNT,
       payload: totalCount,
     };
 
@@ -159,7 +159,7 @@ describe('actions', () => {
   test('should create an action to toggle isFetching', () => {
     const isFetching = true;
     const expectedAction = {
-      type: users.ActionsType.TOGGLE_IS_FETCHING,
+      type: users.ActionType.TOGGLE_IS_FETCHING,
       payload: isFetching,
     };
 
@@ -172,7 +172,7 @@ describe('actions', () => {
     const isFetching = true;
     const userId = 7;
     const expectedAction = {
-      type: users.ActionsType.TOGGLE_IS_FOLLOWING_PROGRESS,
+      type: users.ActionType.TOGGLE_IS_FOLLOWING_PROGRESS,
       payload: {
         isFetching,
         userId,
@@ -192,7 +192,7 @@ describe('actions', () => {
       isAuth: true,
     };
     const expectedAction = {
-      type: auth.ActionsType.SET_AUTH_USER_DATA,
+      type: auth.ActionType.SET_AUTH_USER_DATA,
       payload: data,
     };
 

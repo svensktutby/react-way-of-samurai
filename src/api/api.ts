@@ -1,21 +1,25 @@
 import axios from 'axios';
 import { UserType } from '../types/types';
 
-export type AuthType = {
-  id: number | null;
-  email: string | null;
-  login: string | null;
-  isAuth: boolean;
-};
-
 export type UsersResponseType = {
   items: Array<UserType>;
   totalCount: number;
   error: string | null;
 };
 
+export type AuthType = {
+  id: number | null;
+  email: string | null;
+  login: string | null;
+};
+
+export enum ResultCode {
+  Success = 0,
+  Error = 1,
+}
+
 export type ApiResponseType = {
-  resultCode: 0 | 1;
+  resultCode: ResultCode;
   messages: Array<string>;
   data: AuthType | null;
 };
