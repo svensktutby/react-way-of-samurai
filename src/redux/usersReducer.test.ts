@@ -35,7 +35,7 @@ describe('Users page', () => {
     };
   });
 
-  test('should handle follow', () => {
+  it('should handle follow', () => {
     // 1. data
 
     // 2. action
@@ -47,7 +47,7 @@ describe('Users page', () => {
     expect(newState.users[0].followed).toBeTruthy();
   });
 
-  test('should handle unfollow', () => {
+  it('should handle unfollow', () => {
     const action = users.unfollow(2);
 
     const newState = users.usersReducer(state, action);
@@ -55,7 +55,7 @@ describe('Users page', () => {
     expect(newState.users[1].followed).toBeFalsy();
   });
 
-  test('should handle setUsers', () => {
+  it('should handle setUsers', () => {
     const newUsers = [
       {
         id: 3,
@@ -77,7 +77,7 @@ describe('Users page', () => {
     expect(newState.users[0].name).toBe('Kastus');
   });
 
-  test('should handle setCurrentPage', () => {
+  it('should handle setCurrentPage', () => {
     const action = users.setCurrentPage(3);
 
     const newState = users.usersReducer(state, action);
@@ -85,7 +85,7 @@ describe('Users page', () => {
     expect(newState.currentPage).toBe(3);
   });
 
-  test('should handle setUsersTotalCount', () => {
+  it('should handle setUsersTotalCount', () => {
     const action = users.setUsersTotalCount(10);
 
     const newState = users.usersReducer(state, action);
@@ -93,7 +93,7 @@ describe('Users page', () => {
     expect(newState.totalUsersCount).toBe(10);
   });
 
-  test('should handle toggleIsFetching', () => {
+  it('should handle toggleIsFetching', () => {
     const action = users.toggleIsFetching(true);
 
     const newState = users.usersReducer(state, action);
@@ -101,7 +101,7 @@ describe('Users page', () => {
     expect(newState.isFetching).toBeTruthy();
   });
 
-  test('should handle toggleFollowingProgress', () => {
+  it('should handle toggleFollowingProgress', () => {
     const action1 = users.toggleFollowingProgress(true, 2);
     const action2 = users.toggleFollowingProgress(true, 3);
     const action3 = users.toggleFollowingProgress(false, 3);

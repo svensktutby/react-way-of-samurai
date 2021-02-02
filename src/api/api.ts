@@ -7,21 +7,15 @@ export type UsersResponseType = {
   error: string | null;
 };
 
-export type AuthType = {
-  id: number | null;
-  email: string | null;
-  login: string | null;
-};
-
 export enum ResultCode {
   Success = 0,
   Error = 1,
 }
 
-export type ApiResponseType = {
+export type ApiResponseType<D = Record<string, unknown>> = {
   resultCode: ResultCode;
   messages: Array<string>;
-  data: AuthType | null;
+  data: D;
 };
 
 export const API = axios.create({

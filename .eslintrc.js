@@ -40,12 +40,13 @@ module.exports = {
     'linebreak-style': 'off',
     'import/prefer-default-export': 'off',
     'import/no-default-export': 'error',
-    'import/no-cycle': ['warn'],
+    'import/no-cycle': 'warn',
     'no-debugger': 'warn',
     // FIXME change 'react/destructuring-assignment' to warn
     'react/destructuring-assignment': 'off',
     'react/jsx-props-no-spreading': 'off',
     'react/state-in-constructor': 'off',
+    'react/no-did-update-set-state': 'warn',
     'jsx-a11y/no-autofocus': 'off',
     'jsx-a11y/label-has-associated-control': [
       'error',

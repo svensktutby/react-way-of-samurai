@@ -12,7 +12,7 @@ describe('auth reducer', () => {
     };
   });
 
-  test('should handle setAuthUserData', () => {
+  it('should handle setAuthUserData', () => {
     // 1. data
     const userAuthData = {
       id: 4,

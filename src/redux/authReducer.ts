@@ -1,8 +1,8 @@
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 
-import { authApi } from '../api/authApi';
-import { AuthType, ResultCode } from '../api/api';
+import { authApi, AuthType } from '../api/authApi';
+import { ResultCode } from '../api/api';
 
 export enum ActionType {
   SET_AUTH_USER_DATA = 'SN/AUTH/SET_AUTH_USER_DATA',
@@ -51,7 +51,7 @@ type ThunkType<
 export const getAuthUserData = (): ThunkType => async (dispatch) => {
   const data = await authApi.me();
 
-  if (data.resultCode === ResultCode.Success && data.data) {
+  if (data.resultCode === ResultCode.Success) {
     dispatch(setAuthUserData(data.data));
   }
 };

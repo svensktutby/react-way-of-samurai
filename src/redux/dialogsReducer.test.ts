@@ -41,7 +41,7 @@ describe('Dialogs page', () => {
     };
   });
 
-  test('should handle sendMessage', () => {
+  it('should handle sendMessage', () => {
     // 1. data
 
     // 2. action
@@ -54,7 +54,7 @@ describe('Dialogs page', () => {
     expect(newState.messages[3].message).toBe('I wish you happy holidays');
   });
 
-  test('should handle changeMessage', () => {
+  it('should handle changeMessage', () => {
     const action = dialogs.changeMessage('new text');
 
     const newState = dialogs.dialogsReducer(state, action);

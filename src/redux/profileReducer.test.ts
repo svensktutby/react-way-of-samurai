@@ -22,7 +22,7 @@ describe('Profile page', () => {
     };
   });
 
-  test('should handle addPost', () => {
+  it('should handle addPost', () => {
     // 1. data
 
     // 2. action
@@ -35,7 +35,7 @@ describe('Profile page', () => {
     expect(newState.posts[2].message).toEqual('it-kamasutra.com');
   });
 
-  test('should handle changePost', () => {
+  it('should handle changePost', () => {
     const action = profile.changePost('new text');
 
     const newState = profile.profileReducer(state, action);
@@ -43,7 +43,7 @@ describe('Profile page', () => {
     expect(newState.newPostText).toEqual('new text');
   });
 
-  test('should handle setUserProfile', () => {
+  it('should handle setUserProfile', () => {
     const userProfile = {
       aboutMe: 'tough-ass dude',
       contacts: {

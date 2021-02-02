@@ -8,9 +8,15 @@ import { ProfileStatus } from './ProfileStatus/ProfileStatus';
 
 type ProfileInfoPropsType = {
   profile: ProfileType | null;
+  status: string;
+  updateStatus: (status: string) => void;
 };
 
-export const ProfileInfo: FC<ProfileInfoPropsType> = ({ profile }) => {
+export const ProfileInfo: FC<ProfileInfoPropsType> = ({
+  profile,
+  status,
+  updateStatus,
+}) => {
   if (!profile) {
     return <Preloader text="Loading..." />;
   }
@@ -22,7 +28,7 @@ export const ProfileInfo: FC<ProfileInfoPropsType> = ({ profile }) => {
         src={profile.photos.large || userAvatar}
         alt={`${profile.fullName} avatar`}
       />
-      <ProfileStatus status="Yo, dudes!" />
+      <ProfileStatus status={status} updateStatus={updateStatus} />
     </div>
   );
 };

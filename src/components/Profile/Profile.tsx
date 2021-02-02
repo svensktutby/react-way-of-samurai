@@ -6,12 +6,22 @@ import { ProfileType } from '../../types/types';
 
 type ProfilePropsType = {
   profile: ProfileType | null;
+  status: string;
+  updateStatus: (status: string) => void;
 };
 
-export const Profile: FC<ProfilePropsType> = ({ profile }) => {
+export const Profile: FC<ProfilePropsType> = ({
+  profile,
+  status,
+  updateStatus,
+}) => {
   return (
     <div>
-      <ProfileInfo profile={profile} />
+      <ProfileInfo
+        profile={profile}
+        status={status}
+        updateStatus={updateStatus}
+      />
       <MyPostsContainer />
     </div>
   );
