@@ -1,9 +1,72 @@
 import React, { FC } from 'react';
+import { reduxForm, InjectedFormProps, Field } from 'redux-form';
 
 import s from './Login.module.css';
+import styleBtn from '../common/styles/Button.module.css';
+import styleInput from '../common/styles/Input.module.css';
 
-export type LoginPagePropsType = Record<string, never>;
+type FormDataType = {
+  login: string;
+  password: string;
+  rememberMe: boolean;
+};
 
-export const LoginPage: FC<LoginPagePropsType> = () => {
-  return <h1 className={s.login}>LOGIN</h1>;
+const LoginForm: FC<InjectedFormProps<FormDataType>> = ({ handleSubmit }) => {
+  return (
+    <form onSubmit={handleSubmit}>
+      <div className={`${styleInput.inputWrapper} ${s.loginWrapper}`}>
+        <Field
+          className={`${styleInput.input} ${s.login}`}
+          type="text"
+          name="login"
+          placeholder="Login"
+          component="input"
+        />
+      </div>
+      <div className={`${styleInput.inputWrapper} ${s.passwordWrapper}`}>
+        <Field
+          className={`${styleInput.input} ${s.password}`}
+          type="password"
+          name="password"
+          placeholder="Password"
+          component="input"
+        />
+      </div>
+      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+      <label className={`${styleInput.inputWrapper} ${s.checkboxWrapper}`}>
+        <Field
+          className={`${styleInput.input} ${s.checkbox}`}
+          type="checkbox"
+          name="rememberMe"
+          component="input"
+        />
+        <span className={s.hint}>remember me</span>
+      </label>
+      <div className={`${s.btnWrapper}`}>
+        <button type="submit" className={styleBtn.btn}>
+          Log in
+        </button>
+      </div>
+    </form>
+  );
+};
+
+const LoginReduxForm = reduxForm<FormDataType>({
+  form: 'login',
+})(LoginForm);
+
+export const LoginPage: FC = () => {
+  const submitHandler = (formData: FormDataType) => {
+    console.table(formData);
+  };
+
+  return (
+    <div>
+      <h1 className={s.title}>LOGIN</h1>
+
+      <div className={s.loginFormWrapper}>
+        <LoginReduxForm onSubmit={submitHandler} />
+      </div>
+    </div>
+  );
 };

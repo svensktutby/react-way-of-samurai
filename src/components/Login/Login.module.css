@@ -1,0 +1,28 @@
+.title,
+.checkboxWrapper,
+.btnWrapper {
+  text-align: center;
+}
+
+.loginFormWrapper {
+  max-width: 300px;
+  margin: 0 auto;
+  padding-bottom: 20px;
+}
+
+.loginWrapper,
+.passwordWrapper,
+.checkboxWrapper {
+  margin-bottom: 10px;
+}
+
+
+.checkbox {
+  display: inline-block;
+  width: auto;
+  height: auto;
+}
+
+.hint {
+  padding-left: 10px;
+}

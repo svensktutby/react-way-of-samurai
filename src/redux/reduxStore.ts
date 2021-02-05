@@ -1,4 +1,5 @@
 import { combineReducers, createStore } from 'redux';
+import { reducer as form } from 'redux-form';
 
 import { enhancedStore } from './middleware';
 import { dialogsReducer as dialogsPage } from './dialogsReducer';
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   sidebar,
   usersPage,
   auth,
+  form,
 });
 
 export const store = createStore(rootReducer, enhancedStore);
