@@ -31,8 +31,6 @@ const initialState = {
   status: '',
 };
 
-export type ProfilePageStateType = typeof initialState;
-
 export const profileReducer = (
   state = initialState,
   action: ProfilePageActionsType,
@@ -62,6 +60,7 @@ export const profileReducer = (
   }
 };
 
+/** Actions */
 export const changePost = (text: string) =>
   ({ type: ActionType.UPDATE_NEW_POST_TEXT, payload: text } as const);
 
@@ -73,18 +72,7 @@ export const setUserProfile = (profile: ProfileType) =>
 export const setStatus = (status: string) =>
   ({ type: ActionType.SET_STATUS, payload: status } as const);
 
-export type ProfilePageActionsType =
-  | ReturnType<typeof changePost>
-  | ReturnType<typeof addPost>
-  | ReturnType<typeof setUserProfile>
-  | ReturnType<typeof setStatus>;
-
-type ThunkType<
-  A extends Action = ProfilePageActionsType,
-  R = Promise<void>,
-  S = ProfilePageStateType
-> = ThunkAction<R, S, unknown, A>;
-
+/** Thunks */
 export const getProfile = (userId: number): ThunkType => async (dispatch) => {
   const data = await profileApi.getProfile(userId);
 
@@ -104,3 +92,18 @@ export const updateStatus = (status: string): ThunkType => async (dispatch) => {
     dispatch(setStatus(status));
   }
 };
+
+/** Types */
+export type ProfilePageStateType = typeof initialState;
+
+export type ProfilePageActionsType =
+  | ReturnType<typeof changePost>
+  | ReturnType<typeof addPost>
+  | ReturnType<typeof setUserProfile>
+  | ReturnType<typeof setStatus>;
+
+type ThunkType<
+  A extends Action = ProfilePageActionsType,
+  R = Promise<void>,
+  S = { profilePage: ProfilePageStateType }
+> = ThunkAction<R, S, unknown, A>;

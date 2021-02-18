@@ -8,10 +8,6 @@ export enum ActionType {
   SET_AUTH_USER_DATA = 'SN/AUTH/SET_AUTH_USER_DATA',
 }
 
-export type AuthStateType = AuthType & {
-  isAuth: boolean;
-};
-
 const initialState: AuthStateType = {
   id: null,
   email: null,
@@ -24,30 +20,25 @@ export const authReducer = (
   action: AuthActionsType,
 ): AuthStateType => {
   switch (action.type) {
-    case ActionType.SET_AUTH_USER_DATA: {
+    case ActionType.SET_AUTH_USER_DATA:
       return {
         ...state,
         ...action.payload,
         isAuth: true,
       };
-    }
 
     default:
       return state;
   }
 };
 
+/** Actions */
 export const setAuthUserData = (data: AuthType) =>
   ({ type: ActionType.SET_AUTH_USER_DATA, payload: data } as const);
 
 export type AuthActionsType = ReturnType<typeof setAuthUserData>;
 
-type ThunkType<
-  A extends Action = AuthActionsType,
-  R = Promise<void>,
-  S = AuthType
-> = ThunkAction<R, S, unknown, A>;
-
+/** Thunks */
 export const getAuthUserData = (): ThunkType => async (dispatch) => {
   const data = await authApi.me();
 
@@ -55,3 +46,14 @@ export const getAuthUserData = (): ThunkType => async (dispatch) => {
     dispatch(setAuthUserData(data.data));
   }
 };
+
+/** Types */
+export type AuthStateType = AuthType & {
+  isAuth: boolean;
+};
+
+type ThunkType<
+  A extends Action = AuthActionsType,
+  R = Promise<void>,
+  S = { auth: AuthType }
+> = ThunkAction<R, S, unknown, A>;
