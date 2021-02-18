@@ -17,30 +17,22 @@ describe('Profile page', () => {
           likesCount: 3,
         },
       ],
-      newPostText: 'it-kamasutra.com',
       profile: null,
+      status: '',
     };
   });
 
   it('should handle addPost', () => {
     // 1. data
-
+    const text = 'it-kamasutra.com';
     // 2. action
-    const action = profile.addPost();
+    const action = profile.addPost(text);
 
     const newState = profile.profileReducer(state, action);
 
     // 3. expectation
     expect(newState.posts).toHaveLength(3);
     expect(newState.posts[2].message).toEqual('it-kamasutra.com');
-  });
-
-  it('should handle changePost', () => {
-    const action = profile.changePost('new text');
-
-    const newState = profile.profileReducer(state, action);
-
-    expect(newState.newPostText).toEqual('new text');
   });
 
   it('should handle setUserProfile', () => {
@@ -72,5 +64,16 @@ describe('Profile page', () => {
 
     expect(newState.profile).not.toBeNull();
     expect(newState.profile).toEqual(userProfile);
+  });
+
+  it('should handle setStatus', () => {
+    const status = 'Yo, dude!';
+
+    const action = profile.setStatus(status);
+
+    const newState = profile.profileReducer(state, action);
+
+    expect(newState.status).not.toBeFalsy();
+    expect(newState.status).toEqual(status);
   });
 });

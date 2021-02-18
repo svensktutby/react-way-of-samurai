@@ -7,7 +7,6 @@ import { PostType, ProfileType } from '../types/types';
 import { ResultCode } from '../api/api';
 
 export enum ActionType {
-  UPDATE_NEW_POST_TEXT = 'SN/PROFILE/UPDATE_NEW_POST_TEXT',
   ADD_POST = 'SN/PROFILE/ADD_POST',
   SET_USER_PROFILE = 'SN/PROFILE/SET_USER_PROFILE',
   SET_STATUS = 'SN/PROFILE/SET_STATUS',
@@ -26,7 +25,6 @@ const initialState = {
       likesCount: 3,
     },
   ] as Array<PostType>,
-  newPostText: 'it-kamasutra.com',
   profile: null as ProfileType | null,
   status: '',
 };
@@ -36,17 +34,14 @@ export const profileReducer = (
   action: ProfilePageActionsType,
 ): ProfilePageStateType => {
   switch (action.type) {
-    case ActionType.UPDATE_NEW_POST_TEXT:
-      return { ...state, newPostText: action.payload };
-
     case ActionType.ADD_POST: {
       const post: PostType = {
         id: randomId(),
-        message: state.newPostText,
+        message: action.payload,
         likesCount: 0,
       };
 
-      return { ...state, posts: [...state.posts, post], newPostText: '' };
+      return { ...state, posts: [...state.posts, post] };
     }
 
     case ActionType.SET_USER_PROFILE:
@@ -61,10 +56,8 @@ export const profileReducer = (
 };
 
 /** Actions */
-export const changePost = (text: string) =>
-  ({ type: ActionType.UPDATE_NEW_POST_TEXT, payload: text } as const);
-
-export const addPost = () => ({ type: ActionType.ADD_POST } as const);
+export const addPost = (text: string) =>
+  ({ type: ActionType.ADD_POST, payload: text } as const);
 
 export const setUserProfile = (profile: ProfileType) =>
   ({ type: ActionType.SET_USER_PROFILE, payload: profile } as const);
@@ -97,7 +90,6 @@ export const updateStatus = (status: string): ThunkType => async (dispatch) => {
 export type ProfilePageStateType = typeof initialState;
 
 export type ProfilePageActionsType =
-  | ReturnType<typeof changePost>
   | ReturnType<typeof addPost>
   | ReturnType<typeof setUserProfile>
   | ReturnType<typeof setStatus>;

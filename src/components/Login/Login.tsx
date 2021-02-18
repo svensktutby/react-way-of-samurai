@@ -17,28 +17,28 @@ const LoginForm: FC<InjectedFormProps<FormDataType>> = ({ handleSubmit }) => {
       <div className={`${styleInput.inputWrapper} ${s.loginWrapper}`}>
         <Field
           className={`${styleInput.input} ${s.login}`}
+          component="input"
           type="text"
           name="login"
           placeholder="Login"
-          component="input"
         />
       </div>
       <div className={`${styleInput.inputWrapper} ${s.passwordWrapper}`}>
         <Field
           className={`${styleInput.input} ${s.password}`}
+          component="input"
           type="password"
           name="password"
           placeholder="Password"
-          component="input"
         />
       </div>
       {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
       <label className={`${styleInput.inputWrapper} ${s.checkboxWrapper}`}>
         <Field
           className={`${styleInput.input} ${s.checkbox}`}
+          component="input"
           type="checkbox"
           name="rememberMe"
-          component="input"
         />
         <span className={s.hint}>remember me</span>
       </label>

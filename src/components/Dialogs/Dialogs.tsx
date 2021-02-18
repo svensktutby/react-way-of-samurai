@@ -1,4 +1,5 @@
-import React, { ChangeEvent, FC } from 'react';
+import React, { FC } from 'react';
+import { reduxForm, InjectedFormProps, Field } from 'redux-form';
 
 import s from './Dialogs.module.css';
 import { DialogItem } from './DialogItem/DialogItem';
@@ -7,26 +8,50 @@ import { DialogsPageStateType } from '../../redux/dialogsReducer';
 import styleInput from '../common/styles/Input.module.css';
 import styleBtn from '../common/styles/Button.module.css';
 
+type FormDataType = {
+  message: string;
+};
+
+const AddMessageForm: FC<InjectedFormProps<FormDataType>> = ({
+  handleSubmit,
+}) => {
+  return (
+    <form onSubmit={handleSubmit}>
+      <div className={`${styleInput.inputWrapper} ${s.messageWrapper}`}>
+        <Field
+          className={`${styleInput.input} ${s.message}`}
+          component="textarea"
+          name="message"
+          placeholder="Write here..."
+        />
+      </div>
+      <div>
+        <button type="submit" className={styleBtn.btn}>
+          Send
+        </button>
+      </div>
+    </form>
+  );
+};
+
+const AddMessageFormRedux = reduxForm<FormDataType>({
+  form: 'dialogAddMessageForm',
+})(AddMessageForm);
+
 export type StatePropsType = {
   dialogsPage: DialogsPageStateType;
 };
 
 export type DispatchPropsType = {
-  changeMessage: (message: string) => void;
-  sendMessage: () => void;
+  sendMessage: (message: string) => void;
 };
 
 export const Dialogs: FC<StatePropsType & DispatchPropsType> = ({
-  dialogsPage: { dialogs, messages, newMessageText },
-  changeMessage,
+  dialogsPage: { dialogs, messages },
   sendMessage,
 }) => {
-  const sendMessageHandler = () => {
-    sendMessage();
-  };
-
-  const changeMessageHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    changeMessage(e.currentTarget.value);
+  const sendMessageHandler = (formData: FormDataType) => {
+    sendMessage(formData.message);
   };
 
   const dialogsElements = dialogs.map((d) => (
@@ -40,27 +65,13 @@ export const Dialogs: FC<StatePropsType & DispatchPropsType> = ({
   return (
     <div className={s.dialogs}>
       <div className={s.dialogsList}>{dialogsElements}</div>
+
       <div className={s.messagesList}>
         <div>{messagesElements}</div>
+
         <div>
           <div>
-            <label className={`${styleInput.inputWrapper} ${s.messageWrapper}`}>
-              <textarea
-                className={`${styleInput.input} ${s.message}`}
-                onChange={changeMessageHandler}
-                value={newMessageText}
-                placeholder="Write here..."
-              />
-            </label>
-            <div>
-              <button
-                type="button"
-                className={styleBtn.btn}
-                onClick={sendMessageHandler}
-              >
-                Send
-              </button>
-            </div>
+            <AddMessageFormRedux onSubmit={sendMessageHandler} />
           </div>
         </div>
       </div>

@@ -37,28 +37,20 @@ describe('Dialogs page', () => {
           message: 'Yo',
         },
       ],
-      newMessageText: 'I wish you happy holidays',
     };
   });
 
   it('should handle sendMessage', () => {
     // 1. data
+    const message = 'I wish you happy holidays';
 
     // 2. action
-    const action = dialogs.sendMessage();
+    const action = dialogs.sendMessage(message);
 
     const newState = dialogs.dialogsReducer(state, action);
 
     // 3. expectation
     expect(newState.messages).toHaveLength(4);
     expect(newState.messages[3].message).toBe('I wish you happy holidays');
-  });
-
-  it('should handle changeMessage', () => {
-    const action = dialogs.changeMessage('new text');
-
-    const newState = dialogs.dialogsReducer(state, action);
-
-    expect(newState.newMessageText).toBe('new text');
   });
 });

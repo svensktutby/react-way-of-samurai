@@ -22,6 +22,7 @@ export const Profile: FC<ProfilePropsType> = ({
         status={status}
         updateStatus={updateStatus}
       />
+
       <MyPostsContainer />
     </div>
   );

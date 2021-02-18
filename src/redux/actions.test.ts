@@ -4,32 +4,22 @@ import * as users from './usersReducer';
 import * as auth from './authReducer';
 
 describe('actions', () => {
-  test('should create an action to change a post', () => {
+  it('should create an action to add a post', () => {
     // 1. data
-    const text = 'Hi, there!';
+    const text = 'it-kamasutra.com';
     const expectedAction = {
-      type: profile.ActionType.UPDATE_NEW_POST_TEXT,
+      type: profile.ActionType.ADD_POST,
       payload: text,
     };
 
     // 2. action
-    const action = profile.changePost(text);
+    const action = profile.addPost(text);
 
     // 3. expectation
     expect(action).toEqual(expectedAction);
   });
 
-  test('should create an action to add a post', () => {
-    const expectedAction = {
-      type: profile.ActionType.ADD_POST,
-    };
-
-    const action = profile.addPost();
-
-    expect(action).toEqual(expectedAction);
-  });
-
-  test('should create an action to set a user profile', () => {
+  it('should create an action to set a user profile', () => {
     const userProfile = {
       aboutMe: 'tough-ass dude',
       contacts: {
@@ -62,29 +52,32 @@ describe('actions', () => {
     expect(action).toEqual(expectedAction);
   });
 
-  test('should create an action to change a message', () => {
-    const message = 'Yo, dude';
+  it('should create an action to set a status of user', () => {
+    const status = 'Yo, dude!';
+
     const expectedAction = {
-      type: dialogs.ActionType.UPDATE_NEW_MESSAGE_TEXT,
+      type: profile.ActionType.SET_STATUS,
+      payload: status,
+    };
+
+    const action = profile.setStatus(status);
+
+    expect(action).toEqual(expectedAction);
+  });
+
+  it('should create an action to send a message', () => {
+    const message = 'I wish you happy holidays';
+    const expectedAction = {
+      type: dialogs.ActionType.SEND_MESSAGE,
       payload: message,
     };
 
-    const action = dialogs.changeMessage(message);
+    const action = dialogs.sendMessage(message);
 
     expect(action).toEqual(expectedAction);
   });
 
-  test('should create an action to send a message', () => {
-    const expectedAction = {
-      type: dialogs.ActionType.SEND_MESSAGE,
-    };
-
-    const action = dialogs.sendMessage();
-
-    expect(action).toEqual(expectedAction);
-  });
-
-  test('should create an action to follow a user', () => {
+  it('should create an action to follow a user', () => {
     const userId = 3;
     const expectedAction = {
       type: users.ActionType.FOLLOW,
@@ -96,7 +89,7 @@ describe('actions', () => {
     expect(action).toEqual(expectedAction);
   });
 
-  test('should create an action to unfollow a user', () => {
+  it('should create an action to unfollow a user', () => {
     const userId = 2;
     const expectedAction = {
       type: users.ActionType.UNFOLLOW,
@@ -108,7 +101,7 @@ describe('actions', () => {
     expect(action).toEqual(expectedAction);
   });
 
-  test('should create an action to set users', () => {
+  it('should create an action to set users', () => {
     const newUsers = [
       {
         id: 3,
@@ -132,7 +125,7 @@ describe('actions', () => {
     expect(action).toEqual(expectedAction);
   });
 
-  test('should create an action to set the current page', () => {
+  it('should create an action to set the current page', () => {
     const pageNumber = 5;
     const expectedAction = {
       type: users.ActionType.SET_CURRENT_PAGE,
@@ -144,7 +137,7 @@ describe('actions', () => {
     expect(action).toEqual(expectedAction);
   });
 
-  test('should create an action to set a users total count', () => {
+  it('should create an action to set a users total count', () => {
     const totalCount = 50;
     const expectedAction = {
       type: users.ActionType.SET_USERS_TOTAL_COUNT,
@@ -156,7 +149,7 @@ describe('actions', () => {
     expect(action).toEqual(expectedAction);
   });
 
-  test('should create an action to toggle isFetching', () => {
+  it('should create an action to toggle isFetching', () => {
     const isFetching = true;
     const expectedAction = {
       type: users.ActionType.TOGGLE_IS_FETCHING,
@@ -168,7 +161,7 @@ describe('actions', () => {
     expect(action).toEqual(expectedAction);
   });
 
-  test('should create an action to toggle following progress', () => {
+  it('should create an action to toggle following progress', () => {
     const isFetching = true;
     const userId = 7;
     const expectedAction = {
@@ -184,7 +177,7 @@ describe('actions', () => {
     expect(action).toEqual(expectedAction);
   });
 
-  test('should create an action to set auth user data', () => {
+  it('should create an action to set auth user data', () => {
     const data = {
       id: 4,
       email: null,
