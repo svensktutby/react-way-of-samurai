@@ -1,0 +1,8 @@
+.messageWrapper {
+  max-width: 300px;
+}
+
+.message {
+  resize: none;
+  min-height: 50px;
+}

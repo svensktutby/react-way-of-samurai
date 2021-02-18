@@ -5,13 +5,15 @@ import s from './Login.module.css';
 import styleBtn from '../common/styles/Button.module.css';
 import styleInput from '../common/styles/Input.module.css';
 
-type FormDataType = {
+type LoginFormDataType = {
   login: string;
   password: string;
   rememberMe: boolean;
 };
 
-const LoginForm: FC<InjectedFormProps<FormDataType>> = ({ handleSubmit }) => {
+const LoginForm: FC<InjectedFormProps<LoginFormDataType>> = ({
+  handleSubmit,
+}) => {
   return (
     <form onSubmit={handleSubmit}>
       <div className={`${styleInput.inputWrapper} ${s.loginWrapper}`}>
@@ -23,6 +25,7 @@ const LoginForm: FC<InjectedFormProps<FormDataType>> = ({ handleSubmit }) => {
           placeholder="Login"
         />
       </div>
+
       <div className={`${styleInput.inputWrapper} ${s.passwordWrapper}`}>
         <Field
           className={`${styleInput.input} ${s.password}`}
@@ -32,6 +35,7 @@ const LoginForm: FC<InjectedFormProps<FormDataType>> = ({ handleSubmit }) => {
           placeholder="Password"
         />
       </div>
+
       {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
       <label className={`${styleInput.inputWrapper} ${s.checkboxWrapper}`}>
         <Field
@@ -42,6 +46,7 @@ const LoginForm: FC<InjectedFormProps<FormDataType>> = ({ handleSubmit }) => {
         />
         <span className={s.hint}>remember me</span>
       </label>
+
       <div className={`${s.btnWrapper}`}>
         <button type="submit" className={styleBtn.btn}>
           Log in
@@ -51,12 +56,12 @@ const LoginForm: FC<InjectedFormProps<FormDataType>> = ({ handleSubmit }) => {
   );
 };
 
-const LoginReduxForm = reduxForm<FormDataType>({
+const LoginReduxForm = reduxForm<LoginFormDataType>({
   form: 'login',
 })(LoginForm);
 
 export const LoginPage: FC = () => {
-  const submitHandler = (formData: FormDataType) => {
+  const submitHandler = (formData: LoginFormDataType) => {
     console.table(formData);
   };
 

@@ -1,42 +1,13 @@
 import React, { FC } from 'react';
-import { reduxForm, InjectedFormProps, Field } from 'redux-form';
 
 import s from './Dialogs.module.css';
+import { DialogsPageStateType } from '../../redux/dialogsReducer';
 import { DialogItem } from './DialogItem/DialogItem';
 import { Message } from './Message/Message';
-import { DialogsPageStateType } from '../../redux/dialogsReducer';
-import styleInput from '../common/styles/Input.module.css';
-import styleBtn from '../common/styles/Button.module.css';
-
-type FormDataType = {
-  message: string;
-};
-
-const AddMessageForm: FC<InjectedFormProps<FormDataType>> = ({
-  handleSubmit,
-}) => {
-  return (
-    <form onSubmit={handleSubmit}>
-      <div className={`${styleInput.inputWrapper} ${s.messageWrapper}`}>
-        <Field
-          className={`${styleInput.input} ${s.message}`}
-          component="textarea"
-          name="message"
-          placeholder="Write here..."
-        />
-      </div>
-      <div>
-        <button type="submit" className={styleBtn.btn}>
-          Send
-        </button>
-      </div>
-    </form>
-  );
-};
-
-const AddMessageFormRedux = reduxForm<FormDataType>({
-  form: 'dialogAddMessageForm',
-})(AddMessageForm);
+import {
+  AddMessageFormDataType,
+  AddMessageFormRedux,
+} from './AddMessageForm/AddMessageForm';
 
 export type StatePropsType = {
   dialogsPage: DialogsPageStateType;
@@ -50,7 +21,7 @@ export const Dialogs: FC<StatePropsType & DispatchPropsType> = ({
   dialogsPage: { dialogs, messages },
   sendMessage,
 }) => {
-  const sendMessageHandler = (formData: FormDataType) => {
+  const sendMessageHandler = (formData: AddMessageFormDataType) => {
     sendMessage(formData.message);
   };
 
