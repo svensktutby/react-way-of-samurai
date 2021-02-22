@@ -5,7 +5,7 @@ import { Post } from './Post/Post';
 import { PostType } from '../../../types/types';
 import {
   AddPostFormDataType,
-  AddPostFormRedux,
+  AddPostFormRedux as AddPostForm,
 } from './AddPostForm/AddPostForm';
 
 export type StatePropsType = {
@@ -20,9 +20,16 @@ export const MyPosts: FC<StatePropsType & DispatchPropsType> = ({
   posts,
   addPost,
 }) => {
-  const postsElements = posts.map((p) => (
-    <Post key={p.id} id={p.id} message={p.message} likesCount={p.likesCount} />
-  ));
+  const postsElements = [...posts]
+    .reverse()
+    .map((p) => (
+      <Post
+        key={p.id}
+        id={p.id}
+        message={p.message}
+        likesCount={p.likesCount}
+      />
+    ));
 
   const addPostHandler = (formData: AddPostFormDataType) => {
     addPost(formData.post);
@@ -32,7 +39,7 @@ export const MyPosts: FC<StatePropsType & DispatchPropsType> = ({
     <div className={s.postsBlock}>
       <h3>My posts</h3>
 
-      <AddPostFormRedux onSubmit={addPostHandler} />
+      <AddPostForm onSubmit={addPostHandler} />
 
       <div className={s.posts}>{postsElements}</div>
     </div>

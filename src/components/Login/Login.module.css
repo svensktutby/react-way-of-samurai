@@ -1,26 +1,38 @@
+.form {
+  max-width: 300px;
+  margin: 0 auto;
+  padding-bottom: 20px;
+}
+
+.form > div {
+  margin-bottom: 10px;
+}
+
 .title,
 .checkboxWrapper,
 .btnWrapper {
   text-align: center;
 }
 
-.loginFormWrapper {
-  max-width: 300px;
-  margin: 0 auto;
-  padding-bottom: 20px;
-}
-
-.loginWrapper,
-.passwordWrapper,
 .checkboxWrapper {
+  display: block;
   margin-bottom: 10px;
 }
 
+.checkbox,
+.hint {
+  display: inline-block;
+}
 
 .checkbox {
-  display: inline-block;
-  width: auto;
-  height: auto;
+  border: 1px solid #ced4da;
+
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.checkbox:focus {
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
 }
 
 .hint {

@@ -3,7 +3,10 @@ import { reduxForm, InjectedFormProps, Field } from 'redux-form';
 
 import s from './Login.module.css';
 import styleBtn from '../common/styles/Button.module.css';
-import styleInput from '../common/styles/Input.module.css';
+import { Input } from '../common/FormsControls/FormsControls';
+import { maxLengthCreator, required } from '../../utils/validators';
+
+const maxLength15 = maxLengthCreator(15);
 
 type LoginFormDataType = {
   login: string;
@@ -15,31 +18,26 @@ const LoginForm: FC<InjectedFormProps<LoginFormDataType>> = ({
   handleSubmit,
 }) => {
   return (
-    <form onSubmit={handleSubmit}>
-      <div className={`${styleInput.inputWrapper} ${s.loginWrapper}`}>
-        <Field
-          className={`${styleInput.input} ${s.login}`}
-          component="input"
-          type="text"
-          name="login"
-          placeholder="Login"
-        />
-      </div>
+    <form className={s.form} onSubmit={handleSubmit}>
+      <Field
+        component={Input}
+        name="login"
+        placeholder="Login"
+        validate={[required, maxLength15]}
+      />
 
-      <div className={`${styleInput.inputWrapper} ${s.passwordWrapper}`}>
-        <Field
-          className={`${styleInput.input} ${s.password}`}
-          component="input"
-          type="password"
-          name="password"
-          placeholder="Password"
-        />
-      </div>
+      <Field
+        component={Input}
+        type="password"
+        name="password"
+        placeholder="Password"
+        validate={[required, maxLength15]}
+      />
 
       {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-      <label className={`${styleInput.inputWrapper} ${s.checkboxWrapper}`}>
+      <label className={`${s.checkboxWrapper}`}>
         <Field
-          className={`${styleInput.input} ${s.checkbox}`}
+          className={s.checkbox}
           component="input"
           type="checkbox"
           name="rememberMe"

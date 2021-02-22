@@ -6,7 +6,7 @@ import { DialogItem } from './DialogItem/DialogItem';
 import { Message } from './Message/Message';
 import {
   AddMessageFormDataType,
-  AddMessageFormRedux,
+  AddMessageFormRedux as AddMessageForm,
 } from './AddMessageForm/AddMessageForm';
 
 export type StatePropsType = {
@@ -42,7 +42,7 @@ export const Dialogs: FC<StatePropsType & DispatchPropsType> = ({
 
         <div>
           <div>
-            <AddMessageFormRedux onSubmit={sendMessageHandler} />
+            <AddMessageForm onSubmit={sendMessageHandler} />
           </div>
         </div>
       </div>
