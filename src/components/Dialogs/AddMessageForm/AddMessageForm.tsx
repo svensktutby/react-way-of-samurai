@@ -19,7 +19,7 @@ const AddMessageForm: FC<InjectedFormProps<AddMessageFormDataType>> = ({
           className={`${styleInput.input} ${s.message}`}
           component="textarea"
           name="message"
-          placeholder="Write here..."
+          placeholder="Enter your message..."
         />
       </div>
 

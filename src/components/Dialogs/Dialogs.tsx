@@ -35,10 +35,10 @@ export const Dialogs: FC<StatePropsType & DispatchPropsType> = ({
 
   return (
     <div className={s.dialogs}>
-      <div className={s.dialogsList}>{dialogsElements}</div>
+      <ul className={s.dialogsList}>{dialogsElements}</ul>
 
-      <div className={s.messagesList}>
-        <div>{messagesElements}</div>
+      <div className={s.chat}>
+        <ul className={s.messagesList}>{messagesElements}</ul>
 
         <div>
           <div>
