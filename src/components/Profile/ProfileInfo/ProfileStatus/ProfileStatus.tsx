@@ -1,6 +1,5 @@
 import React, { ChangeEvent, Component } from 'react';
 
-import styleInput from '../../../common/styles/Input.module.css';
 import s from './ProfileStatus.module.css';
 
 type PropsType = {
@@ -52,21 +51,28 @@ export class ProfileStatus extends Component<PropsType, StateType> {
   }
 
   render(): JSX.Element {
+    const defaultStatus = "What's on your mind?";
+
     return (
       <>
         {!this.state.editMode ? (
           <div className={s.statusWrapper}>
-            <span className={s.status} onDoubleClick={this.activateEditMode}>
-              {this.props.status || 'No status'}
+            <span
+              className={s.status}
+              onClick={this.activateEditMode}
+              role="presentation"
+            >
+              {this.props.status || defaultStatus}
             </span>
           </div>
         ) : (
-          <div className={`${styleInput.inputWrapper} ${s.editStatusWrapper}`}>
+          <div className={`${s.editStatusWrapper}`}>
             <input
-              className={`${styleInput.input} ${s.editStatus}`}
+              className={`${s.editStatus}`}
               value={this.state.status}
               onBlur={this.deactivateEditMode}
               onChange={this.statusChangeHandler}
+              placeholder={defaultStatus}
               autoFocus
             />
           </div>

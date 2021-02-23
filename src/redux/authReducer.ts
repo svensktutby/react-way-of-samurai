@@ -1,17 +1,17 @@
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 
-import { authApi, AuthType } from '../api/authApi';
+import { authApi, LoginDataType } from '../api/authApi';
 import { ResultCode } from '../api/api';
 
 export enum ActionType {
   SET_AUTH_USER_DATA = 'SN/AUTH/SET_AUTH_USER_DATA',
 }
 
-const initialState: AuthStateType = {
-  id: null,
-  email: null,
-  login: null,
+const initialState = {
+  id: null as number | null,
+  email: null as string | null,
+  login: null as string | null,
   isAuth: false,
 };
 
@@ -24,7 +24,6 @@ export const authReducer = (
       return {
         ...state,
         ...action.payload,
-        isAuth: true,
       };
 
     default:
@@ -33,8 +32,16 @@ export const authReducer = (
 };
 
 /** Actions */
-export const setAuthUserData = (data: AuthType) =>
-  ({ type: ActionType.SET_AUTH_USER_DATA, payload: data } as const);
+export const setAuthUserData = (
+  id: number | null,
+  email: string | null,
+  login: string | null,
+  isAuth: boolean,
+) =>
+  ({
+    type: ActionType.SET_AUTH_USER_DATA,
+    payload: { id, email, login, isAuth },
+  } as const);
 
 export type AuthActionsType = ReturnType<typeof setAuthUserData>;
 
@@ -43,17 +50,35 @@ export const getAuthUserData = (): ThunkType => async (dispatch) => {
   const data = await authApi.me();
 
   if (data.resultCode === ResultCode.Success) {
-    dispatch(setAuthUserData(data.data));
+    const { id, email, login } = data.data;
+
+    dispatch(setAuthUserData(id, email, login, true));
+  }
+};
+
+export const login = (loginData: LoginDataType): ThunkType => async (
+  dispatch,
+) => {
+  const data = await authApi.login(loginData);
+
+  if (data.resultCode === ResultCode.Success) {
+    await dispatch(getAuthUserData());
+  }
+};
+
+export const logout = (): ThunkType => async (dispatch) => {
+  const data = await authApi.logout();
+
+  if (data.resultCode === ResultCode.Success) {
+    dispatch(setAuthUserData(null, null, null, false));
   }
 };
 
 /** Types */
-export type AuthStateType = AuthType & {
-  isAuth: boolean;
-};
+export type AuthStateType = typeof initialState;
 
 type ThunkType<
   A extends Action = AuthActionsType,
   R = Promise<void>,
-  S = { auth: AuthType }
+  S = { auth: AuthStateType }
 > = ThunkAction<R, S, unknown, A>;

@@ -1,15 +1,20 @@
 import React, { FC } from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { reduxForm, InjectedFormProps, Field } from 'redux-form';
 
 import s from './Login.module.css';
 import styleBtn from '../common/styles/Button.module.css';
 import { Input } from '../common/FormsControls/FormsControls';
 import { maxLengthCreator, required } from '../../utils/validators';
+import { login } from '../../redux/authReducer';
+import { AppStateType } from '../../redux/reduxStore';
+import { LoginDataType } from '../../api/authApi';
 
-const maxLength15 = maxLengthCreator(15);
+const maxLength30 = maxLengthCreator(30);
 
 type LoginFormDataType = {
-  login: string;
+  email: string;
   password: string;
   rememberMe: boolean;
 };
@@ -21,9 +26,9 @@ const LoginForm: FC<InjectedFormProps<LoginFormDataType>> = ({
     <form className={s.form} onSubmit={handleSubmit}>
       <Field
         component={Input}
-        name="login"
-        placeholder="Login"
-        validate={[required, maxLength15]}
+        name="email"
+        placeholder="Email"
+        validate={[required, maxLength30]}
       />
 
       <Field
@@ -31,7 +36,7 @@ const LoginForm: FC<InjectedFormProps<LoginFormDataType>> = ({
         type="password"
         name="password"
         placeholder="Password"
-        validate={[required, maxLength15]}
+        validate={[required, maxLength30]}
       />
 
       {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
@@ -54,22 +59,50 @@ const LoginForm: FC<InjectedFormProps<LoginFormDataType>> = ({
   );
 };
 
-const LoginReduxForm = reduxForm<LoginFormDataType>({
+const LoginFormRedux = reduxForm<LoginFormDataType>({
   form: 'login',
 })(LoginForm);
 
-export const LoginPage: FC = () => {
+type StatePropsType = {
+  isAuth: boolean;
+};
+
+type DispatchPropsType = {
+  login: (loginData: LoginDataType) => void;
+};
+
+const Login: FC<StatePropsType & DispatchPropsType> = ({
+  login: loginCallback,
+  isAuth,
+}) => {
   const submitHandler = (formData: LoginFormDataType) => {
-    console.table(formData);
+    loginCallback({ ...formData });
   };
+
+  if (isAuth) return <Redirect to="/profile" />;
 
   return (
     <div>
       <h1 className={s.title}>LOGIN</h1>
 
       <div className={s.loginFormWrapper}>
-        <LoginReduxForm onSubmit={submitHandler} />
+        <LoginFormRedux onSubmit={submitHandler} />
       </div>
     </div>
   );
 };
+
+const mapStateToProps = ({
+  auth: { isAuth },
+}: AppStateType): StatePropsType => {
+  return {
+    isAuth,
+  };
+};
+
+export const LoginPage = connect<
+  StatePropsType,
+  DispatchPropsType,
+  Record<string, never>,
+  AppStateType
+>(mapStateToProps, { login })(Login);

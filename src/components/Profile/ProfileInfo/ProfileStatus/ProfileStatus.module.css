@@ -3,7 +3,8 @@
   max-width: 300px;
 }
 
-.status {
+.status,
+.editStatus {
   display: block;
   width: 100%;
   height: calc(1.5em + 0.75rem + 2px);
@@ -13,15 +14,27 @@
   font-size: 1rem;
   line-height: 1.5;
 
-  box-shadow: 0 0.2rem 0.2rem rgba(0,123,255,0.25);
+  border: 0;
+  border-radius: 20px;
+}
+
+
+.status {
+  color: #fff;
+
+  background-color: #7d97a5;
+  cursor: pointer;
 }
 
 .editStatus {
-  border-top: 0;
-  border-right: 0;
-  border-left: 0;
+  color: #333;
+
+  background-color: rgb(233, 229, 229);
+  border: 1px solid #ced4da;
 }
 
 .editStatus:focus {
-  box-shadow: 0 0.2rem 0.2rem rgba(0,123,255,0.25);
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
 }

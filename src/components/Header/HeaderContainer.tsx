@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { Header } from './Header';
 import { AppStateType } from '../../redux/reduxStore';
-import { getAuthUserData } from '../../redux/authReducer';
+import { getAuthUserData, logout } from '../../redux/authReducer';
 
 export type StatePropsType = {
   login: string | null;
@@ -12,6 +12,7 @@ export type StatePropsType = {
 
 export type DispatchPropsType = {
   getAuthUserData: () => void;
+  logout: () => void;
 };
 
 export type PropsType = StatePropsType & DispatchPropsType;
@@ -22,9 +23,9 @@ class HeaderAPIContainer extends Component<PropsType> {
   }
 
   render(): JSX.Element {
-    const { login, isAuth } = this.props;
+    const { login, logout: logoutCallback, isAuth } = this.props;
 
-    return <Header login={login} isAuth={isAuth} />;
+    return <Header login={login} logout={logoutCallback} isAuth={isAuth} />;
   }
 }
 
@@ -39,4 +40,4 @@ export const HeaderContainer = connect<
   DispatchPropsType,
   Record<string, never>,
   AppStateType
->(mapStateToProps, { getAuthUserData })(HeaderAPIContainer);
+>(mapStateToProps, { getAuthUserData, logout })(HeaderAPIContainer);
