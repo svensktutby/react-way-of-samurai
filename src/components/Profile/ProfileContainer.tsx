@@ -21,6 +21,7 @@ type RouterPropsType = RouteComponentProps<PathPropsType>;
 type StatePropsType = {
   profile: ProfileType | null;
   status: string;
+  authorizedUserId: number | null;
 };
 
 type DispatchPropsType = {
@@ -33,10 +34,19 @@ type PropsType = StatePropsType & DispatchPropsType & RouterPropsType;
 
 class ProfileAPIContainer extends Component<PropsType> {
   componentDidMount() {
-    const userId = Number(this.props.match.params.userId) || 13640;
+    this.refreshProfile();
+  }
 
-    this.props.getProfile(userId);
-    this.props.getStatus(userId);
+  refreshProfile() {
+    const userId =
+      Number(this.props.match.params.userId) || this.props.authorizedUserId;
+
+    if (!userId) {
+      this.props.history.push('/login');
+    } else {
+      this.props.getProfile(userId);
+      this.props.getStatus(userId);
+    }
   }
 
   render(): JSX.Element {
@@ -53,10 +63,12 @@ class ProfileAPIContainer extends Component<PropsType> {
 
 const mapStateToProps = ({
   profilePage: { profile, status },
-}: AppStateType): StatePropsType => {
+  auth: { id },
+}: AppStateType) => {
   return {
     profile,
     status,
+    authorizedUserId: id,
   };
 };
 

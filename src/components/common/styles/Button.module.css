@@ -34,12 +34,11 @@
 
 .btn:focus {
   outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
 }
 
 @media (hover: hover) {
-  .btn:hover,
-  .btn:focus,
-  .btn:active {
+  .btn:hover {
     color: #fff;
 
     background-color: #7d97a5;

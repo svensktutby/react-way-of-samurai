@@ -27,8 +27,7 @@
 
 @media (hover: hover) {
   .link:hover::after,
-  .link:focus::after,
-  .link:active::after {
+  .link:focus::after {
     bottom: -2px;
 
     opacity: 1;

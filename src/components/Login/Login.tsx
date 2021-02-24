@@ -21,6 +21,7 @@ type LoginFormDataType = {
 
 const LoginForm: FC<InjectedFormProps<LoginFormDataType>> = ({
   handleSubmit,
+  error,
 }) => {
   return (
     <form className={s.form} onSubmit={handleSubmit}>
@@ -49,6 +50,10 @@ const LoginForm: FC<InjectedFormProps<LoginFormDataType>> = ({
         />
         <span className={s.hint}>remember me</span>
       </label>
+
+      <div className={`${s.errorWrapper}`}>
+        {error && <span className={`${s.error}`}>{error}</span>}
+      </div>
 
       <div className={`${s.btnWrapper}`}>
         <button type="submit" className={styleBtn.btn}>

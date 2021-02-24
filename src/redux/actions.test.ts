@@ -178,18 +178,20 @@ describe('actions', () => {
   });
 
   it('should create an action to set auth user data', () => {
-    const data = {
+    const userAuthData = {
       id: 4,
-      email: null,
-      login: null,
+      email: 'tough.ass.dude@me.com',
+      login: 'yoyo',
       isAuth: true,
     };
+
     const expectedAction = {
       type: auth.ActionType.SET_AUTH_USER_DATA,
-      payload: data,
+      payload: userAuthData,
     };
 
-    const action = auth.setAuthUserData(data);
+    const { id, email, login, isAuth } = userAuthData;
+    const action = auth.setAuthUserData(id, email, login, isAuth);
 
     expect(action).toEqual(expectedAction);
   });

@@ -18,14 +18,16 @@ describe('auth reducer', () => {
       id: 4,
       email: 'tough.ass.dude@me.com',
       login: 'yoyo',
+      isAuth: true,
     };
 
     // 2. action
-    const action = auth.setAuthUserData(userAuthData);
+    const { id, email, login, isAuth } = userAuthData;
+    const action = auth.setAuthUserData(id, email, login, isAuth);
 
     const newState = auth.authReducer(state, action);
 
     // 3. expectation
-    expect(newState).toEqual({ ...userAuthData, isAuth: true });
+    expect(newState).toEqual(userAuthData);
   });
 });

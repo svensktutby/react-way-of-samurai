@@ -1,5 +1,6 @@
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
+import { FormAction, stopSubmit } from 'redux-form';
 
 import { authApi, LoginDataType } from '../api/authApi';
 import { ResultCode } from '../api/api';
@@ -63,6 +64,10 @@ export const login = (loginData: LoginDataType): ThunkType => async (
 
   if (data.resultCode === ResultCode.Success) {
     await dispatch(getAuthUserData());
+  } else {
+    const message = data.messages.length ? data.messages[0] : 'Some error';
+
+    dispatch(stopSubmit('login', { _error: message }));
   }
 };
 
@@ -78,7 +83,7 @@ export const logout = (): ThunkType => async (dispatch) => {
 export type AuthStateType = typeof initialState;
 
 type ThunkType<
-  A extends Action = AuthActionsType,
+  A extends Action = AuthActionsType | FormAction,
   R = Promise<void>,
   S = { auth: AuthStateType }
 > = ThunkAction<R, S, unknown, A>;
