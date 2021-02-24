@@ -12,7 +12,6 @@ import {
 import { UserType } from '../../types/types';
 import { Users } from './Users';
 import { Preloader } from '../common/Preloader/Preloader';
-import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 
 type StatePropsType = {
   users: Array<UserType>;
@@ -102,5 +101,4 @@ export const UsersContainer = compose<ComponentType>(
     setCurrentPage,
     getUsers,
   }),
-  withAuthRedirect,
 )(UsersAPIContainer);

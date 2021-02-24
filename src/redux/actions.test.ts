@@ -2,6 +2,7 @@ import * as profile from './profileReducer';
 import * as dialogs from './dialogsReducer';
 import * as users from './usersReducer';
 import * as auth from './authReducer';
+import * as app from './appReducer';
 
 describe('actions', () => {
   it('should create an action to add a post', () => {
@@ -192,6 +193,16 @@ describe('actions', () => {
 
     const { id, email, login, isAuth } = userAuthData;
     const action = auth.setAuthUserData(id, email, login, isAuth);
+
+    expect(action).toEqual(expectedAction);
+  });
+
+  it('should create an action to initialize App', () => {
+    const expectedAction = {
+      type: app.ActionType.INITIALIZED_SUCCESS,
+    };
+
+    const action = app.initializedSuccess();
 
     expect(action).toEqual(expectedAction);
   });

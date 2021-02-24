@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { Header } from './Header';
 import { AppStateType } from '../../redux/reduxStore';
-import { getAuthUserData, logout } from '../../redux/authReducer';
+import { logout } from '../../redux/authReducer';
 
 export type StatePropsType = {
   login: string | null;
@@ -11,17 +11,14 @@ export type StatePropsType = {
 };
 
 export type DispatchPropsType = {
-  getAuthUserData: () => void;
   logout: () => void;
 };
 
 export type PropsType = StatePropsType & DispatchPropsType;
 
+// FIXME refactor to stateless-function
+// eslint-disable-next-line react/prefer-stateless-function
 class HeaderAPIContainer extends Component<PropsType> {
-  componentDidMount() {
-    this.props.getAuthUserData();
-  }
-
   render(): JSX.Element {
     const { login, logout: logoutCallback, isAuth } = this.props;
 
@@ -40,4 +37,4 @@ export const HeaderContainer = connect<
   DispatchPropsType,
   Record<string, never>,
   AppStateType
->(mapStateToProps, { getAuthUserData, logout })(HeaderAPIContainer);
+>(mapStateToProps, { logout })(HeaderAPIContainer);
