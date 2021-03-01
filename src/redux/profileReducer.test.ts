@@ -26,7 +26,7 @@ describe('Profile page', () => {
     // 1. data
     const text = 'it-kamasutra.com';
     // 2. action
-    const action = profile.addPost(text);
+    const action = profile.actions.addPost(text);
 
     const newState = profile.profileReducer(state, action);
 
@@ -58,7 +58,7 @@ describe('Profile page', () => {
       },
     };
 
-    const action = profile.setUserProfile(userProfile);
+    const action = profile.actions.setUserProfile(userProfile);
 
     const newState = profile.profileReducer(state, action);
 
@@ -69,7 +69,7 @@ describe('Profile page', () => {
   it('should handle setStatus', () => {
     const status = 'Yo, dude!';
 
-    const action = profile.setStatus(status);
+    const action = profile.actions.setStatus(status);
 
     const newState = profile.profileReducer(state, action);
 

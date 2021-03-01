@@ -2,7 +2,7 @@ import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 
 import { usersApi } from '../api/usersApi';
-import { UserType } from '../types/types';
+import { InferActionsType, UserType } from '../types/types';
 import { ResultCode } from '../api/api';
 
 export enum ActionType {
@@ -85,79 +85,74 @@ export const usersReducer = (
 };
 
 /** Actions */
-export const follow = (userId: number) =>
-  ({ type: ActionType.FOLLOW, payload: userId } as const);
+export const actions = {
+  follow: (userId: number) =>
+    ({ type: ActionType.FOLLOW, payload: userId } as const),
 
-export const unfollow = (userId: number) =>
-  ({ type: ActionType.UNFOLLOW, payload: userId } as const);
+  unfollow: (userId: number) =>
+    ({ type: ActionType.UNFOLLOW, payload: userId } as const),
 
-export const setUsers = (users: Array<UserType>) =>
-  ({ type: ActionType.SET_USERS, payload: users } as const);
+  setUsers: (users: Array<UserType>) =>
+    ({ type: ActionType.SET_USERS, payload: users } as const),
 
-export const setCurrentPage = (page: number) =>
-  ({ type: ActionType.SET_CURRENT_PAGE, payload: page } as const);
+  setCurrentPage: (page: number) =>
+    ({ type: ActionType.SET_CURRENT_PAGE, payload: page } as const),
 
-export const setUsersTotalCount = (totalCount: number) =>
-  ({ type: ActionType.SET_USERS_TOTAL_COUNT, payload: totalCount } as const);
+  setUsersTotalCount: (totalCount: number) =>
+    ({ type: ActionType.SET_USERS_TOTAL_COUNT, payload: totalCount } as const),
 
-export const toggleIsFetching = (isFetching: boolean) =>
-  ({ type: ActionType.TOGGLE_IS_FETCHING, payload: isFetching } as const);
+  toggleIsFetching: (isFetching: boolean) =>
+    ({ type: ActionType.TOGGLE_IS_FETCHING, payload: isFetching } as const),
 
-export const toggleFollowingProgress = (isFetching: boolean, userId: number) =>
-  ({
-    type: ActionType.TOGGLE_IS_FOLLOWING_PROGRESS,
-    payload: {
-      isFetching,
-      userId,
-    },
-  } as const);
+  toggleFollowingProgress: (isFetching: boolean, userId: number) =>
+    ({
+      type: ActionType.TOGGLE_IS_FOLLOWING_PROGRESS,
+      payload: {
+        isFetching,
+        userId,
+      },
+    } as const),
+};
 
 /** Thunks */
 export const getUsers = (page: number, pageSize: number): ThunkType => async (
   dispatch,
 ) => {
-  dispatch(toggleIsFetching(true));
+  dispatch(actions.toggleIsFetching(true));
 
   const data = await usersApi.getUsers(page, pageSize);
 
-  dispatch(toggleIsFetching(false));
-  dispatch(setUsers(data.items));
-  dispatch(setUsersTotalCount(data.totalCount));
+  dispatch(actions.toggleIsFetching(false));
+  dispatch(actions.setUsers(data.items));
+  dispatch(actions.setUsersTotalCount(data.totalCount));
 };
 
 export const followUser = (userId: number): ThunkType => async (dispatch) => {
-  dispatch(toggleFollowingProgress(true, userId));
+  dispatch(actions.toggleFollowingProgress(true, userId));
 
   const data = await usersApi.follow(userId);
 
   if (data.resultCode === ResultCode.Success) {
-    dispatch(follow(userId));
+    dispatch(actions.follow(userId));
   }
-  dispatch(toggleFollowingProgress(false, userId));
+  dispatch(actions.toggleFollowingProgress(false, userId));
 };
 
 export const unfollowUser = (userId: number): ThunkType => async (dispatch) => {
-  dispatch(toggleFollowingProgress(true, userId));
+  dispatch(actions.toggleFollowingProgress(true, userId));
 
   const data = await usersApi.unfollow(userId);
 
   if (data.resultCode === ResultCode.Success) {
-    dispatch(unfollow(userId));
+    dispatch(actions.unfollow(userId));
   }
-  dispatch(toggleFollowingProgress(false, userId));
+  dispatch(actions.toggleFollowingProgress(false, userId));
 };
 
 /** Types */
 export type UsersPageStateType = typeof initialState;
 
-export type UsersPageActionsType =
-  | ReturnType<typeof follow>
-  | ReturnType<typeof unfollow>
-  | ReturnType<typeof setUsers>
-  | ReturnType<typeof setCurrentPage>
-  | ReturnType<typeof setUsersTotalCount>
-  | ReturnType<typeof toggleIsFetching>
-  | ReturnType<typeof toggleFollowingProgress>;
+export type UsersPageActionsType = InferActionsType<typeof actions>;
 
 type ThunkType<
   A extends Action = UsersPageActionsType,

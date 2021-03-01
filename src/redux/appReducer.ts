@@ -2,6 +2,7 @@ import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 
 import { AuthStateType, getAuthUserData } from './authReducer';
+import { InferActionsType } from '../types/types';
 
 export enum ActionType {
   INITIALIZED_SUCCESS = 'SN/APP/INITIALIZED_SUCCESS',
@@ -14,7 +15,7 @@ const initialState = {
 export const appReducer = (
   state = initialState,
   action: AppActionsType,
-): InitialStateType => {
+): AppInitialStateType => {
   switch (action.type) {
     case ActionType.INITIALIZED_SUCCESS:
       return {
@@ -28,27 +29,29 @@ export const appReducer = (
 };
 
 /** Actions */
-export const initializedSuccess = () =>
-  ({
-    type: ActionType.INITIALIZED_SUCCESS,
-  } as const);
-
-export type AppActionsType = ReturnType<typeof initializedSuccess>;
+export const actions = {
+  initializedSuccess: () =>
+    ({
+      type: ActionType.INITIALIZED_SUCCESS,
+    } as const),
+};
 
 /** Thunks */
 export const initializeApp = (): ThunkType => async (dispatch) => {
   const AuthUserDataPromise = await dispatch(getAuthUserData());
 
   Promise.all([AuthUserDataPromise]).then(() => {
-    dispatch(initializedSuccess());
+    dispatch(actions.initializedSuccess());
   });
 };
 
 /** Types */
-export type InitialStateType = typeof initialState;
+export type AppInitialStateType = typeof initialState;
+
+export type AppActionsType = InferActionsType<typeof actions>;
 
 type ThunkType<
   A extends Action = AppActionsType,
   R = Promise<void>,
-  S = { app: InitialStateType; auth: AuthStateType }
+  S = { app: AppInitialStateType; auth: AuthStateType }
 > = ThunkAction<R, S, unknown, A>;

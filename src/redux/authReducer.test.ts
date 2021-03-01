@@ -23,7 +23,7 @@ describe('auth reducer', () => {
 
     // 2. action
     const { id, email, login, isAuth } = userAuthData;
-    const action = auth.setAuthUserData(id, email, login, isAuth);
+    const action = auth.actions.setAuthUserData(id, email, login, isAuth);
 
     const newState = auth.authReducer(state, action);
 

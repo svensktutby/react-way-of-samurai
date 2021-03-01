@@ -1,8 +1,10 @@
 import { connect } from 'react-redux';
 
-import { addPost } from '../../../redux/profileReducer';
+import { actions as profileActions } from '../../../redux/profileReducer';
 import { DispatchPropsType, MyPosts, StatePropsType } from './MyPosts';
 import { AppStateType } from '../../../redux/reduxStore';
+
+const { addPost } = profileActions;
 
 const mapStateToProps = ({
   profilePage: { posts },

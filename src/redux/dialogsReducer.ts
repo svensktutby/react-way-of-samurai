@@ -1,5 +1,5 @@
 import { randomId } from '../utils/randomId';
-import { DialogItemType, MessageType } from '../types/types';
+import { DialogItemType, InferActionsType, MessageType } from '../types/types';
 
 export enum ActionType {
   SEND_MESSAGE = 'SN/DIALOGS/SEND_MESSAGE',
@@ -63,10 +63,12 @@ export const dialogsReducer = (
 };
 
 /** Actions */
-export const sendMessage = (message: string) =>
-  ({ type: ActionType.SEND_MESSAGE, payload: message } as const);
+export const actions = {
+  sendMessage: (message: string) =>
+    ({ type: ActionType.SEND_MESSAGE, payload: message } as const),
+};
 
 /** Types */
 export type DialogsPageStateType = typeof initialState;
 
-export type DialogsPageActionsType = ReturnType<typeof sendMessage>;
+export type DialogsPageActionsType = InferActionsType<typeof actions>;

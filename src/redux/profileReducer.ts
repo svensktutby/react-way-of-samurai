@@ -3,7 +3,7 @@ import { ThunkAction } from 'redux-thunk';
 
 import { randomId } from '../utils/randomId';
 import { profileApi } from '../api/profileApi';
-import { PostType, ProfileType } from '../types/types';
+import { InferActionsType, PostType, ProfileType } from '../types/types';
 import { ResultCode } from '../api/api';
 
 export enum ActionType {
@@ -56,43 +56,42 @@ export const profileReducer = (
 };
 
 /** Actions */
-export const addPost = (text: string) =>
-  ({ type: ActionType.ADD_POST, payload: text } as const);
+export const actions = {
+  addPost: (text: string) =>
+    ({ type: ActionType.ADD_POST, payload: text } as const),
 
-export const setUserProfile = (profile: ProfileType) =>
-  ({ type: ActionType.SET_USER_PROFILE, payload: profile } as const);
+  setUserProfile: (profile: ProfileType) =>
+    ({ type: ActionType.SET_USER_PROFILE, payload: profile } as const),
 
-export const setStatus = (status: string) =>
-  ({ type: ActionType.SET_STATUS, payload: status } as const);
+  setStatus: (status: string) =>
+    ({ type: ActionType.SET_STATUS, payload: status } as const),
+};
 
 /** Thunks */
 export const getProfile = (userId: number): ThunkType => async (dispatch) => {
   const data = await profileApi.getProfile(userId);
 
-  dispatch(setUserProfile(data));
+  dispatch(actions.setUserProfile(data));
 };
 
 export const getStatus = (userId: number): ThunkType => async (dispatch) => {
   const data = await profileApi.getStatus(userId);
 
-  dispatch(setStatus(data));
+  dispatch(actions.setStatus(data));
 };
 
 export const updateStatus = (status: string): ThunkType => async (dispatch) => {
   const data = await profileApi.updateStatus(status);
 
   if (data.resultCode === ResultCode.Success) {
-    dispatch(setStatus(status));
+    dispatch(actions.setStatus(status));
   }
 };
 
 /** Types */
 export type ProfilePageStateType = typeof initialState;
 
-export type ProfilePageActionsType =
-  | ReturnType<typeof addPost>
-  | ReturnType<typeof setUserProfile>
-  | ReturnType<typeof setStatus>;
+export type ProfilePageActionsType = InferActionsType<typeof actions>;
 
 type ThunkType<
   A extends Action = ProfilePageActionsType,

@@ -45,7 +45,7 @@ describe('Dialogs page', () => {
     const message = 'I wish you happy holidays';
 
     // 2. action
-    const action = dialogs.sendMessage(message);
+    const action = dialogs.actions.sendMessage(message);
 
     const newState = dialogs.dialogsReducer(state, action);
 

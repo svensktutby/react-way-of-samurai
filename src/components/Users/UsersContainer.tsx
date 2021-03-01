@@ -4,14 +4,16 @@ import { connect } from 'react-redux';
 
 import { AppStateType } from '../../redux/reduxStore';
 import {
+  actions as usersActions,
   followUser,
   getUsers,
-  setCurrentPage,
   unfollowUser,
 } from '../../redux/usersReducer';
 import { UserType } from '../../types/types';
 import { Users } from './Users';
 import { Preloader } from '../common/Preloader/Preloader';
+
+const { setCurrentPage } = usersActions;
 
 type StatePropsType = {
   users: Array<UserType>;

@@ -1,7 +1,7 @@
 import * as app from './appReducer';
 
 describe('auth reducer', () => {
-  let state: app.AppStateType;
+  let state: app.AppInitialStateType;
 
   beforeEach(() => {
     state = {
@@ -13,7 +13,7 @@ describe('auth reducer', () => {
     // 1. data
 
     // 2. action
-    const action = app.initializedSuccess();
+    const action = app.actions.initializedSuccess();
 
     const newState = app.appReducer(state, action);
 

@@ -39,7 +39,7 @@ describe('Users page', () => {
     // 1. data
 
     // 2. action
-    const action = users.follow(1);
+    const action = users.actions.follow(1);
 
     const newState = users.usersReducer(state, action);
 
@@ -48,7 +48,7 @@ describe('Users page', () => {
   });
 
   it('should handle unfollow', () => {
-    const action = users.unfollow(2);
+    const action = users.actions.unfollow(2);
 
     const newState = users.usersReducer(state, action);
 
@@ -69,7 +69,7 @@ describe('Users page', () => {
       },
     ];
 
-    const action = users.setUsers(newUsers);
+    const action = users.actions.setUsers(newUsers);
 
     const newState = users.usersReducer(state, action);
 
@@ -78,7 +78,7 @@ describe('Users page', () => {
   });
 
   it('should handle setCurrentPage', () => {
-    const action = users.setCurrentPage(3);
+    const action = users.actions.setCurrentPage(3);
 
     const newState = users.usersReducer(state, action);
 
@@ -86,7 +86,7 @@ describe('Users page', () => {
   });
 
   it('should handle setUsersTotalCount', () => {
-    const action = users.setUsersTotalCount(10);
+    const action = users.actions.setUsersTotalCount(10);
 
     const newState = users.usersReducer(state, action);
 
@@ -94,7 +94,7 @@ describe('Users page', () => {
   });
 
   it('should handle toggleIsFetching', () => {
-    const action = users.toggleIsFetching(true);
+    const action = users.actions.toggleIsFetching(true);
 
     const newState = users.usersReducer(state, action);
 
@@ -102,9 +102,9 @@ describe('Users page', () => {
   });
 
   it('should handle toggleFollowingProgress', () => {
-    const action1 = users.toggleFollowingProgress(true, 2);
-    const action2 = users.toggleFollowingProgress(true, 3);
-    const action3 = users.toggleFollowingProgress(false, 3);
+    const action1 = users.actions.toggleFollowingProgress(true, 2);
+    const action2 = users.actions.toggleFollowingProgress(true, 3);
+    const action3 = users.actions.toggleFollowingProgress(false, 3);
 
     const newState1 = users.usersReducer(state, action1);
     const newState2 = users.usersReducer(newState1, action2);

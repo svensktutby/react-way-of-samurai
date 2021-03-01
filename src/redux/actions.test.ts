@@ -14,7 +14,7 @@ describe('actions', () => {
     };
 
     // 2. action
-    const action = profile.addPost(text);
+    const action = profile.actions.addPost(text);
 
     // 3. expectation
     expect(action).toEqual(expectedAction);
@@ -48,7 +48,7 @@ describe('actions', () => {
       payload: userProfile,
     };
 
-    const action = profile.setUserProfile(userProfile);
+    const action = profile.actions.setUserProfile(userProfile);
 
     expect(action).toEqual(expectedAction);
   });
@@ -61,7 +61,7 @@ describe('actions', () => {
       payload: status,
     };
 
-    const action = profile.setStatus(status);
+    const action = profile.actions.setStatus(status);
 
     expect(action).toEqual(expectedAction);
   });
@@ -73,7 +73,7 @@ describe('actions', () => {
       payload: message,
     };
 
-    const action = dialogs.sendMessage(message);
+    const action = dialogs.actions.sendMessage(message);
 
     expect(action).toEqual(expectedAction);
   });
@@ -85,7 +85,7 @@ describe('actions', () => {
       payload: userId,
     };
 
-    const action = users.follow(userId);
+    const action = users.actions.follow(userId);
 
     expect(action).toEqual(expectedAction);
   });
@@ -97,7 +97,7 @@ describe('actions', () => {
       payload: userId,
     };
 
-    const action = users.unfollow(userId);
+    const action = users.actions.unfollow(userId);
 
     expect(action).toEqual(expectedAction);
   });
@@ -121,7 +121,7 @@ describe('actions', () => {
       payload: newUsers,
     };
 
-    const action = users.setUsers(newUsers);
+    const action = users.actions.setUsers(newUsers);
 
     expect(action).toEqual(expectedAction);
   });
@@ -133,7 +133,7 @@ describe('actions', () => {
       payload: pageNumber,
     };
 
-    const action = users.setCurrentPage(pageNumber);
+    const action = users.actions.setCurrentPage(pageNumber);
 
     expect(action).toEqual(expectedAction);
   });
@@ -145,7 +145,7 @@ describe('actions', () => {
       payload: totalCount,
     };
 
-    const action = users.setUsersTotalCount(totalCount);
+    const action = users.actions.setUsersTotalCount(totalCount);
 
     expect(action).toEqual(expectedAction);
   });
@@ -157,7 +157,7 @@ describe('actions', () => {
       payload: isFetching,
     };
 
-    const action = users.toggleIsFetching(isFetching);
+    const action = users.actions.toggleIsFetching(isFetching);
 
     expect(action).toEqual(expectedAction);
   });
@@ -173,7 +173,7 @@ describe('actions', () => {
       },
     };
 
-    const action = users.toggleFollowingProgress(isFetching, userId);
+    const action = users.actions.toggleFollowingProgress(isFetching, userId);
 
     expect(action).toEqual(expectedAction);
   });
@@ -192,7 +192,7 @@ describe('actions', () => {
     };
 
     const { id, email, login, isAuth } = userAuthData;
-    const action = auth.setAuthUserData(id, email, login, isAuth);
+    const action = auth.actions.setAuthUserData(id, email, login, isAuth);
 
     expect(action).toEqual(expectedAction);
   });
@@ -202,7 +202,7 @@ describe('actions', () => {
       type: app.ActionType.INITIALIZED_SUCCESS,
     };
 
-    const action = app.initializedSuccess();
+    const action = app.actions.initializedSuccess();
 
     expect(action).toEqual(expectedAction);
   });
