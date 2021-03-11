@@ -6,12 +6,13 @@ import { AppStateType } from '../../redux/reduxStore';
 import {
   actions as usersActions,
   followUser,
-  getUsers,
+  requestUsers,
   unfollowUser,
 } from '../../redux/usersReducer';
 import { UserType } from '../../types/types';
 import { Users } from './Users';
 import { Preloader } from '../common/Preloader/Preloader';
+import * as usersSelectors from '../../redux/usersSelectors';
 
 const { setCurrentPage } = usersActions;
 
@@ -28,19 +29,18 @@ type DispatchPropsType = {
   followUser: (userId: number) => void;
   unfollowUser: (userId: number) => void;
   setCurrentPage: (page: number) => void;
-  getUsers: (page: number, pageSize: number) => void;
+  requestUsers: (page: number, pageSize: number) => void;
 };
 
 type PropsType = StatePropsType & DispatchPropsType;
 
 class UsersAPIContainer extends Component<PropsType> {
   componentDidMount() {
-    this.props.getUsers(this.props.page, this.props.pageSize);
+    this.props.requestUsers(this.props.page, this.props.pageSize);
   }
 
   changePageHandler = (page: number) => {
-    this.props.setCurrentPage(page);
-    this.props.getUsers(page, this.props.pageSize);
+    this.props.requestUsers(page, this.props.pageSize);
   };
 
   render(): JSX.Element {
@@ -76,23 +76,14 @@ class UsersAPIContainer extends Component<PropsType> {
   }
 }
 
-const mapStateToProps = ({
-  usersPage: {
-    users,
-    pageSize,
-    totalUsersCount,
-    currentPage,
-    isFetching,
-    followingInProgress,
-  },
-}: AppStateType): StatePropsType => {
+const mapStateToProps = (state: AppStateType): StatePropsType => {
   return {
-    users,
-    pageSize,
-    totalUsersCount,
-    page: currentPage,
-    isFetching,
-    followingInProgress,
+    users: usersSelectors.getUsers(state),
+    pageSize: usersSelectors.getPageSize(state),
+    totalUsersCount: usersSelectors.getTotalUsersCount(state),
+    page: usersSelectors.getCurrentPage(state),
+    isFetching: usersSelectors.getIsFetching(state),
+    followingInProgress: usersSelectors.getFollowingInProgress(state),
   };
 };
 
@@ -101,6 +92,6 @@ export const UsersContainer = compose<ComponentType>(
     followUser,
     unfollowUser,
     setCurrentPage,
-    getUsers,
+    requestUsers,
   }),
 )(UsersAPIContainer);
