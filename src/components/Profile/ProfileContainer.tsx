@@ -50,12 +50,19 @@ class ProfileAPIContainer extends Component<PropsType> {
   }
 
   render(): JSX.Element {
+    const {
+      profile,
+      status,
+      updateStatus: updateStatusCallback,
+      ...props
+    } = this.props;
+
     return (
       <Profile
-        {...this.props}
-        profile={this.props.profile}
-        status={this.props.status}
-        updateStatus={this.props.updateStatus}
+        {...props}
+        profile={profile}
+        status={status}
+        updateStatus={updateStatusCallback}
       />
     );
   }

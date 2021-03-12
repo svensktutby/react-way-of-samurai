@@ -36,11 +36,13 @@ type PropsType = StatePropsType & DispatchPropsType;
 
 class UsersAPIContainer extends Component<PropsType> {
   componentDidMount() {
-    this.props.requestUsers(this.props.page, this.props.pageSize);
+    const { page, pageSize, requestUsers: getUsers } = this.props;
+    getUsers(page, pageSize);
   }
 
   changePageHandler = (page: number) => {
-    this.props.requestUsers(page, this.props.pageSize);
+    const { pageSize, requestUsers: getUsers } = this.props;
+    getUsers(page, pageSize);
   };
 
   render(): JSX.Element {

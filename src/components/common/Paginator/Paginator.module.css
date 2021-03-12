@@ -1,0 +1,25 @@
+.selectedPage,
+.selectedPage:hover,
+.selectedPage:focus {
+  padding: 3px 8px;
+
+  font-weight: bold;
+  color: #7d97a5;
+
+  background-color: #fff;
+  border: 2px solid #7d97a5;
+}
+
+.pageBtn {
+  display: inline-block;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.pageBtn:first-child {
+  margin-left: 0;
+}
+
+.pageBtn:last-child {
+  margin-right: 0;
+}
