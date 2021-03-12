@@ -20,6 +20,18 @@ describe('actions', () => {
     expect(action).toEqual(expectedAction);
   });
 
+  it('should create an action to delete a post', () => {
+    const postId = '100';
+    const expectedAction = {
+      type: profile.ActionType.DELETE_POST,
+      payload: postId,
+    };
+
+    const action = profile.actions.deletePost(postId);
+
+    expect(action).toEqual(expectedAction);
+  });
+
   it('should create an action to set a user profile', () => {
     const userProfile = {
       aboutMe: 'tough-ass dude',

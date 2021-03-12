@@ -9,12 +9,17 @@ describe('Profile page', () => {
         {
           id: '1',
           message: 'Hi, dude!',
-          likesCount: 18,
+          likesCount: 12,
         },
         {
           id: '2',
-          message: "It's not my first post",
-          likesCount: 3,
+          message: 'yo bro',
+          likesCount: 8,
+        },
+        {
+          id: '3',
+          message: 'wazzup',
+          likesCount: 111,
         },
       ],
       profile: null,
@@ -31,8 +36,28 @@ describe('Profile page', () => {
     const newState = profile.profileReducer(state, action);
 
     // 3. expectation
+    expect(newState.posts).toHaveLength(4);
+    expect(newState.posts[3].message).toEqual('it-kamasutra.com');
+  });
+
+  it('should handle deletePost', () => {
+    const postId = '2';
+
+    const action = profile.actions.deletePost(postId);
+
+    const newState = profile.profileReducer(state, action);
+
+    expect(newState.posts).toHaveLength(2);
+  });
+
+  it('should handle deletePost if id is incorrect', () => {
+    const postId = '100';
+
+    const action = profile.actions.deletePost(postId);
+
+    const newState = profile.profileReducer(state, action);
+
     expect(newState.posts).toHaveLength(3);
-    expect(newState.posts[2].message).toEqual('it-kamasutra.com');
   });
 
   it('should handle setUserProfile', () => {

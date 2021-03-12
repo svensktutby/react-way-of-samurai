@@ -8,6 +8,7 @@ import { ResultCode } from '../api/api';
 
 export enum ActionType {
   ADD_POST = 'SN/PROFILE/ADD_POST',
+  DELETE_POST = 'SN/PROFILE/DELETE_POST',
   SET_USER_PROFILE = 'SN/PROFILE/SET_USER_PROFILE',
   SET_STATUS = 'SN/PROFILE/SET_STATUS',
 }
@@ -49,6 +50,12 @@ export const profileReducer = (
       return { ...state, posts: [...state.posts, post] };
     }
 
+    case ActionType.DELETE_POST:
+      return {
+        ...state,
+        posts: state.posts.filter((p) => p.id !== action.payload),
+      };
+
     case ActionType.SET_USER_PROFILE:
       return { ...state, profile: action.payload };
 
@@ -64,6 +71,9 @@ export const profileReducer = (
 export const actions = {
   addPost: (text: string) =>
     ({ type: ActionType.ADD_POST, payload: text } as const),
+
+  deletePost: (id: string) =>
+    ({ type: ActionType.DELETE_POST, payload: id } as const),
 
   setUserProfile: (profile: ProfileType) =>
     ({ type: ActionType.SET_USER_PROFILE, payload: profile } as const),
