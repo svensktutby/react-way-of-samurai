@@ -17,12 +17,17 @@ const initialState = {
     {
       id: randomId(),
       message: 'Hi, dude!',
-      likesCount: 18,
+      likesCount: 12,
     },
     {
       id: randomId(),
-      message: "It's not my first post",
-      likesCount: 3,
+      message: 'yo bro',
+      likesCount: 8,
+    },
+    {
+      id: randomId(),
+      message: 'wazzup',
+      likesCount: 111,
     },
   ] as Array<PostType>,
   profile: null as ProfileType | null,
