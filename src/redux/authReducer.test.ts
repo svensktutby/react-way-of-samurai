@@ -1,3 +1,5 @@
+import deepFreeze from 'deep-freeze';
+
 import * as auth from './authReducer';
 
 describe('auth reducer', () => {
@@ -10,6 +12,8 @@ describe('auth reducer', () => {
       login: null,
       isAuth: false,
     };
+
+    deepFreeze(state);
   });
 
   it('should handle setAuthUserData', () => {
@@ -24,6 +28,7 @@ describe('auth reducer', () => {
     // 2. action
     const { id, email, login, isAuth } = userAuthData;
     const action = auth.actions.setAuthUserData(id, email, login, isAuth);
+    deepFreeze(action);
 
     const newState = auth.authReducer(state, action);
 

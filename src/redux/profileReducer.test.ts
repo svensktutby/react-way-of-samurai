@@ -1,3 +1,5 @@
+import deepFreeze from 'deep-freeze';
+
 import * as profile from './profileReducer';
 
 describe('Profile page', () => {
@@ -25,6 +27,8 @@ describe('Profile page', () => {
       profile: null,
       status: '',
     };
+
+    deepFreeze(state);
   });
 
   it('should handle addPost', () => {
@@ -32,6 +36,7 @@ describe('Profile page', () => {
     const text = 'it-kamasutra.com';
     // 2. action
     const action = profile.actions.addPost(text);
+    deepFreeze(action);
 
     const newState = profile.profileReducer(state, action);
 
@@ -44,6 +49,7 @@ describe('Profile page', () => {
     const postId = '2';
 
     const action = profile.actions.deletePost(postId);
+    deepFreeze(action);
 
     const newState = profile.profileReducer(state, action);
 
@@ -54,6 +60,7 @@ describe('Profile page', () => {
     const postId = '100';
 
     const action = profile.actions.deletePost(postId);
+    deepFreeze(action);
 
     const newState = profile.profileReducer(state, action);
 
@@ -84,6 +91,7 @@ describe('Profile page', () => {
     };
 
     const action = profile.actions.setUserProfile(userProfile);
+    deepFreeze(action);
 
     const newState = profile.profileReducer(state, action);
 
@@ -95,6 +103,7 @@ describe('Profile page', () => {
     const status = 'Yo, dude!';
 
     const action = profile.actions.setStatus(status);
+    deepFreeze(action);
 
     const newState = profile.profileReducer(state, action);
 

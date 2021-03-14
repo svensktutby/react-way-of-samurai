@@ -1,3 +1,5 @@
+import deepFreeze from 'deep-freeze';
+
 import * as dialogs from './dialogsReducer';
 
 describe('Dialogs page', () => {
@@ -38,6 +40,8 @@ describe('Dialogs page', () => {
         },
       ],
     };
+
+    deepFreeze(state);
   });
 
   it('should handle sendMessage', () => {
@@ -46,6 +50,7 @@ describe('Dialogs page', () => {
 
     // 2. action
     const action = dialogs.actions.sendMessage(message);
+    deepFreeze(action);
 
     const newState = dialogs.dialogsReducer(state, action);
 

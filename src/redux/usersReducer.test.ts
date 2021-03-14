@@ -1,3 +1,5 @@
+import deepFreeze from 'deep-freeze';
+
 import * as users from './usersReducer';
 
 describe('Users page', () => {
@@ -33,6 +35,8 @@ describe('Users page', () => {
       isFetching: false,
       followingInProgress: [],
     };
+
+    deepFreeze(state);
   });
 
   it('should handle follow', () => {
@@ -40,6 +44,7 @@ describe('Users page', () => {
 
     // 2. action
     const action = users.actions.follow(1);
+    deepFreeze(action);
 
     const newState = users.usersReducer(state, action);
 
@@ -49,6 +54,7 @@ describe('Users page', () => {
 
   it('should handle unfollow', () => {
     const action = users.actions.unfollow(2);
+    deepFreeze(action);
 
     const newState = users.usersReducer(state, action);
 
@@ -70,6 +76,7 @@ describe('Users page', () => {
     ];
 
     const action = users.actions.setUsers(newUsers);
+    deepFreeze(action);
 
     const newState = users.usersReducer(state, action);
 
@@ -79,6 +86,7 @@ describe('Users page', () => {
 
   it('should handle setCurrentPage', () => {
     const action = users.actions.setCurrentPage(3);
+    deepFreeze(action);
 
     const newState = users.usersReducer(state, action);
 
@@ -87,6 +95,7 @@ describe('Users page', () => {
 
   it('should handle setUsersTotalCount', () => {
     const action = users.actions.setUsersTotalCount(10);
+    deepFreeze(action);
 
     const newState = users.usersReducer(state, action);
 
@@ -95,6 +104,7 @@ describe('Users page', () => {
 
   it('should handle toggleIsFetching', () => {
     const action = users.actions.toggleIsFetching(true);
+    deepFreeze(action);
 
     const newState = users.usersReducer(state, action);
 
@@ -103,11 +113,16 @@ describe('Users page', () => {
 
   it('should handle toggleFollowingProgress', () => {
     const action1 = users.actions.toggleFollowingProgress(true, 2);
+    deepFreeze(action1);
     const action2 = users.actions.toggleFollowingProgress(true, 3);
+    deepFreeze(action2);
     const action3 = users.actions.toggleFollowingProgress(false, 3);
+    deepFreeze(action3);
 
     const newState1 = users.usersReducer(state, action1);
+    deepFreeze(newState1);
     const newState2 = users.usersReducer(newState1, action2);
+    deepFreeze(newState2);
     const newState3 = users.usersReducer(newState2, action3);
 
     expect(newState1.followingInProgress).toEqual([2]);

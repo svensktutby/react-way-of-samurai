@@ -1,3 +1,5 @@
+import deepFreeze from 'deep-freeze';
+
 import * as app from './appReducer';
 
 describe('auth reducer', () => {
@@ -7,6 +9,8 @@ describe('auth reducer', () => {
     state = {
       initialized: false,
     };
+
+    deepFreeze(state);
   });
 
   it('should handle initializedSuccess', () => {
@@ -14,6 +18,7 @@ describe('auth reducer', () => {
 
     // 2. action
     const action = app.actions.initializedSuccess();
+    deepFreeze(action);
 
     const newState = app.appReducer(state, action);
 
