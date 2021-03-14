@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { connect, Provider } from 'react-redux';
 
-import './App.css';
+import s from './App.module.css';
 import { AppStateType, store } from './redux/reduxStore';
 import { DialogsContainer } from './components/Dialogs/DialogsContainer';
 import { UsersContainer } from './components/Users/UsersContainer';
@@ -32,18 +32,18 @@ class App extends Component<PropsType> {
   render() {
     if (!this.props.initialized) {
       return (
-        <div className="preloaderAppWrapper">
+        <div className={s.preloaderAppWrapper}>
           <Preloader text="Loading SamuraiJSApp" />
         </div>
       );
     }
 
     return (
-      <div className="appWrapper">
+      <div className={s.appWrapper}>
         <HeaderContainer />
         <Navbar />
 
-        <main className="appWrapperContent">
+        <main className={s.appWrapperContent}>
           <Route path="/profile/:userId?" render={() => <ProfileContainer />} />
           <Route path="/dialogs" render={() => <DialogsContainer />} />
           <Route path="/users" render={() => <UsersContainer />} />
