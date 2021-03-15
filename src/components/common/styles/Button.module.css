@@ -23,7 +23,7 @@
   cursor: pointer;
 
   transition-duration: 0.5s;
-  transition-property: color, background-color, opacity;
+  transition-property: color, background-color, opacity, box-shadow;
 
   user-select: none;
 }
@@ -34,7 +34,7 @@
 
 .btn:focus {
   outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
 @media (hover: hover) {

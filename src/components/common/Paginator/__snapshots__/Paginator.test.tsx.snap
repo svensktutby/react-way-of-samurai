@@ -1,0 +1,120 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Paginator component should matches the snapshot 1`] = `
+<div
+  className="paginator"
+>
+  <button
+    className="btn"
+    disabled={true}
+    onClick={[Function]}
+    type="button"
+  >
+    First
+  </button>
+  <button
+    className="btn"
+    disabled={true}
+    onClick={[Function]}
+    type="button"
+  >
+    Previous
+  </button>
+  <button
+    className="btn selected"
+    disabled={true}
+    onClick={[Function]}
+    type="button"
+  >
+    1
+  </button>
+  <button
+    className="btn false"
+    disabled={false}
+    onClick={[Function]}
+    type="button"
+  >
+    2
+  </button>
+  <button
+    className="btn false"
+    disabled={false}
+    onClick={[Function]}
+    type="button"
+  >
+    3
+  </button>
+  <button
+    className="btn false"
+    disabled={false}
+    onClick={[Function]}
+    type="button"
+  >
+    4
+  </button>
+  <button
+    className="btn false"
+    disabled={false}
+    onClick={[Function]}
+    type="button"
+  >
+    5
+  </button>
+  <button
+    className="btn false"
+    disabled={false}
+    onClick={[Function]}
+    type="button"
+  >
+    6
+  </button>
+  <button
+    className="btn false"
+    disabled={false}
+    onClick={[Function]}
+    type="button"
+  >
+    7
+  </button>
+  <button
+    className="btn false"
+    disabled={false}
+    onClick={[Function]}
+    type="button"
+  >
+    8
+  </button>
+  <button
+    className="btn false"
+    disabled={false}
+    onClick={[Function]}
+    type="button"
+  >
+    9
+  </button>
+  <button
+    className="btn false"
+    disabled={false}
+    onClick={[Function]}
+    type="button"
+  >
+    10
+  </button>
+  <button
+    className="btn"
+    disabled={false}
+    onClick={[Function]}
+    type="button"
+  >
+    Next
+  </button>
+  <button
+    className="btn"
+    disabled={false}
+    onClick={[Function]}
+    type="button"
+  >
+    Last
+  </button>
+</div>
+`;
