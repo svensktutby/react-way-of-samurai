@@ -3,12 +3,12 @@ import { WrappedFieldMetaProps, WrappedFieldProps } from 'redux-form';
 
 import s from './FormsControls.module.css';
 
-type FormsControlPropsType = {
+type FormControlPropsType = {
   meta: WrappedFieldMetaProps;
   className?: string;
 };
 
-export const FormsControl: FC<FormsControlPropsType> = ({
+export const FormControl: FC<FormControlPropsType> = ({
   meta: { touched, error },
   children,
   className = '',
@@ -32,9 +32,9 @@ export const Textarea: FC<WrappedFieldProps> = (props) => {
   const { input, meta, ...restProps } = props;
 
   return (
-    <FormsControl {...props}>
+    <FormControl {...props}>
       <textarea placeholder="Write here..." {...input} {...restProps} />
-    </FormsControl>
+    </FormControl>
   );
 };
 
@@ -42,13 +42,13 @@ export const Input: FC<WrappedFieldProps> = (props) => {
   const { input, meta, ...restProps } = props;
 
   return (
-    <FormsControl {...props}>
+    <FormControl {...props}>
       <input
         type="text"
         placeholder="Write here..."
         {...input}
         {...restProps}
       />
-    </FormsControl>
+    </FormControl>
   );
 };

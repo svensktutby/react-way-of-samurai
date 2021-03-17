@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 
 import s from './Paginator.module.css';
-import { randomId } from '../../../utils/randomId';
 
 type PaginatorPropsType = {
   pageSize: number;
@@ -58,7 +57,7 @@ export const Paginator: FC<PaginatorPropsType> = ({
         return (
           <button
             type="button"
-            key={randomId()}
+            key={p}
             className={`${s.btn} ${isCurrent && s.selected}`}
             disabled={isCurrent}
             onClick={() => changePageHandler(p)}
