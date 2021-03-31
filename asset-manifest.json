@@ -1,0 +1,32 @@
+{
+  "files": {
+    "main.css": "/react-way-of-samurai/static/css/main.47e20943.chunk.css",
+    "main.js": "/react-way-of-samurai/static/js/main.f00da5d2.chunk.js",
+    "main.js.map": "/react-way-of-samurai/static/js/main.f00da5d2.chunk.js.map",
+    "runtime-main.js": "/react-way-of-samurai/static/js/runtime-main.6f7d6813.js",
+    "runtime-main.js.map": "/react-way-of-samurai/static/js/runtime-main.6f7d6813.js.map",
+    "static/js/2.7c60d64f.chunk.js": "/react-way-of-samurai/static/js/2.7c60d64f.chunk.js",
+    "static/js/2.7c60d64f.chunk.js.map": "/react-way-of-samurai/static/js/2.7c60d64f.chunk.js.map",
+    "static/css/3.776aa13c.chunk.css": "/react-way-of-samurai/static/css/3.776aa13c.chunk.css",
+    "static/js/3.ad8ecee3.chunk.js": "/react-way-of-samurai/static/js/3.ad8ecee3.chunk.js",
+    "static/js/3.ad8ecee3.chunk.js.map": "/react-way-of-samurai/static/js/3.ad8ecee3.chunk.js.map",
+    "static/css/4.8610fbaa.chunk.css": "/react-way-of-samurai/static/css/4.8610fbaa.chunk.css",
+    "static/js/4.e39cd0eb.chunk.js": "/react-way-of-samurai/static/js/4.e39cd0eb.chunk.js",
+    "static/js/4.e39cd0eb.chunk.js.map": "/react-way-of-samurai/static/js/4.e39cd0eb.chunk.js.map",
+    "static/js/5.be139f03.chunk.js": "/react-way-of-samurai/static/js/5.be139f03.chunk.js",
+    "static/js/5.be139f03.chunk.js.map": "/react-way-of-samurai/static/js/5.be139f03.chunk.js.map",
+    "index.html": "/react-way-of-samurai/index.html",
+    "static/css/3.776aa13c.chunk.css.map": "/react-way-of-samurai/static/css/3.776aa13c.chunk.css.map",
+    "static/css/4.8610fbaa.chunk.css.map": "/react-way-of-samurai/static/css/4.8610fbaa.chunk.css.map",
+    "static/css/main.47e20943.chunk.css.map": "/react-way-of-samurai/static/css/main.47e20943.chunk.css.map",
+    "static/js/2.7c60d64f.chunk.js.LICENSE.txt": "/react-way-of-samurai/static/js/2.7c60d64f.chunk.js.LICENSE.txt",
+    "static/media/logo.d6c257c2.svg": "/react-way-of-samurai/static/media/logo.d6c257c2.svg",
+    "static/media/userAvatar.svg": "/react-way-of-samurai/static/media/userAvatar.3b076f75.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.6f7d6813.js",
+    "static/js/2.7c60d64f.chunk.js",
+    "static/css/main.47e20943.chunk.css",
+    "static/js/main.f00da5d2.chunk.js"
+  ]
+}
