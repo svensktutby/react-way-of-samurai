@@ -1,5 +1,11 @@
 import React, { FC, Component, ComponentType, lazy, Suspense } from 'react';
-import { BrowserRouter as Router, Route, withRouter } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+  withRouter,
+} from 'react-router-dom';
 import { compose } from 'redux';
 import { connect, Provider } from 'react-redux';
 
@@ -11,6 +17,7 @@ import { Navbar } from './components/Navbar/Navbar';
 import { LoginPage } from './components/Login/Login';
 import { initializeApp } from './redux/appReducer';
 import { Preloader } from './components/common/Preloader/Preloader';
+import { Error404 } from './components/common/Error404/Error404';
 
 const DialogsContainer = lazy(async () => {
   const module = await import('./components/Dialogs/DialogsContainer');
@@ -58,13 +65,18 @@ class App extends Component<PropsType> {
               </div>
             }
           >
-            <Route
-              path="/profile/:userId?"
-              render={() => <ProfileContainer />}
-            />
-            <Route path="/dialogs" render={() => <DialogsContainer />} />
-            <Route path="/users" render={() => <UsersContainer />} />
-            <Route path="/login" render={() => <LoginPage />} />
+            <Switch>
+              <Route exact path="/" render={() => <Redirect to="/profile" />} />
+              <Route
+                path="/profile/:userId?"
+                render={() => <ProfileContainer />}
+              />
+              <Route path="/dialogs" render={() => <DialogsContainer />} />
+              <Route path="/users" render={() => <UsersContainer />} />
+              <Route path="/login" render={() => <LoginPage />} />
+              <Route path="/404" render={() => <Error404 />} />
+              <Route path="*" render={() => <Redirect to="/404" />} />
+            </Switch>
           </Suspense>
         </main>
       </div>
