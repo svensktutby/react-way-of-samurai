@@ -1,6 +1,6 @@
 import React, { FC, Component, ComponentType, lazy, Suspense } from 'react';
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Route,
   Switch,
   Redirect,
@@ -55,30 +55,37 @@ class App extends Component<PropsType> {
     return (
       <div className={s.appWrapper}>
         <HeaderContainer />
-        <Navbar />
 
-        <main className={s.appWrapperContent}>
-          <Suspense
-            fallback={
-              <div className={s.preloaderPageWrapper}>
-                <Preloader text="Loading..." />
-              </div>
-            }
-          >
-            <Switch>
-              <Route exact path="/" render={() => <Redirect to="/profile" />} />
-              <Route
-                path="/profile/:userId?"
-                render={() => <ProfileContainer />}
-              />
-              <Route path="/dialogs" render={() => <DialogsContainer />} />
-              <Route path="/users" render={() => <UsersContainer />} />
-              <Route path="/login" render={() => <LoginPage />} />
-              <Route path="/404" render={() => <Error404 />} />
-              <Route path="*" render={() => <Redirect to="/404" />} />
-            </Switch>
-          </Suspense>
-        </main>
+        <div className={s.container}>
+          <Navbar />
+
+          <main className={s.appContent}>
+            <Suspense
+              fallback={
+                <div className={s.preloaderPageWrapper}>
+                  <Preloader text="Loading..." />
+                </div>
+              }
+            >
+              <Switch>
+                <Route
+                  exact
+                  path="/"
+                  render={() => <Redirect to="/profile" />}
+                />
+                <Route
+                  path="/profile/:userId?"
+                  render={() => <ProfileContainer />}
+                />
+                <Route path="/dialogs" render={() => <DialogsContainer />} />
+                <Route path="/users" render={() => <UsersContainer />} />
+                <Route path="/login" render={() => <LoginPage />} />
+                <Route path="/404" render={() => <Error404 />} />
+                <Route path="*" render={() => <Redirect to="/404" />} />
+              </Switch>
+            </Suspense>
+          </main>
+        </div>
       </div>
     );
   }

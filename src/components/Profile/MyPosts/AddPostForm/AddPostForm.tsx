@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 
 import s from './AddPostForm.module.css';
-import styleBtn from '../../../common/styles/Button.module.css';
+import styleBtn from '../../../common/styles/button.module.css';
 import { maxLengthCreator, required } from '../../../../utils/validators';
 import { Textarea } from '../../../common/FormsControls/FormsControls';
 

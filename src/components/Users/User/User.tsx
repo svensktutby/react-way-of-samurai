@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import s from './User.module.css';
 import userAvatar from '../../../assets/images/userAvatar.svg';
-import styleBtn from '../../common/styles/Button.module.css';
+import styleBtn from '../../common/styles/button.module.css';
 import { UserType } from '../../../types/types';
 
 type UsersPropsType = {

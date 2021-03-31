@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 
 import s from './Users.module.css';
-import styleBtn from '../common/styles/Button.module.css';
+import styleBtn from '../common/styles/button.module.css';
 import { UserType } from '../../types/types';
 import { Paginator } from '../common/Paginator/Paginator';
 import { User } from './User/User';

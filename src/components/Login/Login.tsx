@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { reduxForm, InjectedFormProps, Field } from 'redux-form';
 
 import s from './Login.module.css';
-import styleBtn from '../common/styles/Button.module.css';
+import styleBtn from '../common/styles/button.module.css';
 import { Input } from '../common/FormsControls/FormsControls';
 import { maxLengthCreator, required } from '../../utils/validators';
 import { login } from '../../redux/authReducer';

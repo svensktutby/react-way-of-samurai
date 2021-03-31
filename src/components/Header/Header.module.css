@@ -1,16 +1,20 @@
 .header {
+  background-color: #4d636f;
+}
+
+.container {
+  composes: container from "../../components/common/styles/container.module.css";
+
   display: flex;
   align-items: center;
   justify-content: space-between;
-  grid-area: header;
-  padding-right: 35px;
-  padding-left: 35px;
-
-  background-color: #4d636f;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 .logo {
   width: 40px;
+  margin-left: 20px;
 }
 
 .login {
