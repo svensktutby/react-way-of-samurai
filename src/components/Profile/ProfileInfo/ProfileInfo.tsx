@@ -1,17 +1,34 @@
 import React, { FC } from 'react';
-import s from './ProfileInfo.module.css';
 
-export const ProfileInfo: FC = () => {
+import s from './ProfileInfo.module.css';
+import userAvatar from '../../../assets/images/userAvatar.svg';
+import { ProfileType } from '../../../types/types';
+import { Preloader } from '../../common/Preloader/Preloader';
+import { ProfileStatus } from './ProfileStatus/ProfileStatus';
+
+type ProfileInfoPropsType = {
+  profile: ProfileType | null;
+  status: string;
+  updateStatus: (status: string) => void;
+};
+
+export const ProfileInfo: FC<ProfileInfoPropsType> = ({
+  profile,
+  status,
+  updateStatus,
+}) => {
+  if (!profile) {
+    return <Preloader text="Loading..." />;
+  }
+
   return (
-    <div>
-      <div>
-        <img
-          className={s.signboard}
-          src="https://image.shutterstock.com/image-photo/amsterdam-canal-street-view-long-260nw-739294837.jpg"
-          alt="Top background"
-        />
-      </div>
-      <div className={s.descriptionBlock}>ava + description</div>
+    <div className={s.profileInfo}>
+      <img
+        className={s.avatar}
+        src={profile.photos.large || userAvatar}
+        alt={`${profile.fullName} avatar`}
+      />
+      <ProfileStatus status={status} updateStatus={updateStatus} />
     </div>
   );
 };

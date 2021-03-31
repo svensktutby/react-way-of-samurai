@@ -1,29 +1,99 @@
+import React, { Component, ComponentType } from 'react';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 
-import { DispatchPropsType, StatePropsType, Users } from './Users';
 import { AppStateType } from '../../redux/reduxStore';
-import { followAC, setUsersAC, unfollowAC } from '../../redux/usersReducer';
+import {
+  actions as usersActions,
+  followUser,
+  requestUsers,
+  unfollowUser,
+} from '../../redux/usersReducer';
+import { UserType } from '../../types/types';
+import { Users } from './Users';
+import { Preloader } from '../common/Preloader/Preloader';
+import * as usersSelectors from '../../redux/usersSelectors';
 
-const mapStateToProps = ({
-  usersPage: { users },
-}: AppStateType): StatePropsType => {
+const { setCurrentPage } = usersActions;
+
+type StatePropsType = {
+  users: Array<UserType>;
+  pageSize: number;
+  totalUsersCount: number;
+  page: number;
+  isFetching: boolean;
+  followingInProgress: Array<number>;
+};
+
+type DispatchPropsType = {
+  followUser: (userId: number) => void;
+  unfollowUser: (userId: number) => void;
+  setCurrentPage: (page: number) => void;
+  requestUsers: (page: number, pageSize: number) => void;
+};
+
+type PropsType = StatePropsType & DispatchPropsType;
+
+class UsersAPIContainer extends Component<PropsType> {
+  componentDidMount() {
+    const { page, pageSize, requestUsers: getUsers } = this.props;
+    getUsers(page, pageSize);
+  }
+
+  changePageHandler = (page: number) => {
+    const { pageSize, requestUsers: getUsers } = this.props;
+    getUsers(page, pageSize);
+  };
+
+  render(): JSX.Element {
+    const {
+      users,
+      pageSize,
+      totalUsersCount,
+      page,
+      followingInProgress,
+      followUser: follow,
+      unfollowUser: unfollow,
+      isFetching,
+    } = this.props;
+
+    return (
+      <>
+        {isFetching ? (
+          <Preloader text="Loading..." />
+        ) : (
+          <Users
+            users={users}
+            pageSize={pageSize}
+            totalUsersCount={totalUsersCount}
+            page={page}
+            followingInProgress={followingInProgress}
+            follow={follow}
+            unfollow={unfollow}
+            changePageHandler={this.changePageHandler}
+          />
+        )}
+      </>
+    );
+  }
+}
+
+const mapStateToProps = (state: AppStateType): StatePropsType => {
   return {
-    users,
+    users: usersSelectors.getUsers(state),
+    pageSize: usersSelectors.getPageSize(state),
+    totalUsersCount: usersSelectors.getTotalUsersCount(state),
+    page: usersSelectors.getCurrentPage(state),
+    isFetching: usersSelectors.getIsFetching(state),
+    followingInProgress: usersSelectors.getFollowingInProgress(state),
   };
 };
 
-const mapDispatchToProps: DispatchPropsType = {
-  follow: followAC,
-  unfollow: unfollowAC,
-  setUsers: setUsersAC,
-};
-
-export const UsersContainer = connect<
-  StatePropsType,
-  DispatchPropsType,
-  {},
-  AppStateType
->(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Users);
+export const UsersContainer = compose<ComponentType>(
+  connect(mapStateToProps, {
+    followUser,
+    unfollowUser,
+    setCurrentPage,
+    requestUsers,
+  }),
+)(UsersAPIContainer);

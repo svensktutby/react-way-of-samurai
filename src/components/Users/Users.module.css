@@ -7,29 +7,3 @@
 
   list-style-type: none;
 }
-
-.item {
-  display: flex;
-  margin-bottom: 10px;
-}
-
-.avatarWrapper {
-  width: 100%;
-  height: auto;
-  overflow: hidden;
-}
-
-.avatar {
-  width: 50px;
-  height: 50px;
-}
-
-.info {
-  display: flex;
-  justify-content: space-between;
-  min-width: 300px;
-}
-
-.location {
-  text-align: right;
-}

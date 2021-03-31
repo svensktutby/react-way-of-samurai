@@ -1,0 +1,52 @@
+.btn {
+  display: inline-block;
+  padding: 4px 9px;
+
+  vertical-align: middle;
+  color: #7d97a5;
+
+  background-color: #fff;
+  border: 1px solid #7d97a5;
+  cursor: pointer;
+
+  transition-duration: 0.5s;
+  transition-property: color, background-color, opacity, box-shadow;
+
+  user-select: none;
+}
+
+.btn:not(:last-child) {
+  border-right: 0;
+}
+
+.btn:first-child {
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.btn:last-child {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.btn:not(.selected):disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+@media (hover: hover) {
+  .btn:not(:disabled):hover,
+  .btn:focus {
+    background-color: rgba(125, 151, 165, 0.4);
+    outline: 0;
+  }
+}
+
+.selected,
+.selected:hover {
+  font-weight: bold;
+  color: #fff;
+
+  background-color: #7d97a5;
+  cursor: default;
+}

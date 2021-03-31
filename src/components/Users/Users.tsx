@@ -1,96 +1,57 @@
-import React, { Component } from 'react';
-import axios, { AxiosResponse } from 'axios';
+import React, { FC } from 'react';
+
 import s from './Users.module.css';
+import styleBtn from '../common/styles/button.module.css';
 import { UserType } from '../../types/types';
-import userAvatar from '../../assets/images/userAvatar.svg';
+import { Paginator } from '../common/Paginator/Paginator';
+import { User } from './User/User';
 
-export type StatePropsType = {
+type UsersPropsType = {
   users: Array<UserType>;
+  pageSize: number;
+  totalUsersCount: number;
+  page: number;
+  followingInProgress: Array<number>;
+  follow: (userId: number) => void;
+  unfollow: (userId: number) => void;
+  changePageHandler: (page: number) => void;
 };
 
-export type DispatchPropsType = {
-  follow: (payload: number) => void;
-  unfollow: (payload: number) => void;
-  setUsers: (payload: Array<UserType>) => void;
+export const Users: FC<UsersPropsType> = (props) => {
+  const {
+    users,
+    pageSize,
+    totalUsersCount,
+    page,
+    followingInProgress,
+    follow,
+    unfollow,
+    changePageHandler,
+  } = props;
+
+  const userElements = users.map((user) => (
+    <User
+      key={user.id}
+      user={user}
+      followingInProgress={followingInProgress}
+      follow={follow}
+      unfollow={unfollow}
+    />
+  ));
+
+  return (
+    <div className={s.usersBlock}>
+      <Paginator
+        pageSize={pageSize}
+        totalItemsCount={totalUsersCount}
+        currentPage={page}
+        changePageHandler={changePageHandler}
+      />
+
+      <ul className={s.list}>{userElements}</ul>
+      <button className={styleBtn.btn} type="button" onClick={() => {}}>
+        Show more
+      </button>
+    </div>
+  );
 };
-
-type GetUsersResponseType = {
-  items: Array<UserType>;
-  totalCount: number;
-  error: string | null;
-};
-
-type PropsType = StatePropsType & DispatchPropsType;
-
-type StateType = {};
-
-export class Users extends Component<PropsType, StateType> {
-  componentDidMount() {
-    const baseUrl = 'https://social-network.samuraijs.com/api/1.0';
-
-    axios({
-      method: 'GET',
-      url: `${baseUrl}/users?count=4`,
-    }).then((res: AxiosResponse<GetUsersResponseType>) => {
-      this.props.setUsers(res.data.items);
-    });
-  }
-
-  render() {
-    const { users, follow, unfollow } = this.props;
-
-    const userElements = users.map((u) => (
-      <li className={s.item} key={u.id}>
-        <div>
-          <div className={s.avatarWrapper}>
-            <img
-              className={s.avatar}
-              src={u.photos.small ? u.photos.small : userAvatar}
-              width="50"
-              height="50"
-              alt="User avatar"
-            />
-          </div>
-          <div>
-            {u.followed ? (
-              <button
-                className={s.followBtn}
-                type="button"
-                onClick={() => follow(u.id)}
-              >
-                Unfollow
-              </button>
-            ) : (
-              <button
-                className={s.followBtn}
-                type="button"
-                onClick={() => unfollow(u.id)}
-              >
-                Follow
-              </button>
-            )}
-          </div>
-        </div>
-        <div className={s.info}>
-          <div>
-            <div className={s.name}>{u.name}</div>
-            <div className={s.status}>{u.status}</div>
-          </div>
-          <div className={s.location}>
-            <div>{'u.location.country'},</div>
-            <div>{'u.location.city'}</div>
-          </div>
-        </div>
-      </li>
-    ));
-
-    return (
-      <div className={s.usersBlock}>
-        <ul className={s.list}>{userElements}</ul>
-        <button className={s.moreBtn} type="button" onClick={() => {}}>
-          Show more
-        </button>
-      </div>
-    );
-  }
-}

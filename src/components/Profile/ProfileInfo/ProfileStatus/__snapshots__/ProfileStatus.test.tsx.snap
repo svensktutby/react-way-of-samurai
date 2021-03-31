@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProfileStatus component should matches the snapshot 1`] = `
+<div
+  className="statusWrapper"
+>
+  <span
+    className="status"
+    onClick={[Function]}
+    role="presentation"
+  >
+    Status is not empty
+  </span>
+</div>
+`;

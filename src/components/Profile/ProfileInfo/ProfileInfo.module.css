@@ -1,7 +1,8 @@
-.signboard {
-  width: 100%;
+.profileInfo {
+  padding: 10px;
 }
 
-.descriptionBlock {
-  padding: 10px;
+.avatar {
+  max-width: 300px;
+  max-height: 300px;
 }

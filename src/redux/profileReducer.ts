@@ -1,53 +1,115 @@
+import { Action } from 'redux';
+import { ThunkAction } from 'redux-thunk';
+
 import { randomId } from '../utils/randomId';
-import { PostType } from '../types/types';
+import { profileApi } from '../api/profileApi';
+import { InferActionsType, PostType, ProfileType } from '../types/types';
+import { ResultCode } from '../api/api';
+
+export enum ActionType {
+  ADD_POST = 'SN/PROFILE/ADD_POST',
+  DELETE_POST = 'SN/PROFILE/DELETE_POST',
+  SET_USER_PROFILE = 'SN/PROFILE/SET_USER_PROFILE',
+  SET_STATUS = 'SN/PROFILE/SET_STATUS',
+}
 
 const initialState = {
   posts: [
     {
       id: randomId(),
       message: 'Hi, dude!',
-      likesCount: 18,
+      likesCount: 12,
     },
     {
       id: randomId(),
-      message: "It's not my first post",
-      likesCount: 3,
+      message: 'yo bro',
+      likesCount: 8,
+    },
+    {
+      id: randomId(),
+      message: 'wazzup',
+      likesCount: 111,
     },
   ] as Array<PostType>,
-  newPostText: 'it-kamasutra.com',
+  profile: null as ProfileType | null,
+  status: '',
 };
-
-export type ProfilePageStateType = typeof initialState;
 
 export const profileReducer = (
   state = initialState,
-  action: ProfilePageActionTypes,
+  action: ProfilePageActionsType,
 ): ProfilePageStateType => {
   switch (action.type) {
-    case UPDATE_NEW_POST_TEXT:
-      return { ...state, newPostText: action.payload };
-
-    case ADD_POST:
+    case ActionType.ADD_POST: {
       const post: PostType = {
         id: randomId(),
-        message: state.newPostText,
+        message: action.payload,
         likesCount: 0,
       };
 
-      return { ...state, posts: [...state.posts, post], newPostText: '' };
+      return { ...state, posts: [...state.posts, post] };
+    }
+
+    case ActionType.DELETE_POST:
+      return {
+        ...state,
+        posts: state.posts.filter((p) => p.id !== action.payload),
+      };
+
+    case ActionType.SET_USER_PROFILE:
+      return { ...state, profile: action.payload };
+
+    case ActionType.SET_STATUS:
+      return { ...state, status: action.payload };
 
     default:
       return state;
   }
 };
 
-const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT';
-export const changePostAC = (payload: string) =>
-  ({ type: UPDATE_NEW_POST_TEXT, payload } as const);
+/** Actions */
+export const actions = {
+  addPost: (text: string) =>
+    ({ type: ActionType.ADD_POST, payload: text } as const),
 
-const ADD_POST = 'ADD_POST';
-export const addPostAC = () => ({ type: ADD_POST } as const);
+  deletePost: (id: string) =>
+    ({ type: ActionType.DELETE_POST, payload: id } as const),
 
-export type ProfilePageActionTypes =
-  | ReturnType<typeof changePostAC>
-  | ReturnType<typeof addPostAC>;
+  setUserProfile: (profile: ProfileType) =>
+    ({ type: ActionType.SET_USER_PROFILE, payload: profile } as const),
+
+  setStatus: (status: string) =>
+    ({ type: ActionType.SET_STATUS, payload: status } as const),
+};
+
+/** Thunks */
+export const getProfile = (userId: number): ThunkType => async (dispatch) => {
+  const data = await profileApi.getProfile(userId);
+
+  dispatch(actions.setUserProfile(data));
+};
+
+export const getStatus = (userId: number): ThunkType => async (dispatch) => {
+  const data = await profileApi.getStatus(userId);
+
+  dispatch(actions.setStatus(data));
+};
+
+export const updateStatus = (status: string): ThunkType => async (dispatch) => {
+  const data = await profileApi.updateStatus(status);
+
+  if (data.resultCode === ResultCode.Success) {
+    dispatch(actions.setStatus(status));
+  }
+};
+
+/** Types */
+export type ProfilePageStateType = typeof initialState;
+
+export type ProfilePageActionsType = InferActionsType<typeof actions>;
+
+type ThunkType<
+  A extends Action = ProfilePageActionsType,
+  R = Promise<void>,
+  S = { profilePage: ProfilePageStateType }
+> = ThunkAction<R, S, unknown, A>;

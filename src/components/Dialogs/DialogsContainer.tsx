@@ -1,7 +1,13 @@
+import { ComponentType } from 'react';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { changeMessageAC, sendMessageAC } from '../../redux/dialogsReducer';
-import { Dialogs, DispatchPropsType, StatePropsType } from './Dialogs';
+
+import { Dialogs, StatePropsType } from './Dialogs';
 import { AppStateType } from '../../redux/reduxStore';
+import { actions as dialogsActons } from '../../redux/dialogsReducer';
+import { withAuthRedirect } from '../../hoc/withAuthRedirect';
+
+const { sendMessage } = dialogsActons;
 
 const mapStateToProps = ({ dialogsPage }: AppStateType): StatePropsType => {
   return {
@@ -9,17 +15,7 @@ const mapStateToProps = ({ dialogsPage }: AppStateType): StatePropsType => {
   };
 };
 
-const mapDispatchToProps: DispatchPropsType = {
-  sendMessage: sendMessageAC,
-  changeMessage: changeMessageAC,
-};
-
-export const DialogsContainer = connect<
-  StatePropsType,
-  DispatchPropsType,
-  {},
-  AppStateType
->(
-  mapStateToProps,
-  mapDispatchToProps,
+export const DialogsContainer = compose<ComponentType>(
+  connect(mapStateToProps, { sendMessage }),
+  withAuthRedirect,
 )(Dialogs);

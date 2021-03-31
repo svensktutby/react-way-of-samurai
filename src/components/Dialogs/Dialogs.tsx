@@ -1,29 +1,28 @@
-import React, { ChangeEvent, FC } from 'react';
+import React, { FC } from 'react';
+
 import s from './Dialogs.module.css';
+import { DialogsPageStateType } from '../../redux/dialogsReducer';
 import { DialogItem } from './DialogItem/DialogItem';
 import { Message } from './Message/Message';
-import { DialogsPageType } from '../../redux/dialogsReducer';
+import {
+  AddMessageFormDataType,
+  AddMessageFormRedux as AddMessageForm,
+} from './AddMessageForm/AddMessageForm';
 
 export type StatePropsType = {
-  dialogsPage: DialogsPageType;
+  dialogsPage: DialogsPageStateType;
 };
 
 export type DispatchPropsType = {
-  changeMessage: (payload: string) => void;
-  sendMessage: () => void;
+  sendMessage: (message: string) => void;
 };
 
 export const Dialogs: FC<StatePropsType & DispatchPropsType> = ({
-  dialogsPage: { dialogs, messages, newMessageText },
-  changeMessage,
+  dialogsPage: { dialogs, messages },
   sendMessage,
 }) => {
-  const sendMessageHandler = () => {
-    sendMessage();
-  };
-
-  const changeMessageHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    changeMessage(e.currentTarget.value);
+  const sendMessageHandler = (formData: AddMessageFormDataType) => {
+    sendMessage(formData.message);
   };
 
   const dialogsElements = dialogs.map((d) => (
@@ -36,19 +35,14 @@ export const Dialogs: FC<StatePropsType & DispatchPropsType> = ({
 
   return (
     <div className={s.dialogs}>
-      <div className={s.dialogsList}>{dialogsElements}</div>
-      <div className={s.messagesList}>
-        <div>{messagesElements}</div>
+      <ul className={s.dialogsList}>{dialogsElements}</ul>
+
+      <div className={s.chat}>
+        <ul className={s.messagesList}>{messagesElements}</ul>
+
         <div>
           <div>
-            <textarea
-              onChange={changeMessageHandler}
-              value={newMessageText}
-              placeholder="Write here..."
-            />
-            <div>
-              <button onClick={sendMessageHandler}>Send</button>
-            </div>
+            <AddMessageForm onSubmit={sendMessageHandler} />
           </div>
         </div>
       </div>

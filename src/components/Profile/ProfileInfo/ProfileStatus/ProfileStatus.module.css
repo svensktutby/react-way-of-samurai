@@ -1,0 +1,40 @@
+.statusWrapper,
+.editStatusWrapper {
+  max-width: 300px;
+}
+
+.status,
+.editStatus {
+  display: block;
+  width: 100%;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.5;
+
+  border: 0;
+  border-radius: 20px;
+}
+
+
+.status {
+  color: #fff;
+
+  background-color: #7d97a5;
+  cursor: pointer;
+}
+
+.editStatus {
+  color: #333;
+
+  background-color: rgb(233, 229, 229);
+  border: 1px solid #ced4da;
+}
+
+.editStatus:focus {
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
+}

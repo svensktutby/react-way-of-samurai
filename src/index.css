@@ -1,5 +1,16 @@
-body {
+html {
   box-sizing: border-box;
+
+  scroll-behavior: smooth;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
   margin: 0;
 
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -11,20 +22,37 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: inherit;
-}
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
   monospace;
 }
 
+svg {
+  fill: currentColor;
+}
+
 img {
   max-width: 100%;
   height: auto;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  margin: 0;
+
+  font-size: 100%;
+  line-height: 1.15;
+  font-family: inherit;
+}
+
+input[type=text],
+input[type=email],
+input[type=password],
+textarea {
+  -webkit-appearance: none; /* fix safari inputs shadow */
 }
 
 [type=button]:not(:disabled),

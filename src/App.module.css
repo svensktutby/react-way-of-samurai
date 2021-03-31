@@ -1,0 +1,39 @@
+.appWrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.container {
+  composes: container from "./components/common/styles/container.module.css";
+
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
+}
+
+.appContent {
+  flex-grow: 1;
+  margin-left: 25px;
+  overflow: hidden;
+
+  border-radius: 4px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+@media screen and (max-width: 768px) {
+  .appContent {
+    margin-left: 15px;
+  }
+}
+
+.preloaderAppWrapper,
+.preloaderPageWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preloaderAppWrapper {
+  height: 100vh;
+}

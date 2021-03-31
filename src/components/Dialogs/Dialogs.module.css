@@ -1,11 +1,18 @@
 .dialogs {
   display: grid;
   grid-template-columns: 2fr 10fr;
+  padding: 10px;
 }
 
 .dialogsList,
 .messagesList {
   margin: 0;
-  padding: 10px;
+  padding-left: 0;
   list-style-type: none;
+}
+
+.dialogsList li,
+.messagesList li {
+  padding: 10px;
+  display: flex;
 }

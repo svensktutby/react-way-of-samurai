@@ -1,59 +1,163 @@
-import { UserType } from '../types/types';
+import { Action } from 'redux';
+import { ThunkAction } from 'redux-thunk';
+
+import { usersApi } from '../api/usersApi';
+import { InferActionsType, UserType } from '../types/types';
+import { ResultCode } from '../api/api';
+
+export enum ActionType {
+  FOLLOW = 'SN/USERS/FOLLOW',
+  UNFOLLOW = 'SN/USERS/UNFOLLOW',
+  SET_USERS = 'SN/USERS/SET_USERS',
+  SET_CURRENT_PAGE = 'SN/USERS/SET_CURRENT_PAGE',
+  SET_USERS_TOTAL_COUNT = 'SN/USERS/SET_USERS_TOTAL_COUNT',
+  TOGGLE_IS_FETCHING = 'SN/USERS/TOGGLE_IS_FETCHING',
+  TOGGLE_IS_FOLLOWING_PROGRESS = 'SN/USERS/TOGGLE_IS_FOLLOWING_PROGRESS',
+}
 
 const initialState = {
   users: [] as Array<UserType>,
+  pageSize: 5,
+  totalUsersCount: 0,
+  currentPage: 1,
+  isFetching: false,
+  followingInProgress: [] as Array<number>,
 };
-
-export type UsersPageType = typeof initialState;
 
 export const usersReducer = (
   state = initialState,
-  action: UsersPageActionTypes,
-): UsersPageType => {
+  action: UsersPageActionsType,
+): UsersPageStateType => {
   switch (action.type) {
-    case FOLLOW: {
-      return {
-        ...state,
-        users: state.users.map((u) =>
-          u.id === action.payload ? { ...u, followed: false } : u,
-        ),
-      };
-    }
-
-    case UNFOLLOW: {
+    case ActionType.FOLLOW:
       return {
         ...state,
         users: state.users.map((u) =>
           u.id === action.payload ? { ...u, followed: true } : u,
         ),
       };
-    }
 
-    case SET_USERS: {
+    case ActionType.UNFOLLOW:
       return {
         ...state,
-        users: [...state.users, ...action.payload],
+        users: state.users.map((u) =>
+          u.id === action.payload ? { ...u, followed: false } : u,
+        ),
       };
-    }
+
+    case ActionType.SET_USERS:
+      return {
+        ...state,
+        users: action.payload,
+      };
+
+    case ActionType.SET_CURRENT_PAGE:
+      return {
+        ...state,
+        currentPage: action.payload,
+      };
+
+    case ActionType.SET_USERS_TOTAL_COUNT:
+      return {
+        ...state,
+        totalUsersCount: action.payload,
+      };
+
+    case ActionType.TOGGLE_IS_FETCHING:
+      return {
+        ...state,
+        isFetching: action.payload,
+      };
+
+    case ActionType.TOGGLE_IS_FOLLOWING_PROGRESS:
+      return {
+        ...state,
+        followingInProgress: action.payload.isFetching
+          ? [...state.followingInProgress, action.payload.userId]
+          : state.followingInProgress.filter(
+              (id) => id !== action.payload.userId,
+            ),
+      };
 
     default:
       return state;
   }
 };
 
-const FOLLOW = 'FOLLOW';
-export const followAC = (payload: number) =>
-  ({ type: FOLLOW, payload } as const);
+/** Actions */
+export const actions = {
+  follow: (userId: number) =>
+    ({ type: ActionType.FOLLOW, payload: userId } as const),
 
-const UNFOLLOW = 'UNFOLLOW';
-export const unfollowAC = (payload: number) =>
-  ({ type: UNFOLLOW, payload } as const);
+  unfollow: (userId: number) =>
+    ({ type: ActionType.UNFOLLOW, payload: userId } as const),
 
-const SET_USERS = 'SET_USERS';
-export const setUsersAC = (payload: Array<UserType>) =>
-  ({ type: SET_USERS, payload } as const);
+  setUsers: (users: Array<UserType>) =>
+    ({ type: ActionType.SET_USERS, payload: users } as const),
 
-export type UsersPageActionTypes =
-  | ReturnType<typeof followAC>
-  | ReturnType<typeof unfollowAC>
-  | ReturnType<typeof setUsersAC>;
+  setCurrentPage: (page: number) =>
+    ({ type: ActionType.SET_CURRENT_PAGE, payload: page } as const),
+
+  setUsersTotalCount: (totalCount: number) =>
+    ({ type: ActionType.SET_USERS_TOTAL_COUNT, payload: totalCount } as const),
+
+  toggleIsFetching: (isFetching: boolean) =>
+    ({ type: ActionType.TOGGLE_IS_FETCHING, payload: isFetching } as const),
+
+  toggleFollowingProgress: (isFetching: boolean, userId: number) =>
+    ({
+      type: ActionType.TOGGLE_IS_FOLLOWING_PROGRESS,
+      payload: {
+        isFetching,
+        userId,
+      },
+    } as const),
+};
+
+/** Thunks */
+export const requestUsers = (
+  page: number,
+  pageSize: number,
+): ThunkType => async (dispatch) => {
+  dispatch(actions.toggleIsFetching(true));
+  dispatch(actions.setCurrentPage(page));
+
+  const data = await usersApi.getUsers(page, pageSize);
+
+  dispatch(actions.toggleIsFetching(false));
+  dispatch(actions.setUsers(data.items));
+  dispatch(actions.setUsersTotalCount(data.totalCount));
+};
+
+export const followUser = (userId: number): ThunkType => async (dispatch) => {
+  dispatch(actions.toggleFollowingProgress(true, userId));
+
+  const data = await usersApi.follow(userId);
+
+  if (data.resultCode === ResultCode.Success) {
+    dispatch(actions.follow(userId));
+  }
+  dispatch(actions.toggleFollowingProgress(false, userId));
+};
+
+export const unfollowUser = (userId: number): ThunkType => async (dispatch) => {
+  dispatch(actions.toggleFollowingProgress(true, userId));
+
+  const data = await usersApi.unfollow(userId);
+
+  if (data.resultCode === ResultCode.Success) {
+    dispatch(actions.unfollow(userId));
+  }
+  dispatch(actions.toggleFollowingProgress(false, userId));
+};
+
+/** Types */
+export type UsersPageStateType = typeof initialState;
+
+export type UsersPageActionsType = InferActionsType<typeof actions>;
+
+type ThunkType<
+  A extends Action = UsersPageActionsType,
+  R = Promise<void>,
+  S = { usersPage: UsersPageStateType }
+> = ThunkAction<R, S, unknown, A>;

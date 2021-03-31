@@ -1,11 +1,28 @@
 import React, { FC } from 'react';
+
 import { ProfileInfo } from './ProfileInfo/ProfileInfo';
 import { MyPostsContainer } from './MyPosts/MyPostsContainer';
+import { ProfileType } from '../../types/types';
 
-export const Profile: FC = () => {
+type ProfilePropsType = {
+  profile: ProfileType | null;
+  status: string;
+  updateStatus: (status: string) => void;
+};
+
+export const Profile: FC<ProfilePropsType> = ({
+  profile,
+  status,
+  updateStatus,
+}) => {
   return (
     <div>
-      <ProfileInfo />
+      <ProfileInfo
+        profile={profile}
+        status={status}
+        updateStatus={updateStatus}
+      />
+
       <MyPostsContainer />
     </div>
   );

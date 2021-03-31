@@ -1,24 +1,29 @@
-import { combineReducers, compose, createStore } from 'redux';
-import { sidebarReducer as sidebar } from './sidebarReducer';
+import { combineReducers, createStore } from 'redux';
+import { reducer as form } from 'redux-form';
+
+import { enhancedStore } from './middleware';
 import { dialogsReducer as dialogsPage } from './dialogsReducer';
 import { profileReducer as profilePage } from './profileReducer';
 import { usersReducer as usersPage } from './usersReducer';
+import { authReducer as auth } from './authReducer';
+import { appReducer as app } from './appReducer';
+import { sidebarReducer as sidebar } from './sidebarReducer';
 
-type RootReducerType = typeof rootReducer;
-export type AppStateType = ReturnType<RootReducerType>;
+export type AppStateType = ReturnType<typeof rootReducer>;
 
 const rootReducer = combineReducers({
   profilePage,
   dialogsPage,
   sidebar,
   usersPage,
+  auth,
+  app,
+  form,
 });
 
-// @ts-ignore
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-export const store = createStore(rootReducer, composeEnhancers());
+export const store = createStore(rootReducer, enhancedStore);
 
 // FIXME remove global __store__
-// @ts-ignore
-window.__store__ = store;
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore next line
+window.store = store;
