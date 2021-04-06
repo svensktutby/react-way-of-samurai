@@ -1,5 +1,5 @@
 import { API, ApiResponseType } from './api';
-import { ProfileType } from '../types/types';
+import { PhotosType, ProfileType } from '../types/types';
 
 export const profileApi = {
   getProfile(userId: number): Promise<ProfileType> {
@@ -12,5 +12,13 @@ export const profileApi = {
     return API.put<ApiResponseType>(`profile/status/`, { status }).then(
       (res) => res.data,
     );
+  },
+  savePhoto(photo: File): Promise<ApiResponseType<PhotosType>> {
+    const formData = new FormData();
+    formData.append('image', photo);
+
+    return API.put<ApiResponseType<PhotosType>>(`profile/photo/`, formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    }).then((res) => res.data);
   },
 };

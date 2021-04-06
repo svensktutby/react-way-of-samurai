@@ -1,8 +1,31 @@
 .profileInfo {
+  max-width: 300px;
   padding: 10px;
 }
 
-.avatar {
+.photoWrapper {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 20px;
+  overflow: hidden;
+
+  border-radius: 50%;
+}
+
+.btnWrapper {
   max-width: 300px;
-  max-height: 300px;
+  margin-bottom: 20px;
+
+  text-align: center;
+}
+
+.inputFile {
+  position: absolute;
+  z-index: -1;
+
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+
+  opacity: 0;
 }

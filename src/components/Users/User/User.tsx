@@ -26,7 +26,7 @@ export const User: FC<UsersPropsType> = ({
           <Link to={`/profile/${user.id}`}>
             <img
               className={s.avatar}
-              src={user.photos.small ? user.photos.small : userAvatar}
+              src={user.photos.small || userAvatar}
               width="50"
               height="50"
               alt="User avatar"

@@ -3,7 +3,12 @@ import { ThunkAction } from 'redux-thunk';
 
 import { randomId } from '../utils/randomId';
 import { profileApi } from '../api/profileApi';
-import { InferActionsType, PostType, ProfileType } from '../types/types';
+import {
+  InferActionsType,
+  PhotosType,
+  PostType,
+  ProfileType,
+} from '../types/types';
 import { ResultCode } from '../api/api';
 
 export enum ActionType {
@@ -11,6 +16,7 @@ export enum ActionType {
   DELETE_POST = 'SN/PROFILE/DELETE_POST',
   SET_USER_PROFILE = 'SN/PROFILE/SET_USER_PROFILE',
   SET_STATUS = 'SN/PROFILE/SET_STATUS',
+  SET_USER_PHOTO = 'SN/PROFILE/SET_USER_PHOTO',
 }
 
 const initialState = {
@@ -62,6 +68,15 @@ export const profileReducer = (
     case ActionType.SET_STATUS:
       return { ...state, status: action.payload };
 
+    case ActionType.SET_USER_PHOTO:
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          photos: action.payload,
+        } as ProfileType,
+      };
+
     default:
       return state;
   }
@@ -80,6 +95,9 @@ export const actions = {
 
   setStatus: (status: string) =>
     ({ type: ActionType.SET_STATUS, payload: status } as const),
+
+  setUserPhoto: (photos: PhotosType) =>
+    ({ type: ActionType.SET_USER_PHOTO, payload: photos } as const),
 };
 
 /** Thunks */
@@ -100,6 +118,14 @@ export const updateStatus = (status: string): ThunkType => async (dispatch) => {
 
   if (data.resultCode === ResultCode.Success) {
     dispatch(actions.setStatus(status));
+  }
+};
+
+export const savePhoto = (photo: File): ThunkType => async (dispatch) => {
+  const data = await profileApi.savePhoto(photo);
+
+  if (data.resultCode === ResultCode.Success) {
+    dispatch(actions.setUserPhoto(data.data));
   }
 };
 
