@@ -26,6 +26,7 @@
 
   font-size: 20px;
   color: #fff;
+  text-transform: capitalize;
   text-decoration: none;
 
   background-color: transparent;
@@ -44,4 +45,8 @@
   color: #333;
 
   background-color: rgb(233, 229, 229);
+}
+
+.link.active {
+  cursor: default;
 }
