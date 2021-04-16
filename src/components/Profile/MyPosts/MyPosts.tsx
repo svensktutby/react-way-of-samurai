@@ -5,7 +5,7 @@ import { Post } from './Post/Post';
 import { PostType } from '../../../types/types';
 import {
   AddPostFormDataType,
-  AddPostFormRedux as AddPostForm,
+  AddPostReduxForm as AddPostForm,
 } from './AddPostForm/AddPostForm';
 
 export type StatePropsType = {

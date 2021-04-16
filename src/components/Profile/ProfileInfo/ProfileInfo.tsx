@@ -1,11 +1,12 @@
-import React, { ChangeEvent, FC } from 'react';
+import React, { ChangeEvent, FC, useState } from 'react';
 
 import s from './ProfileInfo.module.css';
 import userPhoto from '../../../assets/images/userAvatar.svg';
 import { ProfileType } from '../../../types/types';
 import { Preloader } from '../../common/Preloader/Preloader';
 import { ProfileStatus } from './ProfileStatus/ProfileStatus';
-import { ProfileContacts } from './ProfileContacts/ProfileContacts';
+import { ProfileData } from './ProfileData/ProfileData';
+import { ProfileDataReduxForm as ProfileDataForm } from './ProfileData/ProfileDataForm/ProfileDataForm';
 
 type ProfileInfoPropsType = {
   isOwner: boolean;
@@ -22,23 +23,22 @@ export const ProfileInfo: FC<ProfileInfoPropsType> = ({
   updateStatus,
   savePhoto,
 }) => {
+  const [editMode, setEditMode] = useState(false);
+
   if (!profile) {
     return <Preloader text="Loading..." />;
   }
 
-  const {
-    photos,
-    fullName,
-    aboutMe,
-    contacts,
-    lookingForAJob,
-    lookingForAJobDescription,
-  } = profile;
+  const { photos, fullName } = profile;
 
   const addUserPhotoHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       savePhoto(e.target.files[0]);
     }
+  };
+
+  const submitHandler = (formData: Record<string, unknown>) => {
+    console.log(formData);
   };
 
   return (
@@ -71,30 +71,17 @@ export const ProfileInfo: FC<ProfileInfoPropsType> = ({
         )}
       </div>
 
-      <div>
-        <div>{fullName}</div>
-
-        <div>
-          {lookingForAJob ? 'Available for work' : 'Not available for work'}
-        </div>
-
-        {lookingForAJob && (
-          <div>
-            <span>My skills: </span>
-            {lookingForAJobDescription}
-          </div>
-        )}
-
-        <div>
-          <span>About me: </span>
-          {aboutMe}
-        </div>
-
-        <div>
-          <span>Contacts: </span>
-          <ProfileContacts contacts={contacts} />
-        </div>
-      </div>
+      {editMode ? (
+        <ProfileDataForm profile={profile} onSubmit={submitHandler} />
+      ) : (
+        <ProfileData
+          profile={profile}
+          isOwner={isOwner}
+          turnOnEditMode={() => {
+            setEditMode(true);
+          }}
+        />
+      )}
 
       <ProfileStatus status={status} updateStatus={updateStatus} />
     </div>

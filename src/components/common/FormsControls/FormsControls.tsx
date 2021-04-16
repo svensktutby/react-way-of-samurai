@@ -33,7 +33,7 @@ export const Textarea: FC<WrappedFieldProps> = (props) => {
 
   return (
     <FormControl {...props}>
-      <textarea placeholder="Write here..." {...input} {...restProps} />
+      <textarea {...input} {...restProps} />
     </FormControl>
   );
 };
@@ -43,12 +43,7 @@ export const Input: FC<WrappedFieldProps> = (props) => {
 
   return (
     <FormControl {...props}>
-      <input
-        type="text"
-        placeholder="Write here..."
-        {...input}
-        {...restProps}
-      />
+      <input type="text" {...input} {...restProps} />
     </FormControl>
   );
 };

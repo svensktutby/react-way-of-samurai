@@ -33,6 +33,6 @@ const AddMessageForm: FC<InjectedFormProps<AddMessageFormDataType>> = ({
   );
 };
 
-export const AddMessageFormRedux = reduxForm<AddMessageFormDataType>({
+export const AddMessageReduxForm = reduxForm<AddMessageFormDataType>({
   form: 'dialogAddMessageForm',
 })(AddMessageForm);

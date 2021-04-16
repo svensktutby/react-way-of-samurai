@@ -64,7 +64,7 @@ const LoginForm: FC<InjectedFormProps<LoginFormDataType>> = ({
   );
 };
 
-const LoginFormRedux = reduxForm<LoginFormDataType>({
+const LoginReduxForm = reduxForm<LoginFormDataType>({
   form: 'login',
 })(LoginForm);
 
@@ -91,7 +91,7 @@ const Login: FC<StatePropsType & DispatchPropsType> = ({
       <h1 className={s.title}>LOGIN</h1>
 
       <div className={s.loginFormWrapper}>
-        <LoginFormRedux onSubmit={submitHandler} />
+        <LoginReduxForm onSubmit={submitHandler} />
       </div>
     </div>
   );

@@ -31,6 +31,6 @@ const AddPostForm: FC<InjectedFormProps<AddPostFormDataType>> = ({
   );
 };
 
-export const AddPostFormRedux = reduxForm<AddPostFormDataType>({
+export const AddPostReduxForm = reduxForm<AddPostFormDataType>({
   form: 'profileAddPostForm',
 })(AddPostForm);

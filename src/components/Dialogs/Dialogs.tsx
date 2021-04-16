@@ -6,7 +6,7 @@ import { DialogItem } from './DialogItem/DialogItem';
 import { Message } from './Message/Message';
 import {
   AddMessageFormDataType,
-  AddMessageFormRedux as AddMessageForm,
+  AddMessageReduxForm as AddMessageForm,
 } from './AddMessageForm/AddMessageForm';
 
 export type StatePropsType = {

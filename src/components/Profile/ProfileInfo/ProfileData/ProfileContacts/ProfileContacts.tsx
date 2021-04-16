@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
 
 import s from './ProfileContacts.module.css';
-import styleLink from '../../../common/styles/link.module.css';
-import { randomId } from '../../../../utils/randomId';
-import { ContactsType } from '../../../../types/types';
+import styleLink from '../../../../common/styles/link.module.css';
+import { randomId } from '../../../../../utils/randomId';
+import { ContactsType } from '../../../../../types/types';
 
 type ProfileContactPropsType = {
   contacts: ContactsType;

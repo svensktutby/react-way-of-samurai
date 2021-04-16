@@ -1,0 +1,9 @@
+.checkboxField {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.textareaField textarea {
+  resize: vertical;
+  min-height: 50px;
+}

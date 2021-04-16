@@ -54,3 +54,5 @@ export type InferActionsType<T> = T extends Record<
 >
   ? U
   : never;
+
+export type ExtractStringKeysType<T> = Extract<keyof T, string>;
