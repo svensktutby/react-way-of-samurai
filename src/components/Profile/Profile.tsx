@@ -10,6 +10,7 @@ type ProfilePropsType = {
   status: string;
   updateStatus: (status: string) => void;
   savePhoto: (file: File) => void;
+  saveProfile: (profile: ProfileType) => Promise<unknown>;
 };
 
 export const Profile: FC<ProfilePropsType> = ({
@@ -18,6 +19,7 @@ export const Profile: FC<ProfilePropsType> = ({
   status,
   updateStatus,
   savePhoto,
+  saveProfile,
 }) => {
   return (
     <div>
@@ -27,6 +29,7 @@ export const Profile: FC<ProfilePropsType> = ({
         status={status}
         updateStatus={updateStatus}
         savePhoto={savePhoto}
+        saveProfile={saveProfile}
       />
 
       <MyPostsContainer />

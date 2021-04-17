@@ -14,6 +14,7 @@ type ProfileInfoPropsType = {
   status: string;
   updateStatus: (status: string) => void;
   savePhoto: (file: File) => void;
+  saveProfile: (profile: ProfileType) => Promise<unknown>;
 };
 
 export const ProfileInfo: FC<ProfileInfoPropsType> = ({
@@ -22,6 +23,7 @@ export const ProfileInfo: FC<ProfileInfoPropsType> = ({
   status,
   updateStatus,
   savePhoto,
+  saveProfile,
 }) => {
   const [editMode, setEditMode] = useState(false);
 
@@ -37,8 +39,10 @@ export const ProfileInfo: FC<ProfileInfoPropsType> = ({
     }
   };
 
-  const submitHandler = (formData: Record<string, unknown>) => {
-    console.log(formData);
+  const submitHandler = (formData: ProfileType) => {
+    saveProfile(formData).then(() => {
+      setEditMode(false);
+    });
   };
 
   return (
@@ -72,7 +76,12 @@ export const ProfileInfo: FC<ProfileInfoPropsType> = ({
       </div>
 
       {editMode ? (
-        <ProfileDataForm profile={profile} onSubmit={submitHandler} />
+        <ProfileDataForm
+          profile={profile}
+          editMode={editMode}
+          initialValues={profile}
+          onSubmit={submitHandler}
+        />
       ) : (
         <ProfileData
           profile={profile}

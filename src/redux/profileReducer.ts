@@ -10,6 +10,7 @@ import {
   ProfileType,
 } from '../types/types';
 import { ResultCode } from '../api/api';
+import { AuthStateType } from './authReducer';
 
 export enum ActionType {
   ADD_POST = 'SN/PROFILE/ADD_POST',
@@ -129,6 +130,25 @@ export const savePhoto = (photo: File): ThunkType => async (dispatch) => {
   }
 };
 
+export const saveProfile = (profile: ProfileType): ThunkType => async (
+  dispatch,
+  getState,
+) => {
+  const {
+    auth: { id: userId },
+  } = getState();
+
+  const data = await profileApi.saveProfile(profile);
+
+  if (data.resultCode === ResultCode.Success) {
+    if (userId) {
+      await dispatch(getProfile(userId));
+    } else {
+      throw new Error("userId can't be null");
+    }
+  }
+};
+
 /** Types */
 export type ProfilePageStateType = typeof initialState;
 
@@ -137,5 +157,5 @@ export type ProfilePageActionsType = InferActionsType<typeof actions>;
 type ThunkType<
   A extends Action = ProfilePageActionsType,
   R = Promise<void>,
-  S = { profilePage: ProfilePageStateType }
+  S = { profilePage: ProfilePageStateType; auth: AuthStateType }
 > = ThunkAction<R, S, unknown, A>;

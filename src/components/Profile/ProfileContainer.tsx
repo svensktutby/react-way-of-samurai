@@ -10,6 +10,7 @@ import {
   getProfile,
   getStatus,
   savePhoto,
+  saveProfile,
   updateStatus,
 } from '../../redux/profileReducer';
 
@@ -30,6 +31,7 @@ type DispatchPropsType = {
   getStatus: (userId: number) => void;
   updateStatus: (status: string) => void;
   savePhoto: (file: File) => void;
+  saveProfile: (profile: ProfileType) => Promise<unknown>;
 };
 
 type PropsType = StatePropsType & DispatchPropsType & RouterPropsType;
@@ -63,6 +65,7 @@ class ProfileAPIContainer extends Component<PropsType> {
       status,
       updateStatus: updateStatusCallback,
       savePhoto: savePhotoCallback,
+      saveProfile: saveProfileCallback,
       ...props
     } = this.props;
 
@@ -74,6 +77,7 @@ class ProfileAPIContainer extends Component<PropsType> {
         status={status}
         updateStatus={updateStatusCallback}
         savePhoto={savePhotoCallback}
+        saveProfile={saveProfileCallback}
       />
     );
   }
@@ -91,6 +95,12 @@ const mapStateToProps = ({
 };
 
 export const ProfileContainer = compose<ComponentType>(
-  connect(mapStateToProps, { getProfile, getStatus, updateStatus, savePhoto }),
+  connect(mapStateToProps, {
+    getProfile,
+    getStatus,
+    updateStatus,
+    savePhoto,
+    saveProfile,
+  }),
   withRouter,
 )(ProfileAPIContainer);

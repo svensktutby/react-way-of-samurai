@@ -21,4 +21,9 @@ export const profileApi = {
       headers: { 'Content-Type': 'multipart/form-data' },
     }).then((res) => res.data);
   },
+  saveProfile(profile: ProfileType): Promise<ApiResponseType> {
+    return API.put<ApiResponseType>(`profile/`, profile).then(
+      (res) => res.data,
+    );
+  },
 };

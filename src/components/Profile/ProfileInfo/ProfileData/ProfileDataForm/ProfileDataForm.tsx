@@ -12,15 +12,14 @@ import {
 
 type PropsType = {
   profile: ProfileType;
+  editMode: boolean;
 };
 
 type ProfileDataFormType = ExtractStringKeysType<ProfileType>;
 
 export const ProfileDataForm: FC<
   InjectedFormProps<ProfileType, PropsType> & PropsType
-> = ({ handleSubmit, error, profile }) => {
-  const { contacts } = profile;
-
+> = ({ handleSubmit, error, profile: { contacts }, editMode }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
@@ -66,7 +65,7 @@ export const ProfileDataForm: FC<
 
       <div>
         <span>Contacts: </span>
-        <ProfileContacts contacts={contacts} />
+        <ProfileContacts contacts={contacts} editMode={editMode} />
       </div>
     </form>
   );
