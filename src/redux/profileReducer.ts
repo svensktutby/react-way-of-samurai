@@ -1,5 +1,6 @@
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
+import { FormAction, stopSubmit } from 'redux-form';
 
 import { randomId } from '../utils/randomId';
 import { profileApi } from '../api/profileApi';
@@ -146,6 +147,9 @@ export const saveProfile = (profile: ProfileType): ThunkType => async (
     } else {
       throw new Error("userId can't be null");
     }
+  } else {
+    dispatch(stopSubmit('edit-profile', { _error: data.messages[0] }));
+    await Promise.reject(data.messages[0]);
   }
 };
 
@@ -155,7 +159,7 @@ export type ProfilePageStateType = typeof initialState;
 export type ProfilePageActionsType = InferActionsType<typeof actions>;
 
 type ThunkType<
-  A extends Action = ProfilePageActionsType,
+  A extends Action = ProfilePageActionsType | FormAction,
   R = Promise<void>,
   S = { profilePage: ProfilePageStateType; auth: AuthStateType }
 > = ThunkAction<R, S, unknown, A>;

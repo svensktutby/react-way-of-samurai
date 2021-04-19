@@ -3,7 +3,7 @@ import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 
 import s from './ProfileDataForm.module.css';
 import styleBtn from '../../../../common/styles/button.module.css';
-import { ExtractStringKeysType, ProfileType } from '../../../../../types/types';
+import { ProfileType } from '../../../../../types/types';
 import { ProfileContacts } from '../ProfileContacts/ProfileContacts';
 import {
   Input,
@@ -15,14 +15,16 @@ type PropsType = {
   editMode: boolean;
 };
 
-type ProfileDataFormType = ExtractStringKeysType<ProfileType>;
-
 export const ProfileDataForm: FC<
   InjectedFormProps<ProfileType, PropsType> & PropsType
 > = ({ handleSubmit, error, profile: { contacts }, editMode }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
+        <div className={`${s.errorWrapper}`}>
+          {error && <span className={`${s.error}`}>{error}</span>}
+        </div>
+
         <button className={styleBtn.btn} type="submit">
           Save
         </button>

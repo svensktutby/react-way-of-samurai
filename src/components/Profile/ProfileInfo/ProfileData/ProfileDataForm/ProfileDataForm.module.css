@@ -7,3 +7,11 @@
   resize: vertical;
   min-height: 50px;
 }
+
+.errorWrapper {
+  composes: errorWrapper from '../../../../common/styles/errorMessageForm.module.css';
+}
+
+.error {
+  composes: error from '../../../../common/styles/errorMessageForm.module.css';
+}
