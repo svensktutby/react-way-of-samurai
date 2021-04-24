@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { FC } from 'react';
 import { connect } from 'react-redux';
 
 import { Header } from './Header';
@@ -16,15 +16,11 @@ export type DispatchPropsType = {
 
 export type PropsType = StatePropsType & DispatchPropsType;
 
-// FIXME refactor to stateless-function
-// eslint-disable-next-line react/prefer-stateless-function
-class HeaderAPIContainer extends Component<PropsType> {
-  render(): JSX.Element {
-    const { login, logout: logoutCallback, isAuth } = this.props;
+const HeaderAPIContainer: FC<PropsType> = (props) => {
+  const { login, logout: logoutCallback, isAuth } = props;
 
-    return <Header login={login} logout={logoutCallback} isAuth={isAuth} />;
-  }
-}
+  return <Header login={login} logout={logoutCallback} isAuth={isAuth} />;
+};
 
 const mapStateToProps = ({
   auth: { login, isAuth },

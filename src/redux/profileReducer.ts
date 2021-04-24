@@ -116,10 +116,16 @@ export const getStatus = (userId: number): ThunkType => async (dispatch) => {
 };
 
 export const updateStatus = (status: string): ThunkType => async (dispatch) => {
-  const data = await profileApi.updateStatus(status);
+  try {
+    const data = await profileApi.updateStatus(status);
 
-  if (data.resultCode === ResultCode.Success) {
-    dispatch(actions.setStatus(status));
+    if (data.resultCode === ResultCode.Success) {
+      dispatch(actions.setStatus(status));
+    }
+  } catch (error) {
+    // TODO dispatch error message instead of console
+    // eslint-disable-next-line no-console
+    console.error('Error', { ...error });
   }
 };
 
