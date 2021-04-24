@@ -11,6 +11,7 @@ describe('auth reducer', () => {
       email: null,
       login: null,
       isAuth: false,
+      captchaUrl: null,
     };
 
     deepFreeze(state);
@@ -23,6 +24,7 @@ describe('auth reducer', () => {
       email: 'tough.ass.dude@me.com',
       login: 'yoyo',
       isAuth: true,
+      captchaUrl: null,
     };
 
     // 2. action
@@ -34,5 +36,14 @@ describe('auth reducer', () => {
 
     // 3. expectation
     expect(newState).toEqual(userAuthData);
+  });
+
+  it('should handle setCaptchaUrl', () => {
+    const action = auth.actions.setCaptchaUrl('http://url.com');
+    deepFreeze(action);
+
+    const newState = auth.authReducer(state, action);
+
+    expect(newState.captchaUrl).toBe('http://url.com');
   });
 });

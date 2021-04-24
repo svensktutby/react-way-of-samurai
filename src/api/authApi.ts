@@ -1,4 +1,4 @@
-import { API, ApiResponseType } from './api';
+import { API, ApiResponseType, ResultCode, ResultCodeCaptcha } from './api';
 
 type MeResponseDataType = {
   id: number;
@@ -27,11 +27,17 @@ export const authApi = {
     email,
     password,
     rememberMe = false,
-  }: LoginDataType): Promise<ApiResponseType<LoginResponseDataType>> {
-    return API.post<ApiResponseType<LoginResponseDataType>>(`auth/login`, {
+    captcha = null,
+  }: LoginDataType): Promise<
+    ApiResponseType<LoginResponseDataType, ResultCode | ResultCodeCaptcha>
+  > {
+    return API.post<
+      ApiResponseType<LoginResponseDataType, ResultCode | ResultCodeCaptcha>
+    >(`auth/login`, {
       email,
       password,
       rememberMe,
+      captcha,
     }).then((res) => res.data);
   },
   logout(): Promise<ApiResponseType> {

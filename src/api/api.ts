@@ -12,8 +12,12 @@ export enum ResultCode {
   Error = 1,
 }
 
-export type ApiResponseType<D = Record<string, unknown>> = {
-  resultCode: ResultCode;
+export enum ResultCodeCaptcha {
+  Required = 10,
+}
+
+export type ApiResponseType<D = Record<string, unknown>, RC = ResultCode> = {
+  resultCode: RC;
   messages: Array<string>;
   data: D;
 };

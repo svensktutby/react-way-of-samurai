@@ -39,6 +39,10 @@
   padding-left: 10px;
 }
 
+.captchaWrapper {
+  width: 100%;
+}
+
 .errorWrapper {
   composes: errorWrapper from '../common/styles/errorMessageForm.module.css';
 }

@@ -17,12 +17,17 @@ type LoginFormDataType = {
   email: string;
   password: string;
   rememberMe: boolean;
+  captcha: string;
 };
 
-const LoginForm: FC<InjectedFormProps<LoginFormDataType>> = ({
-  handleSubmit,
-  error,
-}) => {
+type LoginFormOwnPropsType = {
+  captchaUrl: null | string;
+};
+
+const LoginForm: FC<
+  InjectedFormProps<LoginFormDataType, LoginFormOwnPropsType> &
+    LoginFormOwnPropsType
+> = ({ handleSubmit, error, captchaUrl }) => {
   return (
     <form className={s.form} onSubmit={handleSubmit}>
       <Field
@@ -51,6 +56,19 @@ const LoginForm: FC<InjectedFormProps<LoginFormDataType>> = ({
         <span className={s.hint}>remember me</span>
       </label>
 
+      {captchaUrl && (
+        <div className={`${s.captchaWrapper}`}>
+          <img src={captchaUrl} alt="Captcha" />
+
+          <Field
+            component={Input}
+            name="captcha"
+            placeholder="Symbols from image"
+            validate={[required]}
+          />
+        </div>
+      )}
+
       <div className={`${s.errorWrapper}`}>
         {error && <span className={`${s.error}`}>{error}</span>}
       </div>
@@ -64,12 +82,13 @@ const LoginForm: FC<InjectedFormProps<LoginFormDataType>> = ({
   );
 };
 
-const LoginReduxForm = reduxForm<LoginFormDataType>({
+const LoginReduxForm = reduxForm<LoginFormDataType, LoginFormOwnPropsType>({
   form: 'login',
 })(LoginForm);
 
 type StatePropsType = {
   isAuth: boolean;
+  captchaUrl: null | string;
 };
 
 type DispatchPropsType = {
@@ -79,6 +98,7 @@ type DispatchPropsType = {
 const Login: FC<StatePropsType & DispatchPropsType> = ({
   login: loginCallback,
   isAuth,
+  captchaUrl,
 }) => {
   const submitHandler = (formData: LoginFormDataType) => {
     loginCallback({ ...formData });
@@ -91,17 +111,18 @@ const Login: FC<StatePropsType & DispatchPropsType> = ({
       <h1 className={s.title}>LOGIN</h1>
 
       <div className={s.loginFormWrapper}>
-        <LoginReduxForm onSubmit={submitHandler} />
+        <LoginReduxForm onSubmit={submitHandler} captchaUrl={captchaUrl} />
       </div>
     </div>
   );
 };
 
 const mapStateToProps = ({
-  auth: { isAuth },
+  auth: { isAuth, captchaUrl },
 }: AppStateType): StatePropsType => {
   return {
     isAuth,
+    captchaUrl,
   };
 };
 
