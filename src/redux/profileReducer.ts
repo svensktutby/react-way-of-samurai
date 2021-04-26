@@ -125,7 +125,7 @@ export const updateStatus = (status: string): ThunkType => async (dispatch) => {
   } catch (error) {
     // TODO dispatch error message instead of console
     // eslint-disable-next-line no-console
-    console.error('Error', { ...error });
+    console.error('Error: ', { ...error });
   }
 };
 
@@ -148,7 +148,7 @@ export const saveProfile = (profile: ProfileType): ThunkType => async (
   const data = await profileApi.saveProfile(profile);
 
   if (data.resultCode === ResultCode.Success) {
-    if (userId) {
+    if (userId !== null) {
       await dispatch(getProfile(userId));
     } else {
       throw new Error("userId can't be null");

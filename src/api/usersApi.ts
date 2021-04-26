@@ -1,8 +1,9 @@
-import { API, ApiResponseType, UsersResponseType } from './api';
+import { API, ApiResponseType, ItemsResponseType } from './api';
+import { UserType } from '../types/types';
 
 export const usersApi = {
-  getUsers(page = 1, pageSize = 5): Promise<UsersResponseType> {
-    return API.get<UsersResponseType>(
+  getUsers(page = 1, pageSize = 5): Promise<ItemsResponseType<UserType>> {
+    return API.get<ItemsResponseType<UserType>>(
       `users?page=${page}&count=${pageSize}`,
     ).then((res) => res.data);
   },

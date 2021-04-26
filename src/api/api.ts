@@ -1,8 +1,15 @@
 import axios from 'axios';
-import { UserType } from '../types/types';
 
-export type UsersResponseType = {
-  items: Array<UserType>;
+export const API = axios.create({
+  baseURL: 'https://social-network.samuraijs.com/api/1.0/',
+  withCredentials: true,
+  headers: {
+    'API-KEY': process.env.REACT_APP_API_KEY,
+  },
+});
+
+export type ItemsResponseType<I> = {
+  items: Array<I>;
   totalCount: number;
   error: string | null;
 };
@@ -21,11 +28,3 @@ export type ApiResponseType<D = Record<string, unknown>, RC = ResultCode> = {
   messages: Array<string>;
   data: D;
 };
-
-export const API = axios.create({
-  baseURL: 'https://social-network.samuraijs.com/api/1.0/',
-  withCredentials: true,
-  headers: {
-    'API-KEY': process.env.REACT_APP_API_KEY,
-  },
-});
