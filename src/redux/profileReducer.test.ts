@@ -2,7 +2,7 @@ import deepFreeze from 'deep-freeze';
 
 import * as profile from './profileReducer';
 
-describe('Profile page', () => {
+describe('profile reducer', () => {
   let state: profile.ProfilePageStateType;
 
   beforeEach(() => {

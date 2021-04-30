@@ -2,7 +2,7 @@ import deepFreeze from 'deep-freeze';
 
 import * as dialogs from './dialogsReducer';
 
-describe('Dialogs page', () => {
+describe('dialogs reducer', () => {
   let state: dialogs.DialogsPageStateType;
 
   beforeEach(() => {

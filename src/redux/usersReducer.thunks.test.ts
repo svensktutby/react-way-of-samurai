@@ -1,0 +1,111 @@
+import {
+  actions,
+  requestUsers,
+  followUser,
+  unfollowUser,
+} from './usersReducer';
+import { ApiResponseType, ItemsResponseType, ResultCode } from '../api/api';
+import { usersApi } from '../api/usersApi';
+import { UserType } from '../types/types';
+
+jest.mock('../api/usersApi');
+
+describe('users async actions', () => {
+  const usersApiMock = usersApi as jest.Mocked<typeof usersApi>;
+
+  const dispatchMock = jest.fn();
+  const getStateMock = jest.fn();
+
+  beforeEach(() => {
+    dispatchMock.mockClear();
+    getStateMock.mockClear();
+  });
+
+  const usersResponse: ItemsResponseType<UserType> = {
+    items: [
+      {
+        id: 1,
+        name: 'Andy',
+        photos: {
+          small: '',
+          large: '',
+        },
+        status: '',
+        followed: true,
+      },
+    ],
+    totalCount: 5,
+    error: null,
+  };
+
+  const followResponse: ApiResponseType = {
+    resultCode: ResultCode.Success,
+    messages: [],
+    data: {},
+  };
+
+  it('should handle requestUsers thunk', async () => {
+    usersApiMock.getUsers.mockResolvedValue(usersResponse);
+
+    const thunk = requestUsers(1, 5);
+
+    await thunk(dispatchMock, getStateMock, {});
+
+    expect(dispatchMock).toBeCalledTimes(5);
+    expect(dispatchMock).toHaveBeenNthCalledWith(
+      1,
+      actions.toggleIsFetching(true),
+    );
+    expect(dispatchMock).toHaveBeenNthCalledWith(2, actions.setCurrentPage(1));
+    expect(dispatchMock).toHaveBeenNthCalledWith(
+      3,
+      actions.toggleIsFetching(false),
+    );
+    expect(dispatchMock).toHaveBeenNthCalledWith(
+      4,
+      actions.setUsers(usersResponse.items),
+    );
+    expect(dispatchMock).toHaveBeenNthCalledWith(
+      5,
+      actions.setUsersTotalCount(usersResponse.totalCount),
+    );
+  });
+
+  it('should handle followUser thunk', async () => {
+    usersApiMock.follow.mockResolvedValue(followResponse);
+
+    const thunk = followUser(1);
+
+    await thunk(dispatchMock, getStateMock, {});
+
+    expect(dispatchMock).toBeCalledTimes(3);
+    expect(dispatchMock).toHaveBeenNthCalledWith(
+      1,
+      actions.toggleFollowingProgress(true, 1),
+    );
+    expect(dispatchMock).toHaveBeenNthCalledWith(2, actions.follow(1));
+    expect(dispatchMock).toHaveBeenNthCalledWith(
+      3,
+      actions.toggleFollowingProgress(false, 1),
+    );
+  });
+
+  it('should handle unfollowUser thunk', async () => {
+    usersApiMock.unfollow.mockResolvedValue(followResponse);
+
+    const thunk = unfollowUser(1);
+
+    await thunk(dispatchMock, getStateMock, {});
+
+    expect(dispatchMock).toBeCalledTimes(3);
+    expect(dispatchMock).toHaveBeenNthCalledWith(
+      1,
+      actions.toggleFollowingProgress(true, 1),
+    );
+    expect(dispatchMock).toHaveBeenNthCalledWith(2, actions.unfollow(1));
+    expect(dispatchMock).toHaveBeenNthCalledWith(
+      3,
+      actions.toggleFollowingProgress(false, 1),
+    );
+  });
+});

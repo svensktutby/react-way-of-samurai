@@ -2,7 +2,7 @@ import deepFreeze from 'deep-freeze';
 
 import * as app from './appReducer';
 
-describe('auth reducer', () => {
+describe('app reducer', () => {
   let state: app.AppInitialStateType;
 
   beforeEach(() => {

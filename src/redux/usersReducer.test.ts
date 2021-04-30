@@ -2,7 +2,7 @@ import deepFreeze from 'deep-freeze';
 
 import * as users from './usersReducer';
 
-describe('Users page', () => {
+describe('users reducer', () => {
   let state: users.UsersPageStateType;
 
   beforeEach(() => {
@@ -16,7 +16,7 @@ describe('Users page', () => {
             large: '',
           },
           status: '',
-          followed: true,
+          followed: false,
         },
         {
           id: 2,
@@ -26,7 +26,7 @@ describe('Users page', () => {
             large: '',
           },
           status: '',
-          followed: false,
+          followed: true,
         },
       ],
       pageSize: 5,
