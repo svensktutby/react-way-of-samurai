@@ -12,7 +12,7 @@ export enum ActionType {
   SET_CAPTCHA_URL = 'SN/AUTH/SET_CAPTCHA_URL',
 }
 
-const initialState = {
+export const initialState = {
   id: null as number | null,
   email: null as string | null,
   login: null as string | null,

@@ -1,13 +1,12 @@
+import configureMockStore from 'redux-mock-store';
 import thunk, { ThunkDispatch } from 'redux-thunk';
-import createMockStore from 'redux-mock-store';
-import deepFreeze from 'deep-freeze';
 
 import {
   actions,
+  initialState,
   requestUsers,
   followUser,
   unfollowUser,
-  UsersPageStateType,
   UsersPageActionsType,
 } from './usersReducer';
 import { usersApi } from '../api/usersApi';
@@ -20,33 +19,13 @@ type DispatchExts = ThunkDispatch<AppStateType, void, UsersPageActionsType>;
 jest.mock('../api/usersApi');
 
 const middleware = [thunk];
-const mockStore = createMockStore<AppStateType, DispatchExts>(middleware);
+const mockStore = configureMockStore<AppStateType, DispatchExts>(middleware);
 const usersApiMock = usersApi as jest.Mocked<typeof usersApi>;
 
 describe('users async actions', () => {
-  let state: UsersPageStateType;
-
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const store = mockStore({ usersPage: state });
-
-  beforeEach(() => {
-    store.clearActions();
-
-    state = {
-      users: [],
-      pageSize: 5,
-      totalUsersCount: 0,
-      currentPage: 1,
-      isFetching: false,
-      followingInProgress: [],
-    };
-
-    deepFreeze(state);
-  });
-
-  it('should dispatch requestUsers thunk', () => {
-    const response: ItemsResponseType<UserType> = {
+  it('should dispatch requestUsers thunk', async () => {
+    // 1. arrange
+    const responsePayload: ItemsResponseType<UserType> = {
       items: [
         {
           id: 1,
@@ -63,62 +42,70 @@ describe('users async actions', () => {
       error: null,
     };
 
-    usersApiMock.getUsers.mockResolvedValueOnce(response);
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const store = mockStore({ usersPage: initialState });
+    usersApiMock.getUsers.mockResolvedValueOnce(responsePayload);
 
+    // 2. act
+    await store.dispatch(requestUsers(1, 5));
+
+    // 3. assert
     const expectedActions = [
       actions.toggleIsFetching(true),
       actions.setCurrentPage(1),
       actions.toggleIsFetching(false),
-      actions.setUsers(response.items),
-      actions.setUsersTotalCount(response.totalCount),
+      actions.setUsers(responsePayload.items),
+      actions.setUsersTotalCount(responsePayload.totalCount),
     ];
-
-    return store.dispatch(requestUsers(1, 5)).then(() => {
-      expect(store.getActions()).toEqual(expectedActions);
-    });
+    expect(store.getActions()).toEqual(expectedActions);
   });
 
-  it('should dispatch followUser thunk', () => {
-    const response: ApiResponseType = {
+  it('should dispatch followUser thunk', async () => {
+    const requestPayload = 3;
+
+    const responsePayload: ApiResponseType = {
       resultCode: ResultCode.Success,
       messages: [],
       data: {},
     };
 
-    const userId = 3;
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const store = mockStore({ usersPage: initialState });
+    usersApiMock.follow.mockResolvedValueOnce(responsePayload);
 
-    usersApiMock.follow.mockResolvedValueOnce(response);
+    await store.dispatch(followUser(requestPayload));
 
     const expectedActions = [
-      actions.toggleFollowingProgress(true, userId),
-      actions.follow(userId),
-      actions.toggleFollowingProgress(false, userId),
+      actions.toggleFollowingProgress(true, requestPayload),
+      actions.follow(requestPayload),
+      actions.toggleFollowingProgress(false, requestPayload),
     ];
-
-    return store.dispatch(followUser(userId)).then(() => {
-      expect(store.getActions()).toEqual(expectedActions);
-    });
+    expect(store.getActions()).toEqual(expectedActions);
   });
 
-  it('should dispatch unfollowUser thunk', () => {
-    const response: ApiResponseType = {
+  it('should dispatch unfollowUser thunk', async () => {
+    const requestPayload = 2;
+
+    const responsePayload: ApiResponseType = {
       resultCode: ResultCode.Success,
       messages: [],
       data: {},
     };
 
-    const userId = 2;
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const store = mockStore({ usersPage: initialState });
+    usersApiMock.unfollow.mockResolvedValueOnce(responsePayload);
 
-    usersApiMock.unfollow.mockResolvedValueOnce(response);
+    await store.dispatch(unfollowUser(requestPayload));
 
     const expectedActions = [
-      actions.toggleFollowingProgress(true, userId),
-      actions.unfollow(userId),
-      actions.toggleFollowingProgress(false, userId),
+      actions.toggleFollowingProgress(true, requestPayload),
+      actions.unfollow(requestPayload),
+      actions.toggleFollowingProgress(false, requestPayload),
     ];
-
-    return store.dispatch(unfollowUser(userId)).then(() => {
-      expect(store.getActions()).toEqual(expectedActions);
-    });
+    expect(store.getActions()).toEqual(expectedActions);
   });
 });

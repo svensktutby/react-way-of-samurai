@@ -1,12 +1,12 @@
 import { API, ApiResponseType, ResultCode, ResultCodeCaptcha } from './api';
 
-type MeResponseDataType = {
+export type MeResponseDataType = {
   id: number;
   email: string;
   login: string;
 };
 
-type LoginResponseDataType = {
+export type LoginResponseDataType = {
   userId: number;
 };
 

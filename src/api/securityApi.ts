@@ -1,6 +1,6 @@
 import { API } from './api';
 
-type GetCaptchaUrlResponseType = {
+export type GetCaptchaUrlResponseType = {
   url: string;
 };
 

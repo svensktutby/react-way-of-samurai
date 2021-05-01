@@ -15,7 +15,7 @@ export enum ActionType {
   TOGGLE_IS_FOLLOWING_PROGRESS = 'SN/USERS/TOGGLE_IS_FOLLOWING_PROGRESS',
 }
 
-const initialState = {
+export const initialState = {
   users: [] as Array<UserType>,
   pageSize: 5,
   totalUsersCount: 0,

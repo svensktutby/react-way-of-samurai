@@ -21,7 +21,7 @@ export enum ActionType {
   SET_USER_PHOTO = 'SN/PROFILE/SET_USER_PHOTO',
 }
 
-const initialState = {
+export const initialState = {
   posts: [
     {
       id: randomId(),
