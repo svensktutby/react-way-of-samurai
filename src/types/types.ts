@@ -48,6 +48,13 @@ export type ProfileType = {
   aboutMe: string;
 };
 
+export type FriendType = null | boolean;
+
+export type FilterType = {
+  term: string;
+  friend: FriendType;
+};
+
 export type InferActionsType<T> = T extends Record<
   string,
   (...args: never[]) => infer U

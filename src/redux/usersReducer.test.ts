@@ -1,6 +1,7 @@
 import deepFreeze from 'deep-freeze';
 
 import * as users from './usersReducer';
+import { FilterType } from '../types/types';
 
 describe('users reducer', () => {
   let state: users.UsersPageStateType;
@@ -34,6 +35,10 @@ describe('users reducer', () => {
       currentPage: 1,
       isFetching: false,
       followingInProgress: [],
+      filter: {
+        term: '',
+        friend: null,
+      },
     };
 
     deepFreeze(state);
@@ -91,6 +96,19 @@ describe('users reducer', () => {
     const newState = users.usersReducer(state, action);
 
     expect(newState.currentPage).toBe(3);
+  });
+
+  it('should handle setFilter', () => {
+    const filter: FilterType = {
+      term: 'dimych',
+      friend: true,
+    };
+    const action = users.actions.setFilter(filter);
+    deepFreeze(action);
+
+    const newState = users.usersReducer(state, action);
+
+    expect(newState.filter).toEqual({ term: 'dimych', friend: true });
   });
 
   it('should handle setUsersTotalCount', () => {

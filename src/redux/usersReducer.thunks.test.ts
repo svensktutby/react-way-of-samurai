@@ -4,7 +4,7 @@ import thunk, { ThunkDispatch } from 'redux-thunk';
 import {
   actions,
   initialState,
-  requestUsers,
+  fetchUsers,
   followUser,
   unfollowUser,
   UsersPageActionsType,
@@ -48,12 +48,13 @@ describe('users async actions', () => {
     usersApiMock.getUsers.mockResolvedValueOnce(responsePayload);
 
     // 2. act
-    await store.dispatch(requestUsers(1, 5));
+    await store.dispatch(fetchUsers(1, 5, { term: '', friend: null }));
 
     // 3. assert
     const expectedActions = [
       actions.toggleIsFetching(true),
       actions.setCurrentPage(1),
+      actions.setFilter({ term: '', friend: null }),
       actions.toggleIsFetching(false),
       actions.setUsers(responsePayload.items),
       actions.setUsersTotalCount(responsePayload.totalCount),

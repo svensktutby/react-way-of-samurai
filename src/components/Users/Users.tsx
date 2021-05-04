@@ -2,9 +2,10 @@ import React, { FC } from 'react';
 
 import s from './Users.module.css';
 import styleBtn from '../common/styles/button.module.css';
-import { UserType } from '../../types/types';
+import { FilterType, UserType } from '../../types/types';
 import { Paginator } from '../common/Paginator/Paginator';
 import { User } from './User/User';
+import { UsersSearchForm } from './UsersSearchForm';
 
 type UsersPropsType = {
   users: Array<UserType>;
@@ -15,6 +16,7 @@ type UsersPropsType = {
   follow: (userId: number) => void;
   unfollow: (userId: number) => void;
   changePageHandler: (page: number) => void;
+  changeFilterHandler: (filter: FilterType) => void;
 };
 
 export const Users: FC<UsersPropsType> = (props) => {
@@ -27,6 +29,7 @@ export const Users: FC<UsersPropsType> = (props) => {
     follow,
     unfollow,
     changePageHandler,
+    changeFilterHandler,
   } = props;
 
   const userElements = users.map((user) => (
@@ -41,17 +44,19 @@ export const Users: FC<UsersPropsType> = (props) => {
 
   return (
     <div className={s.usersBlock}>
+      <UsersSearchForm changeFilterHandler={changeFilterHandler} />
+
+      <ul className={s.list}>{userElements}</ul>
+      <button className={styleBtn.btn} type="button" onClick={() => {}}>
+        Show more
+      </button>
+
       <Paginator
         pageSize={pageSize}
         totalItemsCount={totalUsersCount}
         currentPage={page}
         changePageHandler={changePageHandler}
       />
-
-      <ul className={s.list}>{userElements}</ul>
-      <button className={styleBtn.btn} type="button" onClick={() => {}}>
-        Show more
-      </button>
     </div>
   );
 };

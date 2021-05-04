@@ -1,9 +1,4 @@
-import {
-  actions,
-  requestUsers,
-  followUser,
-  unfollowUser,
-} from './usersReducer';
+import { actions, fetchUsers, followUser, unfollowUser } from './usersReducer';
 import { ApiResponseType, ItemsResponseType, ResultCode } from '../api/api';
 import { usersApi } from '../api/usersApi';
 import { UserType } from '../types/types';
@@ -47,11 +42,11 @@ describe('users async actions without mock store', () => {
   it('should handle requestUsers thunk', async () => {
     usersApiMock.getUsers.mockResolvedValue(usersResponse);
 
-    const thunk = requestUsers(1, 5);
+    const thunk = fetchUsers(1, 5, { term: '', friend: null });
 
     await thunk(dispatchMock, getStateMock, {});
 
-    expect(dispatchMock).toBeCalledTimes(5);
+    expect(dispatchMock).toBeCalledTimes(6);
     expect(dispatchMock).toHaveBeenNthCalledWith(
       1,
       actions.toggleIsFetching(true),
@@ -59,14 +54,18 @@ describe('users async actions without mock store', () => {
     expect(dispatchMock).toHaveBeenNthCalledWith(2, actions.setCurrentPage(1));
     expect(dispatchMock).toHaveBeenNthCalledWith(
       3,
-      actions.toggleIsFetching(false),
+      actions.setFilter({ term: '', friend: null }),
     );
     expect(dispatchMock).toHaveBeenNthCalledWith(
       4,
-      actions.setUsers(usersResponse.items),
+      actions.toggleIsFetching(false),
     );
     expect(dispatchMock).toHaveBeenNthCalledWith(
       5,
+      actions.setUsers(usersResponse.items),
+    );
+    expect(dispatchMock).toHaveBeenNthCalledWith(
+      6,
       actions.setUsersTotalCount(usersResponse.totalCount),
     );
   });

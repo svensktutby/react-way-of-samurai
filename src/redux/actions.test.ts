@@ -3,6 +3,7 @@ import * as dialogs from './dialogsReducer';
 import * as users from './usersReducer';
 import * as auth from './authReducer';
 import * as app from './appReducer';
+import { FilterType } from '../types/types';
 
 describe('actions', () => {
   it('should create an action to add a post', () => {
@@ -146,6 +147,21 @@ describe('actions', () => {
     };
 
     const action = users.actions.setCurrentPage(pageNumber);
+
+    expect(action).toEqual(expectedAction);
+  });
+
+  it('should create an action to set the filter', () => {
+    const filter: FilterType = {
+      term: 'dimych',
+      friend: true,
+    };
+    const expectedAction = {
+      type: users.ActionType.SET_FILTER,
+      payload: filter,
+    };
+
+    const action = users.actions.setFilter(filter);
 
     expect(action).toEqual(expectedAction);
   });

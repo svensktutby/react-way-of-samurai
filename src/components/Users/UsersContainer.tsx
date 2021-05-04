@@ -6,10 +6,10 @@ import { AppStateType } from '../../redux/reduxStore';
 import {
   actions as usersActions,
   followUser,
-  requestUsers,
+  fetchUsers,
   unfollowUser,
 } from '../../redux/usersReducer';
-import { UserType } from '../../types/types';
+import { FilterType, UserType } from '../../types/types';
 import { Users } from './Users';
 import { Preloader } from '../common/Preloader/Preloader';
 import * as usersSelectors from '../../redux/usersSelectors';
@@ -23,26 +23,33 @@ type StatePropsType = {
   page: number;
   isFetching: boolean;
   followingInProgress: Array<number>;
+  filter: FilterType;
 };
 
 type DispatchPropsType = {
   followUser: (userId: number) => void;
   unfollowUser: (userId: number) => void;
   setCurrentPage: (page: number) => void;
-  requestUsers: (page: number, pageSize: number) => void;
+  fetchUsers: (page: number, pageSize: number, filter: FilterType) => void;
 };
 
 type PropsType = StatePropsType & DispatchPropsType;
 
 class UsersAPIContainer extends Component<PropsType> {
   componentDidMount() {
-    const { page, pageSize, requestUsers: getUsers } = this.props;
-    getUsers(page, pageSize);
+    const { page, pageSize, filter, fetchUsers: getUsers } = this.props;
+    getUsers(page, pageSize, filter);
   }
 
   changePageHandler = (page: number) => {
-    const { pageSize, requestUsers: getUsers } = this.props;
-    getUsers(page, pageSize);
+    const { pageSize, filter, fetchUsers: getUsers } = this.props;
+    getUsers(page, pageSize, filter);
+  };
+
+  changeFilterHandler = (filter: FilterType) => {
+    const page = 1;
+    const { pageSize, fetchUsers: getUsers } = this.props;
+    getUsers(page, pageSize, filter);
   };
 
   render(): JSX.Element {
@@ -59,20 +66,19 @@ class UsersAPIContainer extends Component<PropsType> {
 
     return (
       <>
-        {isFetching ? (
-          <Preloader text="Loading..." />
-        ) : (
-          <Users
-            users={users}
-            pageSize={pageSize}
-            totalUsersCount={totalUsersCount}
-            page={page}
-            followingInProgress={followingInProgress}
-            follow={follow}
-            unfollow={unfollow}
-            changePageHandler={this.changePageHandler}
-          />
-        )}
+        {isFetching && <Preloader text="Loading..." />}
+
+        <Users
+          users={users}
+          pageSize={pageSize}
+          totalUsersCount={totalUsersCount}
+          page={page}
+          followingInProgress={followingInProgress}
+          follow={follow}
+          unfollow={unfollow}
+          changePageHandler={this.changePageHandler}
+          changeFilterHandler={this.changeFilterHandler}
+        />
       </>
     );
   }
@@ -86,6 +92,7 @@ const mapStateToProps = (state: AppStateType): StatePropsType => {
     page: usersSelectors.getCurrentPage(state),
     isFetching: usersSelectors.getIsFetching(state),
     followingInProgress: usersSelectors.getFollowingInProgress(state),
+    filter: usersSelectors.getUsersFilter(state),
   };
 };
 
@@ -94,6 +101,6 @@ export const UsersContainer = compose<ComponentType>(
     followUser,
     unfollowUser,
     setCurrentPage,
-    requestUsers,
+    fetchUsers,
   }),
 )(UsersAPIContainer);
