@@ -1,5 +1,6 @@
 import configureMockStore from 'redux-mock-store';
-import thunk, { ThunkDispatch } from 'redux-thunk';
+import thunk from 'redux-thunk';
+import type { ThunkDispatch } from 'redux-thunk';
 
 import {
   actions,
@@ -8,12 +9,13 @@ import {
   getStatus,
   updateStatus,
   savePhoto,
-  ProfilePageActionsType,
 } from './profileReducer';
+import type { ProfilePageActionsType } from './profileReducer';
 import { profileApi } from '../api/profileApi';
-import { ApiResponseType, ResultCode } from '../api/api';
-import { PhotosType, ProfileType } from '../types/types';
-import { AppStateType } from './reduxStore';
+import { ResultCode } from '../api/api';
+import type { ApiResponseType } from '../api/api';
+import type { PhotosType, ProfileType } from '../types/types';
+import type { AppStateType } from './reduxStore';
 
 type DispatchExts = ThunkDispatch<AppStateType, void, ProfilePageActionsType>;
 

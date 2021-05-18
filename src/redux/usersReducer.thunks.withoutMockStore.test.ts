@@ -1,7 +1,8 @@
 import { actions, fetchUsers, followUser, unfollowUser } from './usersReducer';
-import { ApiResponseType, ItemsResponseType, ResultCode } from '../api/api';
+import { ResultCode } from '../api/api';
+import type { ApiResponseType, ItemsResponseType } from '../api/api';
 import { usersApi } from '../api/usersApi';
-import { UserType } from '../types/types';
+import type { UserType } from '../types/types';
 
 jest.mock('../api/usersApi');
 

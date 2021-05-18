@@ -1,5 +1,6 @@
-import { API, ApiResponseType, ItemsResponseType } from './api';
-import { UserType, FilterType } from '../types/types';
+import { API } from './api';
+import type { ApiResponseType, ItemsResponseType } from './api';
+import type { UserType, FilterType } from '../types/types';
 
 export const usersApi = {
   getUsers(

@@ -1,5 +1,9 @@
 import { randomId } from '../utils/randomId';
-import { DialogItemType, InferActionsType, MessageType } from '../types/types';
+import type {
+  DialogItemType,
+  InferActionsType,
+  MessageType,
+} from '../types/types';
 
 export enum ActionType {
   SEND_MESSAGE = 'SN/DIALOGS/SEND_MESSAGE',

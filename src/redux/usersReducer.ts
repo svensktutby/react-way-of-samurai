@@ -1,9 +1,7 @@
-import { Action } from 'redux';
-import { ThunkAction } from 'redux-thunk';
-
 import { usersApi } from '../api/usersApi';
-import { FilterType, InferActionsType, UserType } from '../types/types';
+import type { FilterType, InferActionsType, UserType } from '../types/types';
 import { ResultCode } from '../api/api';
+import type { ThunkType } from './reduxStore';
 
 export enum ActionType {
   FOLLOW = 'SN/USERS/FOLLOW',
@@ -133,7 +131,7 @@ export const fetchUsers = (
   page: number,
   pageSize: number,
   filter: FilterType,
-): ThunkType => async (dispatch) => {
+): ThunkType<UsersPageActionsType> => async (dispatch) => {
   dispatch(actions.toggleIsFetching(true));
   dispatch(actions.setCurrentPage(page));
   dispatch(actions.setFilter(filter));
@@ -145,7 +143,9 @@ export const fetchUsers = (
   dispatch(actions.setUsersTotalCount(data.totalCount));
 };
 
-export const followUser = (userId: number): ThunkType => async (dispatch) => {
+export const followUser = (
+  userId: number,
+): ThunkType<UsersPageActionsType> => async (dispatch) => {
   dispatch(actions.toggleFollowingProgress(true, userId));
 
   const data = await usersApi.follow(userId);
@@ -156,7 +156,9 @@ export const followUser = (userId: number): ThunkType => async (dispatch) => {
   dispatch(actions.toggleFollowingProgress(false, userId));
 };
 
-export const unfollowUser = (userId: number): ThunkType => async (dispatch) => {
+export const unfollowUser = (
+  userId: number,
+): ThunkType<UsersPageActionsType> => async (dispatch) => {
   dispatch(actions.toggleFollowingProgress(true, userId));
 
   const data = await usersApi.unfollow(userId);
@@ -171,9 +173,3 @@ export const unfollowUser = (userId: number): ThunkType => async (dispatch) => {
 export type UsersPageStateType = typeof initialState;
 
 export type UsersPageActionsType = InferActionsType<typeof actions>;
-
-type ThunkType<
-  A extends Action = UsersPageActionsType,
-  R = Promise<void>,
-  S = { usersPage: UsersPageStateType }
-> = ThunkAction<R, S, unknown, A>;

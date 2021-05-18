@@ -1,4 +1,6 @@
 import { combineReducers, createStore } from 'redux';
+import type { Action } from 'redux';
+import type { ThunkAction } from 'redux-thunk';
 import { reducer as form } from 'redux-form';
 
 import { enhancedStore } from './middleware';
@@ -8,8 +10,6 @@ import { usersReducer as usersPage } from './usersReducer';
 import { authReducer as auth } from './authReducer';
 import { appReducer as app } from './appReducer';
 import { sidebarReducer as sidebar } from './sidebarReducer';
-
-export type AppStateType = ReturnType<typeof rootReducer>;
 
 const rootReducer = combineReducers({
   profilePage,
@@ -22,6 +22,14 @@ const rootReducer = combineReducers({
 });
 
 export const store = createStore(rootReducer, enhancedStore);
+
+export type AppStateType = ReturnType<typeof rootReducer>;
+
+export type ThunkType<
+  A extends Action = Action,
+  R = Promise<void>,
+  S = AppStateType
+> = ThunkAction<R, S, unknown, A>;
 
 // FIXME remove global __store__
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment

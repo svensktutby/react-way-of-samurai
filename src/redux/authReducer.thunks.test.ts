@@ -1,5 +1,6 @@
 import configureMockStore from 'redux-mock-store';
-import thunk, { ThunkDispatch } from 'redux-thunk';
+import thunk from 'redux-thunk';
+import type { ThunkDispatch } from 'redux-thunk';
 
 import {
   actions,
@@ -7,12 +8,15 @@ import {
   getAuthUserData,
   getCaptchaUrl,
   logout,
-  AuthActionsType,
 } from './authReducer';
-import { authApi, MeResponseDataType } from '../api/authApi';
-import { securityApi, GetCaptchaUrlResponseType } from '../api/securityApi';
-import { ApiResponseType, ResultCode } from '../api/api';
-import { AppStateType } from './reduxStore';
+import type { AuthActionsType } from './authReducer';
+import { authApi } from '../api/authApi';
+import type { MeResponseDataType } from '../api/authApi';
+import { securityApi } from '../api/securityApi';
+import type { GetCaptchaUrlResponseType } from '../api/securityApi';
+import { ResultCode } from '../api/api';
+import type { ApiResponseType } from '../api/api';
+import type { AppStateType } from './reduxStore';
 
 type DispatchExts = ThunkDispatch<AppStateType, void, AuthActionsType>;
 

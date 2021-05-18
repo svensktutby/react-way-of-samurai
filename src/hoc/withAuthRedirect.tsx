@@ -1,7 +1,10 @@
-import React, { ComponentType, FC } from 'react';
+import React from 'react';
+import type { ComponentType, FC } from 'react';
 import { Redirect } from 'react-router-dom';
-import { connect, ConnectedComponent } from 'react-redux';
-import { AppStateType } from '../redux/reduxStore';
+import { connect } from 'react-redux';
+import type { ConnectedComponent } from 'react-redux';
+
+import type { AppStateType } from '../redux/reduxStore';
 
 type StatePropsType = {
   isAuth: boolean;

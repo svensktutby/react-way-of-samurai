@@ -1,4 +1,5 @@
-import React, { FC, lazy } from 'react';
+import React, { lazy } from 'react';
+import type { FC } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 import { UsersContainer } from '../components/Users/UsersContainer';

@@ -1,7 +1,7 @@
 import deepFreeze from 'deep-freeze';
 
 import * as users from './usersReducer';
-import { FilterType } from '../types/types';
+import type { FilterType } from '../types/types';
 
 describe('users reducer', () => {
   let state: users.UsersPageStateType;

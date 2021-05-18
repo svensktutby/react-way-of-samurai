@@ -1,5 +1,6 @@
 import configureMockStore from 'redux-mock-store';
-import thunk, { ThunkDispatch } from 'redux-thunk';
+import thunk from 'redux-thunk';
+import type { ThunkDispatch } from 'redux-thunk';
 
 import {
   actions,
@@ -7,12 +8,13 @@ import {
   fetchUsers,
   followUser,
   unfollowUser,
-  UsersPageActionsType,
 } from './usersReducer';
+import type { UsersPageActionsType } from './usersReducer';
 import { usersApi } from '../api/usersApi';
-import { ApiResponseType, ItemsResponseType, ResultCode } from '../api/api';
-import { UserType } from '../types/types';
-import { AppStateType } from './reduxStore';
+import { ResultCode } from '../api/api';
+import type { ApiResponseType, ItemsResponseType } from '../api/api';
+import type { UserType } from '../types/types';
+import type { AppStateType } from './reduxStore';
 
 type DispatchExts = ThunkDispatch<AppStateType, void, UsersPageActionsType>;
 

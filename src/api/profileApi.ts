@@ -1,5 +1,6 @@
-import { API, ApiResponseType } from './api';
-import { PhotosType, ProfileType } from '../types/types';
+import { API } from './api';
+import type { ApiResponseType } from './api';
+import type { PhotosType, ProfileType } from '../types/types';
 
 export const profileApi = {
   getProfile(userId: number): Promise<ProfileType> {

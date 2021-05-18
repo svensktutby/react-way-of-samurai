@@ -3,7 +3,7 @@ import * as dialogs from './dialogsReducer';
 import * as users from './usersReducer';
 import * as auth from './authReducer';
 import * as app from './appReducer';
-import { FilterType } from '../types/types';
+import type { FilterType } from '../types/types';
 
 describe('actions', () => {
   it('should create an action to add a post', () => {

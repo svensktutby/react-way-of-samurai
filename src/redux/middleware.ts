@@ -1,4 +1,5 @@
-import { applyMiddleware, compose, Middleware } from 'redux';
+import { applyMiddleware, compose } from 'redux';
+import type { Middleware } from 'redux';
 import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 

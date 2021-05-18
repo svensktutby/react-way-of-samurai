@@ -1,17 +1,16 @@
-import { Action } from 'redux';
-import { ThunkAction } from 'redux-thunk';
-import { FormAction, stopSubmit } from 'redux-form';
+import { stopSubmit } from 'redux-form';
+import type { FormAction } from 'redux-form';
 
 import { randomId } from '../utils/randomId';
 import { profileApi } from '../api/profileApi';
-import {
+import type {
   InferActionsType,
   PhotosType,
   PostType,
   ProfileType,
 } from '../types/types';
 import { ResultCode } from '../api/api';
-import { AuthStateType } from './authReducer';
+import type { ThunkType } from './reduxStore';
 
 export enum ActionType {
   ADD_POST = 'SN/PROFILE/ADD_POST',
@@ -103,19 +102,25 @@ export const actions = {
 };
 
 /** Thunks */
-export const getProfile = (userId: number): ThunkType => async (dispatch) => {
+export const getProfile = (
+  userId: number,
+): ThunkType<ProfilePageActionsType> => async (dispatch) => {
   const data = await profileApi.getProfile(userId);
 
   dispatch(actions.setUserProfile(data));
 };
 
-export const getStatus = (userId: number): ThunkType => async (dispatch) => {
+export const getStatus = (
+  userId: number,
+): ThunkType<ProfilePageActionsType> => async (dispatch) => {
   const data = await profileApi.getStatus(userId);
 
   dispatch(actions.setStatus(data));
 };
 
-export const updateStatus = (status: string): ThunkType => async (dispatch) => {
+export const updateStatus = (
+  status: string,
+): ThunkType<ProfilePageActionsType> => async (dispatch) => {
   try {
     const data = await profileApi.updateStatus(status);
 
@@ -129,7 +134,9 @@ export const updateStatus = (status: string): ThunkType => async (dispatch) => {
   }
 };
 
-export const savePhoto = (photo: File): ThunkType => async (dispatch) => {
+export const savePhoto = (
+  photo: File,
+): ThunkType<ProfilePageActionsType> => async (dispatch) => {
   const data = await profileApi.savePhoto(photo);
 
   if (data.resultCode === ResultCode.Success) {
@@ -137,7 +144,9 @@ export const savePhoto = (photo: File): ThunkType => async (dispatch) => {
   }
 };
 
-export const saveProfile = (profile: ProfileType): ThunkType => async (
+export const saveProfile = (
+  profile: ProfileType,
+): ThunkType<ProfilePageActionsType | FormAction> => async (
   dispatch,
   getState,
 ) => {
@@ -163,9 +172,3 @@ export const saveProfile = (profile: ProfileType): ThunkType => async (
 export type ProfilePageStateType = typeof initialState;
 
 export type ProfilePageActionsType = InferActionsType<typeof actions>;
-
-type ThunkType<
-  A extends Action = ProfilePageActionsType | FormAction,
-  R = Promise<void>,
-  S = { profilePage: ProfilePageStateType; auth: AuthStateType }
-> = ThunkAction<R, S, unknown, A>;

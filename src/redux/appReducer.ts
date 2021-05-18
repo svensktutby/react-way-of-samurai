@@ -1,8 +1,6 @@
-import { Action } from 'redux';
-import { ThunkAction } from 'redux-thunk';
-
-import { AuthStateType, getAuthUserData } from './authReducer';
-import { InferActionsType } from '../types/types';
+import { getAuthUserData } from './authReducer';
+import type { InferActionsType } from '../types/types';
+import type { ThunkType } from './reduxStore';
 
 export enum ActionType {
   INITIALIZED_SUCCESS = 'SN/APP/INITIALIZED_SUCCESS',
@@ -37,7 +35,9 @@ export const actions = {
 };
 
 /** Thunks */
-export const initializeApp = (): ThunkType => async (dispatch) => {
+export const initializeApp = (): ThunkType<AppActionsType> => async (
+  dispatch,
+) => {
   const AuthUserDataPromise = await dispatch(getAuthUserData());
 
   Promise.all([AuthUserDataPromise]).then(() => {
@@ -49,9 +49,3 @@ export const initializeApp = (): ThunkType => async (dispatch) => {
 export type AppInitialStateType = typeof initialState;
 
 export type AppActionsType = InferActionsType<typeof actions>;
-
-type ThunkType<
-  A extends Action = AppActionsType,
-  R = Promise<void>,
-  S = { app: AppInitialStateType; auth: AuthStateType }
-> = ThunkAction<R, S, unknown, A>;

@@ -1,10 +1,12 @@
-import React, { Component, ComponentType, FC, Suspense } from 'react';
+import React, { Component, Suspense } from 'react';
+import type { ComponentType, FC } from 'react';
 import { HashRouter as Router, withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { connect, Provider } from 'react-redux';
 
 import s from './App.module.css';
-import { AppStateType, store } from '../redux/reduxStore';
+import { store } from '../redux/reduxStore';
+import type { AppStateType } from '../redux/reduxStore';
 import { HeaderContainer } from '../components/Header/HeaderContainer';
 import { Navbar } from '../components/Navbar/Navbar';
 import { initializeApp } from '../redux/appReducer';

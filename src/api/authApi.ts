@@ -1,4 +1,5 @@
-import { API, ApiResponseType, ResultCode, ResultCodeCaptcha } from './api';
+import { API, ResultCode, ResultCodeCaptcha } from './api';
+import type { ApiResponseType } from './api';
 
 export type MeResponseDataType = {
   id: number;
