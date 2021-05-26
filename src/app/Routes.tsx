@@ -2,7 +2,7 @@ import React, { lazy } from 'react';
 import type { FC } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
-import { UsersContainer } from '../components/Users/UsersContainer';
+import { UsersPage } from '../components/Users/UsersPage';
 import { LoginPage } from '../components/Login/Login';
 import { Error404 } from '../components/common/Error404/Error404';
 
@@ -35,7 +35,7 @@ export const Routes: FC = () => {
           render={() => <ProfileContainer />}
         />
         <Route path={PATH.DIALOGS} render={() => <DialogsContainer />} />
-        <Route path={PATH.USERS} render={() => <UsersContainer />} />
+        <Route path={PATH.USERS} render={() => <UsersPage />} />
         <Route path={PATH.LOGIN} render={() => <LoginPage />} />
         <Route path={PATH.ERROR_404} render={() => <Error404 />} />
 

@@ -1,10 +1,11 @@
-import React, { FC } from 'react';
+import React from 'react';
+import type { FC } from 'react';
 import { Link } from 'react-router-dom';
 
 import s from './User.module.css';
 import userAvatar from '../../../assets/images/userAvatar.svg';
 import styleBtn from '../../common/styles/button.module.css';
-import { UserType } from '../../../types/types';
+import type { UserType } from '../../../types/types';
 
 type UsersPropsType = {
   user: UserType;

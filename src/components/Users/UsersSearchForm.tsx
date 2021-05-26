@@ -1,8 +1,10 @@
-import React, { FC, memo } from 'react';
-import { Formik, Field, Form, FormikHelpers } from 'formik';
+import React, { memo } from 'react';
+import type { FC } from 'react';
+import { Formik, Field, Form } from 'formik';
+import type { FormikHelpers } from 'formik';
 
-import { FilterType } from '../../types/types';
 import { transformValues } from '../../utils/formikUtils';
+import type { FilterType } from '../../types/types';
 
 type PropsType = {
   changeFilterHandler: (filter: FilterType) => void;
