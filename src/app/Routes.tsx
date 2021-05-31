@@ -13,6 +13,7 @@ export const PATH = {
 
   LOGIN: '/login',
   ERROR_404: '/404',
+  BASENAME: '/react-way-of-samurai',
 };
 
 const DialogsContainer = lazy(async () => {

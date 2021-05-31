@@ -1,6 +1,6 @@
 import React, { Component, Suspense } from 'react';
 import type { ComponentType, FC } from 'react';
-import { HashRouter as Router, withRouter } from 'react-router-dom';
+import { BrowserRouter as Router, withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { connect, Provider } from 'react-redux';
 
@@ -11,7 +11,7 @@ import { HeaderContainer } from '../components/Header/HeaderContainer';
 import { Navbar } from '../components/Navbar/Navbar';
 import { initializeApp } from '../redux/appReducer';
 import { Preloader } from '../components/common/Preloader/Preloader';
-import { Routes } from './Routes';
+import { Routes, PATH } from './Routes';
 
 type StatePropsType = {
   initialized: boolean;
@@ -92,7 +92,7 @@ const AppContainer = compose<ComponentType>(
 export const SamuraiJSApp: FC = () => {
   return (
     <Provider store={store}>
-      <Router>
+      <Router basename={PATH.BASENAME}>
         <AppContainer />
       </Router>
     </Provider>
