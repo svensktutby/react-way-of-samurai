@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import type { FC } from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import * as queryString from 'querystring';
 
 import s from './Users.module.css';
 import styleBtn from '../common/styles/button.module.css';
@@ -19,8 +21,15 @@ import {
   getFollowingInProgress,
 } from '../../redux/usersSelectors';
 
+type QueryParamsType = {
+  page?: string;
+  term?: string;
+  friend?: string;
+};
+
 export const Users: FC = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const users = useTypedSelector(getUsers);
   const totalUsersCount = useTypedSelector(getTotalUsersCount);
@@ -30,8 +39,46 @@ export const Users: FC = () => {
   const followingInProgress = useTypedSelector(getFollowingInProgress);
 
   useEffect(() => {
-    dispatch(fetchUsers(currentPage, pageSize, filter));
-  }, [dispatch, currentPage, pageSize, filter]);
+    const parsed: QueryParamsType = queryString.parse(
+      history.location.search.slice(1),
+    );
+
+    let actualPage = currentPage;
+    let actualFilter = filter;
+
+    if (parsed.page) actualPage = Number(parsed.page);
+
+    if (parsed.term) actualFilter = { ...actualFilter, term: parsed.term };
+
+    switch (parsed.friend) {
+      case 'null':
+        actualFilter = { ...actualFilter, friend: null };
+        break;
+      case 'true':
+        actualFilter = { ...actualFilter, friend: true };
+        break;
+      case 'false':
+        actualFilter = { ...actualFilter, friend: false };
+        break;
+      default:
+        break;
+    }
+
+    dispatch(fetchUsers(actualPage, pageSize, actualFilter));
+  }, [dispatch, currentPage, pageSize, filter, history.location.search]);
+
+  useEffect(() => {
+    const query: QueryParamsType = {};
+
+    if (filter.term) query.term = filter.term;
+    if (filter.friend !== null) query.friend = String(filter.friend);
+    if (currentPage !== 1) query.page = String(currentPage);
+
+    history.push({
+      pathname: '/users',
+      search: queryString.stringify(query),
+    });
+  }, [currentPage, filter, history]);
 
   const changePageHandler = (page: number) => {
     dispatch(fetchUsers(page, pageSize, filter));

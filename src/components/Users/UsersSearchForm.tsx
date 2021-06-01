@@ -3,21 +3,28 @@ import type { FC } from 'react';
 import { Formik, Field, Form } from 'formik';
 import type { FormikHelpers } from 'formik';
 
+import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { transformValues } from '../../utils/formikUtils';
 import type { FilterType } from '../../types/types';
+import { getUsersFilter } from '../../redux/usersSelectors';
 
 type PropsType = {
   changeFilterHandler: (filter: FilterType) => void;
 };
 
+type FriendFormType = 'true' | 'false' | 'null';
 type FormFilterType = {
   term: string;
-  friend: 'true' | 'false' | 'null';
+  friend: FriendFormType;
 };
 
 export const UsersSearchForm: FC<PropsType> = memo(
   ({ changeFilterHandler }) => {
-    const initialValues: FormFilterType = { term: '', friend: 'null' };
+    const filter = useTypedSelector(getUsersFilter);
+    const initialValues: FormFilterType = {
+      term: filter.term,
+      friend: String(filter.friend) as FriendFormType,
+    };
 
     const submitHandler = (
       { term, friend }: FormFilterType,
@@ -33,7 +40,11 @@ export const UsersSearchForm: FC<PropsType> = memo(
     };
 
     return (
-      <Formik initialValues={initialValues} onSubmit={submitHandler}>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={submitHandler}
+        enableReinitialize
+      >
         {({ isSubmitting }) => (
           <Form>
             <Field type="text" name="term" />

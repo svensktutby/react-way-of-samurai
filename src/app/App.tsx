@@ -31,9 +31,9 @@ class App extends Component<PropsType> {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   catchAllUnhandledErrors = (e: PromiseRejectionEvent) => {
-    // TODO dispatch error message instead of alert (lesson 99, 45:00)
-    // eslint-disable-next-line no-alert
-    alert('Some error occurred');
+    // TODO dispatch error message instead of console (lesson 99, 45:00)
+    // eslint-disable-next-line no-console
+    console.error('Some error occurred');
   };
 
   componentWillUnount() {
